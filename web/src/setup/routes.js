@@ -7,6 +7,8 @@ export const routes = {
 
   about: '/about',
 
+  login: '/login',
+
   thoughts: {
     list: '/thoughts',
 

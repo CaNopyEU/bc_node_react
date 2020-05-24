@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 // App Imports
 import {menuShow, menuHide, messageHide} from './api/actions'
 import Menu from './Menu'
+import './Layout.css'
 
 // Component
 const Layout = ({ children }) => {
@@ -15,15 +16,15 @@ const Layout = ({ children }) => {
   return (
     <div>
       {/* Header */}
-      <header>
+      <header className="main-navigation">
         {/* Menu */}
         { menuIsVisible && <Menu /> }
 
         {/* Header visible toggle button */}
         {
           menuIsVisible
-            ? <button onClick={() => dispatch(menuHide())}>Hide Menu</button>
-            : <button onClick={() => dispatch(menuShow())}>Show Menu</button>
+            ? <button className="button1" onClick={() => dispatch(menuHide())}>Hide Menu</button>
+            : <button className="button1" onClick={() => dispatch(menuShow())}>Show Menu</button>
         }
       </header>
 

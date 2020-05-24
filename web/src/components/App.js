@@ -7,9 +7,11 @@ import {routes} from '../setup/routes'
 import Layout from './common/Layout'
 import Home from './home/Home'
 import About from './home/About'
+import Login from './home/Login'
 import ThoughtsList from './thoughts/List'
 import ThoughtsCreate from './thoughts/Create'
 import ThoughtsView from './thoughts/View'
+import './App.css'
 
 // Component
 const App = () => (
@@ -18,6 +20,7 @@ const App = () => (
       {/* Common */}
       <Route path={routes.home} component={Home} exact/>
       <Route path={routes.about} component={About}/>
+      <Route path={routes.login} component={Login}/>
 
       {/* Thoughts */}
       <Route path={routes.thoughts.list} component={ThoughtsList} exact/>
