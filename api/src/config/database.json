@@ -1,0 +1,16 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "Radim1385",
+    "database": "test-db",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "postgres",
+    "password": "Radim1385",
+    "database": "school-db",
+    "host": "localhost",
+    "dialect": "postgres"
+  }
+}
