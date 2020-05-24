@@ -56,7 +56,7 @@ export default (sequelize, DataTypes) => {
 
   User.associate = (models) => {
     User.belongsToMany(models.Lecture, {
-      through: 'lecture_teacher',
+      through: models.LectureTeacher,
       foreignKey: 'teacherId'
     })
     User.belongsTo(models.Class, {

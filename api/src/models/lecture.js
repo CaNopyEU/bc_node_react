@@ -8,11 +8,11 @@ export default (sequelize, DataTypes) => {
 
   Lecture.associate = (models) => {
     Lecture.belongsToMany(models.Class, {
-      through: 'lecture_class',
+      through: models.LectureClass,
       foreignKey: 'lectureId'
     });
     Lecture.belongsToMany(models.User, {
-      through: 'lecture_teacher',
+      through: models.LectureTeacher,
       foreignKey: 'lectureId'
     })
   }

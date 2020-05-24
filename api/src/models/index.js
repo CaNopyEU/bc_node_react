@@ -10,7 +10,9 @@ const models = {
   Class: databaseConnection.import('./class'),
   Grade: databaseConnection.import('./grade'),
   User: databaseConnection.import('./user'),
-  Homework: databaseConnection.import('./homework')
+  Homework: databaseConnection.import('./homework'),
+  LectureTeacher: databaseConnection.import('./lecture_teacher'),
+  LectureClass: databaseConnection.import('./lecture_class')
 }
 
 Object.keys(models).forEach((modelName) => {
