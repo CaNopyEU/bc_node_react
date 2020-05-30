@@ -1,6 +1,7 @@
 // App Imports
 import models from '../../models'
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken'
 
 // Get User by ID
 export async function getById(parentValue, {id}, {teacherId}) {
@@ -38,9 +39,30 @@ export async function create(parentValue, {
   } catch (err) {
     throw err;
   }
-
-
 }
+
+//login user
+export async function logUser(parentValue, {username, password}) {
+  const user = await models.User.findOne({username: username})
+  if (!user) {
+    throw new Error('User does not exist!')
+  }
+  const isEqual = await bcrypt.compare(password, user.password)
+  if (!isEqual) {
+    throw new Error('Password is incorrect!')
+  }
+  const token = jwt.sign({
+      userId: user.id,
+      role: user.role
+    },
+    'someSuperSacretKey',
+    {
+      expiresIn: '1h'
+    }
+  )
+  return {userId: user.id, role: user.role, token: token, tokenExpiration: 1}
+}
+
 
 // Delete users
 export async function remove(parentValue, {id}) {

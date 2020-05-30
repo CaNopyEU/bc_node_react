@@ -6,7 +6,7 @@ import UserType from '../type'
 import {create, remove} from '../resolvers'
 
 // User create
-export const userCreate = {
+export const createUser = {
   type: UserType,
   args: {
     username: {
@@ -26,7 +26,7 @@ export const userCreate = {
 }
 
 // User remove
-export const userRemove = {
+export const deleteUser = {
   type: UserType,
   args: {
     id: {
