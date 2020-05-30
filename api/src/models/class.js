@@ -12,9 +12,8 @@ export default (sequelize, DataTypes) => {
     }
   })
   Class.associate = (models) => {
-    Class.belongsToMany(models.Lecture, {
-      through: models.LectureClass,
-      foreignKey: 'classId'
+    Class.belongsTo(models.Teacher, {
+      foreignKey: 'teacherId',
     })
   }
   return Class

@@ -5,14 +5,19 @@ import Sequelize from 'sequelize'
 import databaseConnection from '../setup/databaseConnection'
 
 const models = {
-  Thought: databaseConnection.import('./thought'),
   Lecture: databaseConnection.import('./lecture'),
   Class: databaseConnection.import('./class'),
   Grade: databaseConnection.import('./grade'),
   User: databaseConnection.import('./user'),
   Homework: databaseConnection.import('./homework'),
-  LectureTeacher: databaseConnection.import('./lecture_teacher'),
-  LectureClass: databaseConnection.import('./lecture_class')
+  Attendance: databaseConnection.import('./attendance'),
+  Group: databaseConnection.import('./group'),
+  Parent: databaseConnection.import('./parent'),
+  Record: databaseConnection.import('./record'),
+  Student: databaseConnection.import('./student'),
+  Teacher: databaseConnection.import('./teacher'),
+  TeacherLecture: databaseConnection.import('./teacher_lecture'),
+  GroupLecture: databaseConnection.import('./group_lecture')
 }
 
 Object.keys(models).forEach((modelName) => {

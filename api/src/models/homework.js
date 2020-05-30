@@ -5,7 +5,7 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.STRING
     },
     desc: {
-      type: DataTypes.FLOAT
+      type: DataTypes.STRING
     },
     finishAt: {
       type: DataTypes.DATE
@@ -13,11 +13,11 @@ export default (sequelize, DataTypes) => {
   });
 
   Homework.associate = (models) => {
-    Homework.belongsTo(models.Class, {
-      foreignKey: 'classId'
+    Homework.belongsTo(models.Group, {
+      foreignKey: 'groupId'
     })
 
-    Homework.belongsTo(models.User, {
+    Homework.belongsTo(models.Teacher, {
       foreignKey: 'teacherId'
     })
 

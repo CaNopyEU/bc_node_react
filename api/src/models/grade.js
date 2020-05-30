@@ -10,18 +10,17 @@ export default (sequelize, DataTypes) => {
   })
   Grade.associate = (models) => {
 
-    Grade.belongsTo(models.User, {
-      foreignKey: 'teacherId',
+    Grade.belongsTo(models.Student, {
+      foreignKey: 'studentId',
     })
 
-    Grade.belongsTo(models.User, {
-      foreignKey: 'studentId',
+    Grade.belongsTo(models.Teacher, {
+      foreignKey: 'teacherId',
     })
 
     Grade.belongsTo(models.Lecture, {
       foreignKey: 'lectureId',
     })
-
   }
   return Grade
 }

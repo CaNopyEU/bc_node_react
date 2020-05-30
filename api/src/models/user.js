@@ -1,4 +1,4 @@
-// Thought
+// User
 export default (sequelize, DataTypes) => {
   const User = sequelize.define('users', {
     username: {
@@ -18,51 +18,9 @@ export default (sequelize, DataTypes) => {
     password: {
       type: DataTypes.STRING
     },
-    first_name: {
-      type: DataTypes.STRING
-    },
-    last_name: {
-      type: DataTypes.STRING
-    },
-    email: {
-      type: DataTypes.STRING,
-      unique: true,
-      validate: {
-        isEmail: {
-          args: true,
-          msg: 'Neplatný email'
-        }
-      }
-    },
     role: {
       type: DataTypes.STRING
-    },
-    city: {
-      type: DataTypes.STRING
-    },
-    street: {
-      type: DataTypes.STRING
-    },
-    street_num: {
-      type: DataTypes.FLOAT
-    },
-    phone: {
-      type: DataTypes.FLOAT
-    },
-    date: {
-      type: DataTypes.DATE
     }
   })
-
-  User.associate = (models) => {
-    User.belongsToMany(models.Lecture, {
-      through: models.LectureTeacher,
-      foreignKey: 'teacherId'
-    })
-    User.belongsTo(models.Class, {
-      foreignKey: 'classId',
-    });
-  }
-
   return User
 }
