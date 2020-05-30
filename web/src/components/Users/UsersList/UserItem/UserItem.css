@@ -1,0 +1,23 @@
+.user__list-item {
+    margin: 1rem 0;
+    padding: 1rem;
+    border: 1px solid #4aa1ff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user__list-item td {
+    width: 15%;
+    color: #356fff;
+}
+
+.user__list-item h2 {
+    margin: 0;
+    font-size: 1rem;
+    color: #4e5164;
+}
+
+.user__list-item p {
+    margin: 0;
+}

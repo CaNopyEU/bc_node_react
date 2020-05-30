@@ -1,0 +1,24 @@
+.users__list {
+    width: 90%;
+    max-width: 90%;
+    margin: 2rem auto;
+    padding: 0;
+    list-style: none;
+}
+.users__list-item {
+    margin: 1rem 0;
+    padding: 1rem;
+    border: 1px solid #4aa1ff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.users__list-item td {
+    margin: 0;
+    color: #4e5164;
+}
+
+.users__list-item p {
+    margin: 0;
+}
