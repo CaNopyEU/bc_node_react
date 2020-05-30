@@ -2,26 +2,63 @@
 import models from '../../models'
 
 // Get Grade by ID
-export async function getById(parentValue, { id }) {
-  return await models.Grade.findOne({ where: { id } })
+export async function getById(parentValue, {id}) {
+  return await models.Grade.findOne({
+    where: {id}, include: [
+      {
+        model: models.Class,
+        where: {}
+      },
+      {
+        model: models.Student,
+        where: {}
+      },
+      {
+        model: models.Teacher,
+        where: {}
+      }
+    ]
+  })
 }
 
 // Get all grade
 export async function getAll() {
-  return await models.Grade.findAll({ order: [ ['createdAt', 'DESC'] ] })
+  return await models.Grade.findAll({
+    order: [['date', 'DESC']], include: [
+      {
+        model: models.Class,
+        where: {}
+      },
+      {
+        model: models.Student,
+        where: {}
+      },
+      {
+        model: models.Teacher,
+        where: {}
+      }
+    ]
+  })
 }
 
 // Create grade
-export async function create(parentValue, { grade, teacherId, studentId, lectureId, date }) {
-  console.log(grade)
-  console.log(teacherId)
-  console.log(studentId)
-  console.log(lectureId)
-  console.log(date)
-  return await models.Grade.create({ grade, teacherId, studentId, lectureId, date })
+export async function create(parentValue, {
+  grade,
+  teacherId,
+  studentId,
+  lectureId,
+  date
+}) {
+  return await models.Grade.create({
+    grade,
+    teacherId,
+    studentId,
+    lectureId,
+    date
+  })
 }
 
 // Delete grade
 export async function remove(parentValue, {id}) {
-  return await models.Grade.destroy({ where: { id } })
+  return await models.Grade.destroy({where: {id}})
 }

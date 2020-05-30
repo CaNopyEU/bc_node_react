@@ -5,13 +5,13 @@ import {GraphQLInt, GraphQLList} from 'graphql'
 import GradeType from '../type'
 import {getAll, getById} from '../resolvers'
 
-// Thoughts All
+// Grade All
 export const grades = {
   type: new GraphQLList(GradeType),
   resolve: getAll
 }
 
-// Thought By ID
+// Grade By ID
 export const grade = {
   type: GradeType,
   args: {

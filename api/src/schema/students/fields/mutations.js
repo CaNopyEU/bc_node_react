@@ -2,32 +2,60 @@
 import {GraphQLString, GraphQLInt, GraphQLFloat} from 'graphql'
 
 // App Imports
-import UserType from '../type'
 import {create, remove} from '../resolvers'
+import StudentType from "../type";
 
-// User create
-export const userCreate = {
-  type: UserType,
+// Student create
+export const createStudent = {
+  type: StudentType,
   args: {
-    username: {
-      name: 'username',
+    first_name: {
+      name: 'first_name',
       type: GraphQLString
     },
-    password: {
+    last_name: {
       name: 'password',
       type: GraphQLString
     },
-    role: {
-      name: 'role',
+    city: {
+      name: 'city',
       type: GraphQLString
-    }
+    },
+    street: {
+      name: 'street',
+      type: GraphQLString
+    },
+    street_num: {
+      name: 'street_num',
+      type: GraphQLFloat
+    },
+    dob: {
+      name: 'dob',
+      type: GraphQLString
+    },
+    desc: {
+      name: 'desc',
+      type: GraphQLString
+    },
+    userId: {
+      name: 'userId',
+      type: GraphQLInt
+    },
+    parentId: {
+      name: 'parentId',
+      type: GraphQLInt
+    },
+    groupId: {
+      name: 'groupId',
+      type: GraphQLInt
+    },
   },
   resolve: create
 }
 
-// User remove
-export const userRemove = {
-  type: UserType,
+// Student remove
+export const removeStudent = {
+  type: StudentType,
   args: {
     id: {
       name: 'id',

@@ -2,32 +2,40 @@
 import {GraphQLString, GraphQLInt, GraphQLFloat} from 'graphql'
 
 // App Imports
-import UserType from '../type'
+import ParentType from '../type'
 import {create, remove} from '../resolvers'
 
-// User create
-export const userCreate = {
-  type: UserType,
+// Parent create
+export const createParent = {
+  type: ParentType,
   args: {
-    username: {
-      name: 'username',
+    first_name: {
+      name: 'first_name',
       type: GraphQLString
     },
-    password: {
-      name: 'password',
+    last_name: {
+      name: 'last_name',
       type: GraphQLString
     },
-    role: {
-      name: 'role',
+    email: {
+      name: 'email',
       type: GraphQLString
-    }
+    },
+    dob: {
+      name: 'dob',
+      type: GraphQLString
+    },
+    phone: {
+      name: 'phone',
+      type: GraphQLFloat
+    },
   },
   resolve: create
 }
 
-// User remove
-export const userRemove = {
-  type: UserType,
+// Parent remove
+export const deleteParent = {
+  type: ParentType,
   args: {
     id: {
       name: 'id',

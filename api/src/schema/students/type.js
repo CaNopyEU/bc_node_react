@@ -22,7 +22,6 @@ const StudentType = new GraphQLObjectType({
     user: {type: UserType},
     parent: {type: ParentType},
     group: {type: GroupType}
-
   })
 })
 

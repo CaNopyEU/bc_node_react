@@ -9,7 +9,9 @@ export async function getById(parentValue, {id}, {teacherId}) {
 
 // Get all users
 export async function getAll() {
-  return await models.User.findAll({order: [['createdAt', 'DESC']]})
+  return await models.User.findAll({
+    order: [['createdAt', 'DESC']],
+  })
 }
 
 // Create users

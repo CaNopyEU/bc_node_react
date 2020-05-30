@@ -1,24 +1,58 @@
 // App Imports
 import models from '../../models'
 
-// Get lecture by ID
-export async function getById(parentValue, { id }) {
-    return await models.Lecture.findOne({ where: { id } })
+// Get Attendance by ID
+export async function getById(parentValue, {id}) {
+  return await models.Attendance.findOne({
+    where: {id},
+    include: [
+      {
+        model: models.Teacher,
+        where: {}
+      },
+      {
+        model: models.Student,
+        where: {}
+      }
+    ]
+  })
 }
 
-// Get all lectures
+// Get all Attendances
 export async function getAll() {
-    return await models.Lecture.findAll({ order: [ ['createdAt', 'DESC'] ] })
+  return await models.Attendance.findAll({
+    order: [['date', 'DESC']],
+    include: [
+      {
+        model: models.Teacher,
+        where: {}
+      },
+      {
+        model: models.Student,
+        where: {}
+      }
+    ]
+  })
 }
 
-// Create leacture
-export async function create(parentValue, { lecture, lectureType }) {
-    console.log(lecture)
-    console.log(lectureType)
-    return await models.Lecture.create({ lecture, lectureType })
+// Create Attendance
+export async function create(parentValue, {
+  desc,
+  date,
+  pardon,
+  teacherId,
+  studentId
+}) {
+  return await models.Attendance.create({
+      desc,
+      date,
+      pardon,
+      teacherId,
+      studentId
+  })
 }
 
-// Delete lecture
+// Delete Attendance
 export async function remove(parentValue, {id}) {
-    return await models.Lecture.destroy({ where: { id } })
+  return await models.Attendance.destroy({where: {id}})
 }

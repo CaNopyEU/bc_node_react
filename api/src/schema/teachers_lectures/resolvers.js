@@ -1,13 +1,13 @@
 // App Imports
 import models from '../../models'
 
-// Get GroupLecture by ID
+// Get TeacherLecture by ID
 export async function getById(parentValue, {id}) {
-  return await models.GroupLecture.findOne({
+  return await models.TeacherLecture.findOne({
     where: {id},
     include: [
       {
-        model: models.Group,
+        model: models.Teacher,
         where: {}
       },
       {
@@ -18,13 +18,13 @@ export async function getById(parentValue, {id}) {
   })
 }
 
-// Get all GroupLectures
+// Get all TeacherLectures
 export async function getAll() {
-  return await models.GroupLecture.findAll({
+  return await models.TeacherLecture.findAll({
     order: [['updatedAt', 'DESC']],
     include: [
       {
-        model: models.Group,
+        model: models.Teacher,
         where: {}
       },
       {
@@ -35,18 +35,18 @@ export async function getAll() {
   })
 }
 
-// Create GroupLecture
+// Create TeacherLecture
 export async function create(parentValue, {
   lectureId,
-  groupId
+  teacherId
 }) {
-  return await models.GroupLecture.create({
+  return await models.TeacherLecture.create({
     lectureId,
-    groupId
+    teacherId
   })
 }
 
-// Delete GroupLecture
+// Delete TeacherLecture
 export async function remove(parentValue, {id}) {
-  return await models.GroupLecture.destroy({where: {id}})
+  return await models.TeacherLecture.destroy({where: {id}})
 }

@@ -1,38 +1,65 @@
 // App Imports
 import models from '../../models'
-import bcrypt from 'bcrypt';
 
 // Get User by ID
-export async function getById(parentValue, {id}, {teacherId}) {
-  return await models.User.findOne({where: {id}})
+export async function getById(parentValue, {id}) {
+  return await models.Teacher.findOne({
+    where: {id},
+    include: [{
+      model: models.User,
+      where: {}
+    }]
+  })
 }
 
 // Get all users
 export async function getAll() {
-  return await models.User.findAll({order: [['createdAt', 'DESC']]})
+  return await models.Teacher.findAll({
+    order: [['last_name', 'ASC']],
+    include: [{
+      model: models.User,
+      where: {}
+    }]
+  })
 }
 
 // Create users
 export async function create(parentValue, {
-  username,
-  password,
-  role
+  first_name,
+  last_name,
+  email,
+  city,
+  street,
+  street_num,
+  phone,
+  dob,
+  main_teacher,
+  userId
 }) {
-  console.log(username)
-  console.log(password)
-  console.log(role)
+  console.log(first_name)
+  console.log(last_name)
+  console.log(email)
+  console.log(city)
+  console.log(street)
+  console.log(street_num)
+  console.log(phone)
+  console.log(dob)
+  console.log(main_teacher)
+  console.log(userId)
   try {
-    if (password.length < 5) {
-      throw new Error('Heslo musí byť v rozmedzí 5 až 20 znakov');
-    }
-    const hashedPassword = await bcrypt.hash(password, 12);
-    console.log(hashedPassword);
-    const user = await models.User.create({
-      username,
-      password: hashedPassword,
-      role
+    const Teacher = await models.Teacher.create({
+      first_name,
+      last_name,
+      email,
+      city,
+      street,
+      street_num,
+      phone,
+      dob,
+      main_teacher,
+      userId
     })
-    return user;
+    return Teacher;
   } catch (err) {
     throw err;
   }
@@ -42,5 +69,5 @@ export async function create(parentValue, {
 
 // Delete users
 export async function remove(parentValue, {id}) {
-  return await models.User.destroy({where: {id}})
+  return await models.Teacher.destroy({where: {id}})
 }

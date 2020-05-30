@@ -7,6 +7,14 @@ import * as oneClass from './classes/fields/query'
 import * as grade from './grades/fields/query'
 import * as user from './users/fields/query'
 import * as homework from './homeworks/fields/query'
+import * as teacher from './teachers/fields/query'
+import * as student from './students/fields/query'
+import * as record from './records/fields/query'
+import * as parent from './parents/fields/query'
+import * as group from './groups/fields/query'
+import * as attendance from './attendances/fields/query'
+import * as group_lecture from './groups_lectures/fields/query'
+import * as teacher_lecture from './teachers_lectures/fields/query'
 
 // Query
 const query = new GraphQLObjectType({
@@ -18,7 +26,15 @@ const query = new GraphQLObjectType({
     ...oneClass,
     ...grade,
     ...user,
-    ...homework
+    ...homework,
+    ...teacher,
+    ...student,
+    ...record,
+    ...parent,
+    ...group,
+    ...attendance,
+    ...group_lecture,
+    ...teacher_lecture
   })
 })
 

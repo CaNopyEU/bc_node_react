@@ -1,27 +1,44 @@
 // App Imports
 import models from '../../models'
 
-// Get Grade by ID
-export async function getById(parentValue, { id }) {
-  return await models.Grade.findOne({ where: { id } })
+// Get Group by ID
+export async function getById(parentValue, {id}) {
+  return await models.Group.findOne({
+    where: {id},
+    include: [
+      {
+        model: models.Class,
+        where: {}
+      }
+    ]
+  })
 }
 
-// Get all grade
+// Get all Groups
 export async function getAll() {
-  return await models.Grade.findAll({ order: [ ['createdAt', 'DESC'] ] })
+  return await models.Group.findAll({
+    order: [['createdAt', 'DESC']], include: [
+      {
+        model: models.Class,
+        where: {}
+      }
+    ]
+  })
 }
 
 // Create grade
-export async function create(parentValue, { grade, teacherId, studentId, lectureId, date }) {
-  console.log(grade)
-  console.log(teacherId)
-  console.log(studentId)
-  console.log(lectureId)
-  console.log(date)
-  return await models.Grade.create({ grade, teacherId, studentId, lectureId, date })
+export async function create(parentValue, {
+  title,
+  classId
+}) {
+
+  return await models.Group.create({
+    title,
+    classId
+  })
 }
 
-// Delete grade
+// Delete group
 export async function remove(parentValue, {id}) {
-  return await models.Grade.destroy({ where: { id } })
+  return await models.Group.destroy({where: {id}})
 }

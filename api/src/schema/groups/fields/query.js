@@ -2,18 +2,18 @@
 import {GraphQLInt, GraphQLList} from 'graphql'
 
 // App Imports
-import GradeType from '../type'
 import {getAll, getById} from '../resolvers'
+import GroupType from "../type";
 
-// Thoughts All
-export const grades = {
-  type: new GraphQLList(GradeType),
+// Group All
+export const groups = {
+  type: new GraphQLList(GroupType),
   resolve: getAll
 }
 
-// Thought By ID
-export const grade = {
-  type: GradeType,
+// Group By ID
+export const group = {
+  type: GroupType,
   args: {
     id: {type: GraphQLInt}
   },

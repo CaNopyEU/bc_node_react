@@ -17,12 +17,12 @@ export const homeworkCreate = {
       name: 'desc',
       type: GraphQLString
     },
-    finishAt: {
-      name: 'finishAt',
+    deadline: {
+      name: 'deadline',
       type: GraphQLString
     },
-    classId: {
-      name: 'classId',
+    groupId: {
+      name: 'groupId',
       type: GraphQLInt
     },
     teacherId: {

@@ -2,18 +2,18 @@
 import {GraphQLInt, GraphQLList} from 'graphql'
 
 // App Imports
-import LectureType from '../type'
+import GroupLectureType from '../type'
 import {getAll, getById} from '../resolvers'
 
-// Lectures All
-export const lectures = {
-  type: new GraphQLList(LectureType),
+// GroupLectures All
+export const groupLectures = {
+  type: new GraphQLList(GroupLectureType),
   resolve: getAll
 }
 
-// Thought By ID
-export const lecture = {
-  type: LectureType,
+// GroupLecture By ID
+export const groupLecture = {
+  type: GroupLectureType,
   args: {
     id: {type: GraphQLInt}
   },

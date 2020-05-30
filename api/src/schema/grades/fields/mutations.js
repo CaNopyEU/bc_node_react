@@ -6,7 +6,7 @@ import GradeType from '../type'
 import {create, remove} from '../resolvers'
 
 // Grade create
-export const gradeCreate = {
+export const createGrade = {
   type: GradeType,
   args: {
     grade: {
@@ -38,7 +38,7 @@ export const gradeCreate = {
 }
 
 // Grade remove
-export const gradeRemove = {
+export const deleteGrade = {
   type: GradeType,
   args: {
     id: {

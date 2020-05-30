@@ -1,25 +1,41 @@
 // Imports
-import {GraphQLString, GraphQLInt} from 'graphql'
+import {GraphQLString, GraphQLInt, GraphQLBoolean} from 'graphql'
 
 // App Imports
-import LectureType from '../type'
+import AttendanceType from '../type'
 import {create, remove} from '../resolvers'
 
 // Lecture create
-export const lectureCreate = {
-    type: LectureType,
+export const createAttendance = {
+    type: AttendanceType,
     args: {
-        lecture: {
-            name: 'lecture',
+        desc: {
+            name: 'desc',
             type: GraphQLString
+        },
+        date: {
+            name: 'date',
+            type: GraphQLString
+        },
+        pardon: {
+            name: 'pardon',
+            type: GraphQLBoolean
+        },
+        teacherId: {
+            name: 'teacherId',
+            type: GraphQLInt
+        },
+        studentId: {
+            name: 'studentId',
+            type: GraphQLInt
         }
     },
     resolve: create
 }
 
-// Lecture remove
-export const lectureRemove = {
-    type: LectureType,
+// Attendance remove
+export const deleteAttendance = {
+    type: AttendanceType,
     args: {
         id: {
             name: 'id',

@@ -2,29 +2,41 @@
 import {GraphQLString, GraphQLInt} from 'graphql'
 
 // App Imports
-import LectureType from '../type'
+import RecordType from '../type'
 import {create, remove} from '../resolvers'
 
-// Lecture create
-export const lectureCreate = {
-    type: LectureType,
-    args: {
-        lecture: {
-            name: 'lecture',
-            type: GraphQLString
-        }
+// Record create
+export const createRecord = {
+  type: RecordType,
+  args: {
+    desc: {
+      name: 'lecture',
+      type: GraphQLString
     },
-    resolve: create
+    date: {
+      name: 'date',
+      type: GraphQLString
+    },
+    teacherId: {
+      name: 'teacherId',
+      type: GraphQLInt
+    },
+    studentId: {
+      name: 'studentId',
+      type: GraphQLInt
+    }
+  },
+  resolve: create
 }
 
-// Lecture remove
-export const lectureRemove = {
-    type: LectureType,
-    args: {
-        id: {
-            name: 'id',
-            type: GraphQLInt
-        }
-    },
-    resolve: remove
+// Record remove
+export const deleteRecord = {
+  type: RecordType,
+  args: {
+    id: {
+      name: 'id',
+      type: GraphQLInt
+    }
+  },
+  resolve: remove
 }

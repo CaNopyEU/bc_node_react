@@ -11,7 +11,7 @@ export const lectures = {
   resolve: getAll
 }
 
-// Thought By ID
+// Lecture By ID
 export const lecture = {
   type: LectureType,
   args: {

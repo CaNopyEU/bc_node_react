@@ -4,7 +4,6 @@ import {GraphQLInt, GraphQLList} from 'graphql'
 // App Imports
 import HomeworkType from '../type'
 import {getAll, getById} from '../resolvers'
-import UserType from "../../users/type";
 
 // Homeworks All
 export const homeworks = {

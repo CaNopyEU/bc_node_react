@@ -3,7 +3,7 @@ import {GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLBoolean} from 'grap
 import LectureType from "../lectures/type";
 import GroupType from "../groups/type";
 
-// Attendant type
+// GroupLectureType type
 const GroupLectureType = new GraphQLObjectType({
     name: 'group_lecture',
 

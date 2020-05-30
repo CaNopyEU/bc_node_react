@@ -1,38 +1,33 @@
 // App Imports
 import models from '../../models'
-import bcrypt from 'bcrypt';
 
-// Get User by ID
-export async function getById(parentValue, {id}, {teacherId}) {
-  return await models.User.findOne({where: {id}})
+// Get Parent by ID
+export async function getById(parentValue, {id}) {
+  return await models.Parent.findOne({where: {id}})
 }
 
-// Get all users
+// Get all parents
 export async function getAll() {
-  return await models.User.findAll({order: [['createdAt', 'DESC']]})
+  return await models.Parent.findAll({order: [['last_name', 'ASC']]})
 }
 
-// Create users
+// Create parent
 export async function create(parentValue, {
-  username,
-  password,
-  role
+  first_name,
+  last_name,
+  email,
+  dob,
+  phone
 }) {
-  console.log(username)
-  console.log(password)
-  console.log(role)
   try {
-    if (password.length < 5) {
-      throw new Error('Heslo musí byť v rozmedzí 5 až 20 znakov');
-    }
-    const hashedPassword = await bcrypt.hash(password, 12);
-    console.log(hashedPassword);
-    const user = await models.User.create({
-      username,
-      password: hashedPassword,
-      role
+    const Parent = await models.Parent.create({
+      first_name,
+      last_name,
+      email,
+      dob,
+      phone
     })
-    return user;
+    return Parent;
   } catch (err) {
     throw err;
   }
@@ -40,7 +35,7 @@ export async function create(parentValue, {
 
 }
 
-// Delete users
+// Delete parent
 export async function remove(parentValue, {id}) {
-  return await models.User.destroy({where: {id}})
+  return await models.Parent.destroy({where: {id}})
 }

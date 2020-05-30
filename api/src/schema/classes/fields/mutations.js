@@ -6,29 +6,31 @@ import ClassType from '../type'
 import {create, remove} from '../resolvers'
 
 // Thought create
-export const classCreate = {
+export const createClass = {
   type: ClassType,
   args: {
     classType: {
       name: 'classType',
       type: GraphQLString
     },
-
     year: {
       name: 'year',
       type: GraphQLInt
     },
-
     schedule: {
       name: 'schedule',
       type: GraphQLString
+    },
+    teacherId: {
+      name: 'teacherId',
+      type: GraphQLInt
     }
   },
   resolve: create
 }
 
-// Thought remove
-export const classRemove = {
+// Class remove
+export const deleteClass = {
   type: ClassType,
   args: {
     id: {
