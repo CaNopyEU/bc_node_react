@@ -1,9 +1,10 @@
 // Imports
 import {GraphQLObjectType, GraphQLString, GraphQLInt} from 'graphql'
-import UserType from "../users/type";
+import StudentType from "../students/type";
+import TeacherType from "../teachers/type";
 import LectureType from "../lectures/type";
 
-// Thought type
+// Grade type
 const GradeType = new GraphQLObjectType({
   name: 'grade',
   description: '...',
@@ -11,12 +12,12 @@ const GradeType = new GraphQLObjectType({
   fields: () => ({
     id: {type: GraphQLInt},
     grade: {type: GraphQLString},
-    teacher: {type: UserType},
-    student: {type: UserType},
+    date: {type: GraphQLString},
     createdAt: {type: GraphQLString},
     updatedAt: {type: GraphQLString},
+    teacher: {type: TeacherType},
+    student: {type: StudentType},
     lecture: {type: LectureType},
-    date: {type: GraphQLString}
   })
 })
 

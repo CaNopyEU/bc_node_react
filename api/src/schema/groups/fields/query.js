@@ -2,18 +2,18 @@
 import {GraphQLInt, GraphQLList} from 'graphql'
 
 // App Imports
-import ThoughtType from '../type'
+import GradeType from '../type'
 import {getAll, getById} from '../resolvers'
 
 // Thoughts All
-export const thoughts = {
-  type: new GraphQLList(ThoughtType),
+export const grades = {
+  type: new GraphQLList(GradeType),
   resolve: getAll
 }
 
 // Thought By ID
-export const thought = {
-  type: ThoughtType,
+export const grade = {
+  type: GradeType,
   args: {
     id: {type: GraphQLInt}
   },

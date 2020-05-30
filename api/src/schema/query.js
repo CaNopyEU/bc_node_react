@@ -2,7 +2,6 @@
 import {GraphQLObjectType} from 'graphql'
 
 // App Imports
-import * as thought from './thoughts/fields/query'
 import * as lecture from './lectures/fields/query'
 import * as oneClass from './classes/fields/query'
 import * as grade from './grades/fields/query'
@@ -15,7 +14,6 @@ const query = new GraphQLObjectType({
   description: '...',
 
   fields: () => ({
-    ...thought,
     ...lecture,
     ...oneClass,
     ...grade,

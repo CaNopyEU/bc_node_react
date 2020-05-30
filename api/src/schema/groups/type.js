@@ -1,20 +1,22 @@
 // Imports
 import {GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLFloat} from 'graphql'
 import ClassType from "../classes/type";
+import GroupLectureType from "../groups_lectures/type";
 
-// User type
-const UserType = new GraphQLObjectType({
-  name: 'user',
+
+// Group type
+const GroupType = new GraphQLObjectType({
+  name: 'group',
   description: '...',
 
   fields: () => ({
     id: {type: GraphQLInt},
-    username: {type: GraphQLString},
-    password: {type: GraphQLString},
-    role: {type: GraphQLString},
+    title: {type: GraphQLFloat},
     createdAt: {type: GraphQLString},
     updatedAt: {type: GraphQLString},
+    class: {type: ClassType},
+    lectures: {type: GroupLectureType}
   })
 })
 
-export default UserType
+export default GroupType

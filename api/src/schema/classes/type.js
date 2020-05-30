@@ -1,7 +1,8 @@
 // Imports
 import {GraphQLObjectType, GraphQLString, GraphQLInt} from 'graphql'
+import TeacherType from "../teachers/type";
 
-// Thought type
+// Class type
 const ClassType = new GraphQLObjectType({
   name: 'Class',
   description: '...',
@@ -12,7 +13,8 @@ const ClassType = new GraphQLObjectType({
     year: {type: GraphQLInt},
     schedule: {type: GraphQLString},
     createdAt: {type: GraphQLString},
-    updatedAt: {type: GraphQLString}
+    updatedAt: {type: GraphQLString},
+    teacher: {type: TeacherType}
   })
 })
 

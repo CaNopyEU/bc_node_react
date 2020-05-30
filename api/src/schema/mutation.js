@@ -2,7 +2,6 @@
 import {GraphQLObjectType} from 'graphql'
 
 // App Imports
-import * as thought from './thoughts/fields/mutations'
 import * as lecture from './lectures/fields/mutations'
 import * as oneClass from './classes/fields/mutations'
 import * as grade from './grades/fields/mutations'
@@ -15,7 +14,6 @@ const mutation = new GraphQLObjectType({
   description: '...',
 
   fields: {
-    ...thought,
     ...lecture,
     ...oneClass,
     ...grade,
