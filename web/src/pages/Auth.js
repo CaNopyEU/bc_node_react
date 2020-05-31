@@ -2,6 +2,8 @@ import React, {Component} from "react";
 
 import './Auth.css';
 import AuthContext from '../context/auth-context';
+import * as Yup from "yup";
+import {ErrorMessage, Field, Form, Formik} from "formik";
 
 class AuthPage extends Component {
 
@@ -9,28 +11,13 @@ class AuthPage extends Component {
 
   constructor(props) {
     super(props);
-    this.usernameEl = React.createRef();
-    this.passwordEl = React.createRef();
-    this.roleEl = React.createRef();
     this.state = {
       err: ''
     }
   }
 
 
-  submitHandler = (event) => {
-    event.preventDefault();
-    const username = this.usernameEl.current.value;
-    const password = this.passwordEl.current.value;
-
-
-    if (username.trim().length === 0 || password.trim().length === 0) {
-      this.setState({
-        err: 'Nevyplnili ste všetky požadované údaje'
-      });
-      return;
-    }
-
+  submitHandler = (values) => {
     let requestBody = {
       query: `
                 query Login($username: String!, $password: String!) {
@@ -43,8 +30,8 @@ class AuthPage extends Component {
                 }
             `,
       variables: {
-        username: username,
-        password: password
+        username: values.username,
+        password: values.password
       }
     };
 
@@ -81,26 +68,46 @@ class AuthPage extends Component {
   };
 
   render() {
-    console.log(this.state.err)
     return (
-      <form className="auth-form" onSubmit={this.submitHandler}>
-        {(this.state.err) &&
-        <div className="form-control errors">
-          <label htmlFor="text">{this.state.err}</label>
-        </div>
-        }
-        <div className="form-control">
-          <label htmlFor="text">Používateľské meno</label>
-          <input type="text" id="text" ref={this.usernameEl}/>
-        </div>
-        <div className="form-control">
-          <label htmlFor="password">Heslo</label>
-          <input type="password" id="password" ref={this.passwordEl}/>
-        </div>
-        <div className="form-actions">
-          <button type="input">Prihlásiť</button>
-        </div>
-      </form>
+      <Formik
+        initialValues={{username: '', password: ''}}
+        validationSchema={Yup.object({
+          username: Yup.string()
+            .max(15, 'Môže byť maximálne 15 znakov dlhé')
+            .min(5,'Musí byť minimalne 5 znakov dlhé')
+            .required('Prihlasovacie meno je potrebé vyplniť!'),
+          password: Yup.string()
+            .max(20, 'Môže byť maximálne 20 znakov dlhé')
+            .min(5,'Musí byť minimalne 5 znakov dlhé')
+            .required('Heslo je potrebé vyplniť!'),
+        })}
+        onSubmit={(values, {setSubmitting}) => {
+          setTimeout(() => {
+            this.submitHandler(values)
+            setSubmitting(false);
+          }, 400);
+        }}
+      >
+        <Form className="auth-form">
+          {
+            this.state.err &&
+            <div className="form-control errors">
+              <label>{this.state.err}</label>
+            </div>
+          }
+          <div className="form-control">
+            <label htmlFor="username">Prihlasovacie meno:</label>
+            <Field name="username" type="text"/>
+            <ErrorMessage  name="username"/>
+          </div>
+          <div className="form-control">
+            <label htmlFor="password" >Heslo:</label>
+            <Field name="password" type="password"/>
+            <ErrorMessage name="password"/>
+          </div>
+          <button className="btn" type="submit">Prihlásiť</button>
+        </Form>
+      </Formik>
     );
   }
 }

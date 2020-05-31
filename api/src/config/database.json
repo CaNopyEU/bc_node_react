@@ -2,7 +2,7 @@
   "development": {
     "username": "postgres",
     "password": "admin",
-    "database": "db-test",
+    "database": "dataa-baze",
     "host": "localhost",
     "dialect": "postgres"
   },

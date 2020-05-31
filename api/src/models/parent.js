@@ -11,7 +11,7 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.STRING
     },
     dob: {
-      type: DataTypes.DATE
+      type: DataTypes.STRING
     },
     phone: {
       type: DataTypes.FLOAT

@@ -5,18 +5,15 @@ import Modal from '../components/Modal/Modal';
 import Spinner from '../components/Spinner/Spinner';
 import './Users.css';
 import Backdrop from "../components/Backdrop/Backdrop";
-import CreateProfil from "../components/CreateProfil/CreateProfil";
+import CreateProfile from "../components/CreateProfil/CreateProfile";
 
 class Users extends Component {
   state = {
     creating: false,
     isLoading: false,
-    modal: null,
     users: [],
     selectedUser: null,
     userInfo: null,
-    errors: '',
-    success: ''
   }
   isActive = true;
   componentDidMount() {
@@ -115,7 +112,7 @@ class Users extends Component {
   }
 
   modalCreateProfileHandler = (userId, role) => {
-    return <CreateProfil/>
+    return <CreateProfile/>
   }
 
 
@@ -184,9 +181,7 @@ class Users extends Component {
                     <br/>
                     Prajete si ho vytvoriť?
                   </h1>
-                  <button className="btn">
-                    Vytvoriť profil
-                  </button>
+                    <CreateProfile userId={this.state.selectedUser.id} role={this.state.selectedUser.role}/>
                 </>
               }
             </>

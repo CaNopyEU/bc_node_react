@@ -18,6 +18,16 @@ body {
     margin-bottom: 1rem;
 }
 
+.flex {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+}
+
+.check {
+    width: 20px !important;
+}
+
 .form-actions button,
 .btn {
     background: #4aa1ff;

@@ -23,7 +23,7 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.FLOAT
     },
     dob: {
-      type: DataTypes.DATE
+      type: DataTypes.STRING
     },
     main_teacher: {
       type: DataTypes.BOOLEAN
