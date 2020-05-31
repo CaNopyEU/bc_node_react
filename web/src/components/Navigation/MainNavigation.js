@@ -10,28 +10,31 @@ const mainNavigation = props => (
             return (
                 <header className="main-navigation">
                     <div className="main-navigation__logo">
-                        <h1>The Navbar</h1>
+                        <h1>Informačný systém</h1>
                     </div>
                     <nav className="main-navigation__items">
                         <ul>
-                            <li>
-                                <NavLink to="/users">Users</NavLink>
-                            </li>
                             {!context.token && (
                                 <li>
-                                    <NavLink to="/auth">Authentication</NavLink>
+                                    <NavLink to="/auth">Prihlásenie</NavLink>
                                 </li>
                             )}
-                            <li>
-                                <NavLink to="/events">Events</NavLink>
-                            </li>
                             {context.token &&
                             <>
                                 <li>
-                                    <NavLink to="/bookings">Bookings</NavLink>
+                                    <NavLink to="/users">Používatelia</NavLink>
                                 </li>
                                 <li>
-                                    <button onClick={context.logout}>Logout</button>
+                                    <NavLink to="/events">Events</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="/registration">Registrácia</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="/people">Ľudia na škole</NavLink>
+                                </li>
+                                <li>
+                                    <button onClick={context.logout}>Odhlásiť</button>
                                 </li>
                             </>
                             }

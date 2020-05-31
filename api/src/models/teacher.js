@@ -35,9 +35,10 @@ export default (sequelize, DataTypes) => {
       foreignKey: 'teacherId'
     });
     Teacher.belongsTo(models.User, {
-      foreignKey: 'userId',
-    })
-
+      foreignKey: {
+        name: 'userId'
+      },
+    });
   }
   return Teacher
 }

@@ -30,10 +30,14 @@
     padding: 1rem;
 }
 
+ul, li {
+    list-style: none;
+}
+
 @media (min-width: 768px) {
     .modal {
-        width: 30rem;
-        left: calc((100% - 30rem)/2);
+        width: 50%;
+        left: calc((50%)/2);
     }
 
 }

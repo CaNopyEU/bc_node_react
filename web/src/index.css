@@ -38,3 +38,26 @@ body {
     background: #356fff;
     border-color: #356fff;
 }
+
+.errors {
+    background-color: #f2dede;
+    border: solid #a92424 1px;
+    border-radius: 9px;
+    color: #a92424;
+    text-align: center;
+    line-height: 20px;
+    font-size: 15px;
+    padding: 10px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.26);
+}
+.success {
+    background-color: #dff0d8;
+    border: solid #d6e9c6 1px;
+    border-radius: 9px;
+    color: #3c763d;
+    text-align: center;
+    line-height: 20px;
+    font-size: 15px;
+    padding: 10px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.26);
+}

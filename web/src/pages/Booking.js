@@ -77,7 +77,7 @@ class BookingPage extends Component {
             }
         };
 
-        fetch('http://localhost:8000/api', {
+        fetch('http://localhost:8000/', {
                 method: 'POST'
                 ,
                 body: JSON.stringify
@@ -87,7 +87,7 @@ class BookingPage extends Component {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + this.context.token
-                }//TODO: pouzi knihovnu
+                }
             }
         )
             .then(res => {

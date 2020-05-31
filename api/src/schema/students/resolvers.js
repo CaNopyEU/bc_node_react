@@ -20,6 +20,21 @@ export async function getById(parentValue, {id}) {
       }]
   })
 }
+// Get Student by user ID
+export async function getByUserId(parentValue, {id}) {
+  return await models.Student.findOne({
+    where: {userId: id},
+    include: [
+      {
+        model: models.Parent,
+        where: {}
+      },
+      {
+        model: models.Group,
+        where: {}
+      }]
+  })
+}
 
 // Get all students
 export async function getAll() {

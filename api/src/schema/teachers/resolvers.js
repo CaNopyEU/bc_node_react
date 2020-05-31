@@ -1,10 +1,21 @@
 // App Imports
 import models from '../../models'
 
-// Get User by ID
+// Get Teacher by ID
 export async function getById(parentValue, {id}) {
   return await models.Teacher.findOne({
     where: {id},
+    include: [{
+      model: models.User,
+      where: {}
+    }]
+  })
+}
+
+// Get Teacher by user ID
+export async function getByUserId(parentValue, {id}) {
+  return await models.Teacher.findOne({
+    where: {userId: id},
     include: [{
       model: models.User,
       where: {}

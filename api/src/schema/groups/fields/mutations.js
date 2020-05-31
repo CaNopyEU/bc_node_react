@@ -11,7 +11,7 @@ export const createGroup = {
   args: {
     title: {
       name: 'title',
-      type: GraphQLString
+      type: GraphQLInt
     },
     classId: {
       name: 'classId',

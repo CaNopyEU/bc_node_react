@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken'
 
 // Get User by ID
-export async function getById(parentValue, {id}, {teacherId}) {
+export async function getById(parentValue, {id}) {
   return await models.User.findOne({where: {id}})
 }
 
@@ -43,7 +43,7 @@ export async function create(parentValue, {
 
 //login user
 export async function logUser(parentValue, {username, password}) {
-  const user = await models.User.findOne({username: username})
+  const user = await models.User.findOne({where:{username: username}})
   if (!user) {
     throw new Error('User does not exist!')
   }

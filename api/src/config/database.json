@@ -2,14 +2,14 @@
   "development": {
     "username": "postgres",
     "password": "admin",
-    "database": "test-new",
+    "database": "db-test",
     "host": "localhost",
     "dialect": "postgres"
   },
   "production": {
     "username": "postgres",
     "password": "Radim1385",
-    "database": "school-db",
+    "database": "db-test",
     "host": "localhost",
     "dialect": "postgres"
   }

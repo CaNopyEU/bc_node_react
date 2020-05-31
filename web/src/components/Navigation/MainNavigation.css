@@ -3,19 +3,24 @@
     left: 0;
     top: 0;
     width: 90%;
-    height: 3.5rem;
+    height: 8rem;
     background: #4aa1ff;
-    padding: 0 5%;
+    padding: 10px 5%;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    z-index: 100;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.26);
 }
 
 .main-navigation__logo,
 .main-navigation__logo h1 {
     margin: 0;
     height: auto;
-    font-size: 1.5rem;
+    font-size: 2rem;
+    color: #f1f1f1;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.26); ;
+
 }
 
 .main-navigation__items {
@@ -38,7 +43,8 @@
 .main-navigation__items button{
     text-decoration: none;
     color: white;
-    padding: 0.25rem 0.5rem;
+    height: 100%;
+    padding: 3rem 3rem;
     border: none;
     font: inherit;
     background: transparent;
@@ -55,4 +61,5 @@
     color: black;
     background: white;
     border-radius: 5px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.26);
 }

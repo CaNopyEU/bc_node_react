@@ -16,21 +16,6 @@ export default (sequelize, DataTypes) => {
     phone: {
       type: DataTypes.FLOAT
     }
-  })/*
-  Grade.associate = (models) => {
-
-    Grade.belongsTo(models.User, {
-      foreignKey: 'teacherId',
-    })
-
-    Grade.belongsTo(models.User, {
-      foreignKey: 'studentId',
-    })
-
-    Grade.belongsTo(models.Lecture, {
-      foreignKey: 'lectureId',
-    })
-
-  }*/
+  })
   return Parent
 }

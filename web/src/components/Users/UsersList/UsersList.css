@@ -1,6 +1,6 @@
 .users__list {
     width: 90%;
-    max-width: 90%;
+    max-width: 1200px;
     margin: 2rem auto;
     padding: 0;
     list-style: none;
@@ -12,10 +12,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+
 }
 
-.users__list-item td {
+.users__list-item th {
     margin: 0;
+    width: 15%;
     color: #4e5164;
 }
 

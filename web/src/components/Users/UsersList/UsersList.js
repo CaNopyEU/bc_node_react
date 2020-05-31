@@ -9,23 +9,19 @@ const userList = props => {
     const users = props.users.map(user => {
         return (
             <UserItem
-                key={user._id}
-                userId={user._id}
+                key={user.id}
+                id={user.id}
                 username={user.username}
-                email={user.email}
-                first={user.first}
-                last={user.last}
-                privilege={user.privilege}
+                role={user.role}
+                onDetail={props.onViewDetail}
             />
         )
     })
     return (
         <table className="users__list">
             <tr className="users__list-item">
+                <th>ID používateľa:</th>
                 <th>Prihlasovacie meno:</th>
-                <th>Email:</th>
-                <th>Meno:</th>
-                <th>Priezvisko:</th>
                 <th>Oprávnenie:</th>
                 <th>Detail:</th>
             </tr>

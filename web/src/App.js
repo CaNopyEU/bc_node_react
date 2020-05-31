@@ -1,10 +1,14 @@
 import React, {Component} from 'react';
 import {BrowserRouter, Route, Redirect, Switch} from 'react-router-dom';
 import decoded from 'jwt-decode';
+
 import AuthPage from "./pages/Auth";
 import EventsPage from "./pages/Events";
 import BookingPage from "./pages/Booking";
 import UsersPage from "./pages/Users";
+import PeoplePage from "./pages/People";
+import RegistrationPage from "./pages/Registration";
+
 import MainNavigation from "./components/Navigation/MainNavigation";
 import AuthContext from './context/auth-context';
 
@@ -29,7 +33,8 @@ class App extends Component {
 
   logout = () => {
     this.setState({token: null, userId: null, role: null});
-    localStorage.removeItem('token')
+    localStorage.removeItem('token');
+
   };
   componentDidMount() {
     const token = JSON.parse(localStorage.getItem('token'));
@@ -54,18 +59,16 @@ class App extends Component {
           <MainNavigation/>
           <main className="main-content">
             <Switch>
-              {!this.state.token && <Redirect from="/bookings" to="/auth" exact/>}
-              {this.state.token && <Redirect from="/" to="/events" exact/>}
-              {this.state.token && <Redirect from="/auth" to="/events" exact/>}
+              {!this.state.token && <Redirect from="/" to="/auth" exact/>}
+              {this.state.token && <Redirect from="/" to="/users" exact/>}
+              {this.state.token && <Redirect from="/auth" to="/users" exact/>}
               {!this.state.token && (
                 <Route path="/auth" component={AuthPage}/>
               )}
+              <Route path="/people" component={PeoplePage}/>
+              <Route path="/registration" component={RegistrationPage}/>
               <Route path="/events" component={EventsPage}/>
-              {/*TODO: configure routes for Users,*/}
               <Route path="/users" component={UsersPage}/>
-              {this.state.token && (
-                <Route path="/bookings" component={BookingPage}/>
-              )}
               {!this.state.token && <Redirect to="/auth" exact/>}
 
             </Switch>

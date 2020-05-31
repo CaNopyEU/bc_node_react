@@ -30,11 +30,17 @@ export default (sequelize, DataTypes) => {
     })
 
     Student.belongsTo(models.Parent, {
-      foreignKey: 'parentId',
+      foreignKey: {
+        name: 'parentId',
+        allowNull: true
+      }
     })
 
     Student.belongsTo(models.Group, {
-      foreignKey: 'groupId',
+      foreignKey: {
+        name: 'groupId',
+        allowNull: true
+      }
     })
 
   }

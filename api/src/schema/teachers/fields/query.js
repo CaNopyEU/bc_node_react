@@ -2,7 +2,7 @@
 import {GraphQLInt, GraphQLList} from 'graphql'
 
 // App Imports
-import {getAll, getById} from '../resolvers'
+import {getAll, getById, getByUserId} from '../resolvers'
 import TeacherType from "../type";
 
 // Teachers all
@@ -18,4 +18,13 @@ export const teacher = {
     id: {type: GraphQLInt}
   },
   resolve: getById
+}
+
+// Teacher by userId
+export const teacherByUser = {
+  type: TeacherType,
+  args: {
+    id: {type: GraphQLInt}
+  },
+  resolve: getByUserId
 }
