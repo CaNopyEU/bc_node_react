@@ -32,7 +32,8 @@ export async function create(parentValue, {
   year,
   schedule,
   teacherId
-}) {
+})
+{
   return await models.Class.create({
     classType,
     year,

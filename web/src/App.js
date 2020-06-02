@@ -8,6 +8,8 @@ import BookingPage from "./pages/Booking";
 import UsersPage from "./pages/Users";
 import PeoplePage from "./pages/People";
 import RegistrationPage from "./pages/Registration";
+import LecturePage from "./pages/Lectures";
+import ClassPage from "./pages/Classes";
 
 import MainNavigation from "./components/Navigation/MainNavigation";
 import AuthContext from './context/auth-context';
@@ -34,7 +36,6 @@ class App extends Component {
   logout = () => {
     this.setState({token: null, userId: null, role: null});
     localStorage.removeItem('token');
-
   };
   componentDidMount() {
     const token = JSON.parse(localStorage.getItem('token'));
@@ -66,9 +67,11 @@ class App extends Component {
                 <Route path="/auth" component={AuthPage}/>
               )}
               <Route path="/people" component={PeoplePage}/>
+              <Route path="/class" component={ClassPage}/>
               <Route path="/registration" component={RegistrationPage}/>
               <Route path="/events" component={EventsPage}/>
               <Route path="/users" component={UsersPage}/>
+              <Route path="/lectures" component={LecturePage}/>
               {!this.state.token && <Redirect to="/auth" exact/>}
 
             </Switch>

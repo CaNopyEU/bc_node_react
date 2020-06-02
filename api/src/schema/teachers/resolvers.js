@@ -34,6 +34,14 @@ export async function getAll() {
   })
 }
 
+// Get all teachers with class
+export async function getAllwithClass() {
+  return await models.Teacher.findAll({
+    order: [['last_name', 'ASC']],
+    where: {main_teacher : true}
+  })
+}
+
 // Create users
 export async function create(parentValue, {
   first_name,

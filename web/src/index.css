@@ -1,6 +1,6 @@
 body {
     margin: 0;
-    font-family: sans-serif;
+    font-family: Bahnschrift;
 }
 
 .form-control label,
@@ -70,4 +70,8 @@ body {
     font-size: 15px;
     padding: 10px;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.26);
+}
+h1 {
+    padding-top: 30px;
+    text-align: center;
 }

@@ -31,6 +31,12 @@ const mainNavigation = props => (
                                     <NavLink to="/registration">Registrácia</NavLink>
                                 </li>
                                 <li>
+                                    <NavLink to="/lectures">Predmety</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="/class">Triedy</NavLink>
+                                </li>
+                                <li>
                                     <NavLink to="/people">Ľudia na škole</NavLink>
                                 </li>
                                 <li>

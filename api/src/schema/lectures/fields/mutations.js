@@ -6,7 +6,7 @@ import LectureType from '../type'
 import {create, remove} from '../resolvers'
 
 // Lecture create
-export const crateLecture = {
+export const createLecture = {
     type: LectureType,
     args: {
         lecture: {

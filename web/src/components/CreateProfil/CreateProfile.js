@@ -27,8 +27,6 @@ function CreateProfile(props) {
         main_teacher: values.main_teacher
       }
     };
-    console.log(values)
-    console.log(requestBody)
     fetch('http://localhost:8000/', {
       method: 'POST',
       body: JSON.stringify(requestBody),

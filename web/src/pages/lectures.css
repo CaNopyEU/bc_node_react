@@ -1,0 +1,19 @@
+table {
+    align-self: center;
+    margin: 0 auto;
+    width: 50%;
+    text-align: center;
+}
+
+.table__header {
+    background-color: #356fff;
+    border: solid 2px #4aa1ff;
+    color: #f1f1f1;
+    line-height: 30px;
+    font-family: Bahnschrift;
+}
+
+tbody {
+    background-color: #f1f1f1;
+    font-family: Bahnschrift;
+}
