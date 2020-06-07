@@ -10,7 +10,7 @@ const BookingControls = props => {
                 className={props.activeOutputType === 'students' ? 'active' : ''}
                 onClick={props.onChange.bind(this, 'students')}
             >
-                Zoznam študentov
+                Zoznam mojich spolužiakov
             </button>
             <button
                 className={props.activeOutputType === 'teachers' ? 'active' : ''}

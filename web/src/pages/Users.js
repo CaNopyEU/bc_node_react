@@ -128,7 +128,7 @@ class Users extends Component {
           <Modal
             title={this.state.selectedUser.username}
             canCancel
-            canEdit
+
             onCancel={this.modalCancelHandler}
             editText="Upraviť používateľa"
             onEdit={this.modalCreateProfileHandler(this.state.selectedUser.id, this.state.selectedUser.role)}

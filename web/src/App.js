@@ -5,6 +5,7 @@ import decoded from 'jwt-decode';
 import AuthPage from "./pages/Auth";
 import EventsPage from "./pages/Events";
 import BookingPage from "./pages/Booking";
+import ProfilePage from "./pages/Profile";
 import UsersPage from "./pages/Users";
 import PeoplePage from "./pages/People";
 import RegistrationPage from "./pages/Registration";
@@ -66,6 +67,7 @@ class App extends Component {
               {!this.state.token && (
                 <Route path="/auth" component={AuthPage}/>
               )}
+              <Route path="/profile" component={ProfilePage}/>
               <Route path="/people" component={PeoplePage}/>
               <Route path="/class" component={ClassPage}/>
               <Route path="/registration" component={RegistrationPage}/>

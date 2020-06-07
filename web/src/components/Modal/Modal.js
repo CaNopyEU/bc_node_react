@@ -9,10 +9,15 @@ const modal = props => (
       {props.children}
     </section>
     <section className="modal__actions">
+
       {props.canCancel &&
+      <>
+      <div>Dátum odovzdania domácej úlohy : 26. 9. 2020</div>
       <button className="btn" onClick={props.onCancel}>
-        Cancel
-      </button>}
+        Zrušiť
+      </button>
+      </>
+      }
       {props.canConfirm &&
       <button className="btn" onClick={props.onConfirm}>
         {props.confirmText}

@@ -22,22 +22,31 @@ const mainNavigation = props => (
                             {context.token &&
                             <>
                                 <li>
-                                    <NavLink to="/users">Používatelia</NavLink>
+                                    <NavLink to="/profile">Môj účet</NavLink>
                                 </li>
                                 <li>
-                                    <NavLink to="/events">Events</NavLink>
+                                    <NavLink to="/users">Events</NavLink>
                                 </li>
                                 <li>
-                                    <NavLink to="/registration">Registrácia</NavLink>
+                                    <NavLink to="/registration">Žiacka knižka</NavLink>
                                 </li>
-                                <li>
+                                {/*<li>
                                     <NavLink to="/lectures">Predmety</NavLink>
+                                </li>*/}
+                                <li>
+                                    <NavLink to="/lecturess">Domáce úlohy</NavLink>
                                 </li>
                                 <li>
+                                    <NavLink to="/lectures">Poznámky</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="/lectduress">Neprítomnosti</NavLink>
+                                </li>
+                                {/*<li>
                                     <NavLink to="/class">Triedy</NavLink>
-                                </li>
+                                </li>*/}
                                 <li>
-                                    <NavLink to="/people">Ľudia na škole</NavLink>
+                                    <NavLink to="/people">Moji spolužiaci a učitelia</NavLink>
                                 </li>
                                 <li>
                                     <button onClick={context.logout}>Odhlásiť</button>
