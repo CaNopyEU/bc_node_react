@@ -17,7 +17,9 @@ const models = {
   Student: databaseConnection.import('./student'),
   Teacher: databaseConnection.import('./teacher'),
   TeacherLecture: databaseConnection.import('./teacher_lecture'),
-  GroupLecture: databaseConnection.import('./group_lecture')
+  GroupLecture: databaseConnection.import('./group_lecture'),
+  StudentGroup: databaseConnection.import('./student_group'),
+  TeacherGroup: databaseConnection.import('./teacher_group')
 }
 
 Object.keys(models).forEach((modelName) => {

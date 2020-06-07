@@ -13,11 +13,13 @@ export default (sequelize, DataTypes) => {
   Lecture.associate = (models) => {
     Lecture.belongsToMany(models.Teacher, {
       through: models.TeacherLecture,
-      foreignKey: 'lectureId'
+      foreignKey: 'lectureId',
+      as: 'teachers'
     });
     Lecture.belongsToMany(models.Group, {
       through: models.GroupLecture,
-      foreignKey: 'lectureId'
+      foreignKey: 'lectureId',
+      as: 'groups'
     })
   }
 

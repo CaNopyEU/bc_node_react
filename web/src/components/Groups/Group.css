@@ -1,0 +1,22 @@
+.groups {
+    display: flex;
+    flex-flow: column;
+    width: 90%;
+    padding: 0 5%;
+}
+.groups-header {
+    display: flex;
+    flex-flow: row;
+}
+.groups-body {
+    display: flex;
+    flex-flow: column;
+    padding: 5% 0;
+}
+.plus-button::before {
+    content: '+';
+}
+.groups-form-control {
+    display: flex;
+    flex-flow: row;
+}

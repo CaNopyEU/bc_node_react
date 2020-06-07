@@ -28,6 +28,10 @@ export async function create(parentValue, {
     if (password.length < 5) {
       throw new Error('Heslo musí byť v rozmedzí 5 až 20 znakov');
     }
+    const existingUser = await models.User.findOne({where: {username: username}})
+    if (existingUser) {
+      throw new Error('User exists already.');
+    }
     const hashedPassword = await bcrypt.hash(password, 12);
     console.log(hashedPassword);
     const user = await models.User.create({

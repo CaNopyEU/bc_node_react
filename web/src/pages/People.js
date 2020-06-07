@@ -40,7 +40,7 @@ class PeoplePage extends Component {
                 email
                 dob
               }
-              group {
+              groups {
                 id
                 title
               }

@@ -8,7 +8,18 @@ export default (sequelize, DataTypes) => {
   Group.associate = (models) => {
     Group.belongsToMany(models.Lecture, {
       through: models.GroupLecture,
-      foreignKey: 'groupId'
+      foreignKey: 'groupId',
+      as: 'lectures'
+    });
+    Group.belongsToMany(models.Teacher, {
+      through: models.TeacherGroup,
+      foreignKey: 'groupId',
+      as: 'teachers'
+    });
+    Group.belongsToMany(models.Student, {
+      through: models.StudentGroup,
+      foreignKey: 'groupId',
+      as: 'students'
     });
     Group.belongsTo(models.Class, {
       foreignKey: 'classId',

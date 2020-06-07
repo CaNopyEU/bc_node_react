@@ -1,7 +1,7 @@
 // Imports
-import {GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLBoolean} from 'graphql'
-import TeacherLectureType from "../teachers_lectures/type";
-import GroupLectureType from "../groups_lectures/type";
+import {GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLBoolean, GraphQLList} from 'graphql'
+import GroupType from "../groups/type";
+import TeacherType from "../teachers/type";
 
 // Lecture type
 const LectureType = new GraphQLObjectType({
@@ -13,8 +13,8 @@ const LectureType = new GraphQLObjectType({
         lectureType: {type: GraphQLBoolean},
         createdAt: {type: GraphQLString},
         updatedAt: {type: GraphQLString},
-        teachers: {type: TeacherLectureType},
-        groups: {type: GroupLectureType}
+        teachers: {type:  new GraphQLList(TeacherType)},
+        groups: {type: new GraphQLList(GroupType)}
     })
 })
 

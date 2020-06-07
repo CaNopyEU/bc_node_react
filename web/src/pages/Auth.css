@@ -1,8 +1,17 @@
 .auth-form {
     display: flex;
-    width: 25rem;
-    max-width: 80%;
+    width: 100%;
+    max-width: 30rem;
     margin: 5rem auto;
     flex-flow: column;
     justify-content: flex-start;
+}
+.form-control-input {
+    padding: 2% 2%;
+    width: 96% !important;
+    border-radius: 5px;
+    border: solid 1px #356fff;
+}
+.auth-btn {
+ width: 100%;
 }

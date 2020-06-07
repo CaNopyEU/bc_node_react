@@ -7,6 +7,12 @@ export default (sequelize, DataTypes) => {
     last_name: {
       type: DataTypes.STRING
     },
+    title_before: {
+      type: DataTypes.STRING
+    },
+    title_after: {
+      type: DataTypes.STRING
+    },
     email: {
       type: DataTypes.STRING
     },

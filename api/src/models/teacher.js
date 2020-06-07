@@ -7,6 +7,12 @@ export default (sequelize, DataTypes) => {
     last_name: {
       type: DataTypes.STRING
     },
+    title_before: {
+      type: DataTypes.STRING
+    },
+    title_after: {
+      type: DataTypes.STRING
+    },
     email: {
       type: DataTypes.STRING
     },
@@ -32,7 +38,13 @@ export default (sequelize, DataTypes) => {
   Teacher.associate = (models) => {
     Teacher.belongsToMany(models.Lecture, {
       through: models.TeacherLecture,
-      foreignKey: 'teacherId'
+      foreignKey: 'teacherId',
+      as: 'lectures'
+    });
+    Teacher.belongsToMany(models.Group, {
+      through: models.TeacherGroup,
+      foreignKey: 'teacherId',
+      as: 'groups'
     });
     Teacher.belongsTo(models.User, {
       foreignKey: {

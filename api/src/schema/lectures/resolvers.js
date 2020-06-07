@@ -3,7 +3,16 @@ import models from '../../models'
 
 // Get lecture by ID
 export async function getById(parentValue, {id}) {
-  return await models.Lecture.findOne({where: {id}})
+  const lectures = await models.Lecture.findOne({
+    where: {id},
+    include: [
+      {
+        model: models.Group,
+        as: 'groups'
+      }
+    ]
+  })
+  return lectures;
 }
 
 // Get all lectures

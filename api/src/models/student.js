@@ -24,7 +24,11 @@ export default (sequelize, DataTypes) => {
     }
   })
   Student.associate = (models) => {
-
+    Student.belongsToMany(models.Group, {
+      through: models.StudentGroup,
+      foreignKey: 'studentId',
+      as: 'groups'
+    });
     Student.belongsTo(models.User, {
       foreignKey: 'userId',
     })
@@ -35,14 +39,6 @@ export default (sequelize, DataTypes) => {
         allowNull: true
       }
     })
-
-    Student.belongsTo(models.Group, {
-      foreignKey: {
-        name: 'groupId',
-        allowNull: true
-      }
-    })
-
   }
   return Student
 }

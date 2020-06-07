@@ -88,7 +88,7 @@ class AuthPage extends Component {
           }, 400);
         }}
       >
-        <Form className="auth-form">
+        <Form className="auth-form" style={{paddingTop: 80}}>
           {
             this.state.err &&
             <div className="form-control errors">
@@ -97,15 +97,15 @@ class AuthPage extends Component {
           }
           <div className="form-control">
             <label htmlFor="username">Prihlasovacie meno:</label>
-            <Field name="username" type="text"/>
+            <Field className="form-control-input" name="username" type="text"/>
             <ErrorMessage  name="username"/>
           </div>
           <div className="form-control">
             <label htmlFor="password" >Heslo:</label>
-            <Field name="password" type="password"/>
+            <Field className="form-control-input" name="password" type="password"/>
             <ErrorMessage name="password"/>
           </div>
-          <button className="btn" type="submit">Prihlásiť</button>
+          <button className="btn auth-btn" type="submit">Prihlásiť</button>
         </Form>
       </Formik>
     );

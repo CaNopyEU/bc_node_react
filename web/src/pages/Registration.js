@@ -14,7 +14,8 @@ class RegistrationPage extends Component {
     super(props);
     this.state = {
       errors: '',
-      success: ''
+      success: '',
+      username: ''
     }
   }
 
@@ -46,13 +47,18 @@ class RegistrationPage extends Component {
         if (res.status !== 200 && res.status !== 201) {
           throw new Error('Failed!');
         }
-        this.setState({
-          success: 'Nový používateľ bol úspešne vytvorený'
-        })
         return res.json();
       })
+      .then(resData => {
+        if(resData.data.createUser.username){
+          this.setState({
+            success: `Nový používateľ "${resData.data.createUser.username}" bol úspešne vytvorený`
+          })
+        }
+      }
+      )
       .catch(err => {
-        this.setState({errors: 'Húuups, došlo k neočakávanej chybe'})
+        this.setState({errors: 'Nepodarilo sa nového používateľa vytvoriť'})
         console.log(err);
       });
   };
@@ -88,6 +94,12 @@ class RegistrationPage extends Component {
             this.state.success &&
             <div className="form-control success">
               <label>{this.state.success}</label>
+            </div>
+          }
+          {
+            this.state.errors &&
+            <div className="form-control errors">
+              <label>{this.state.errors}</label>
             </div>
           }
           <div className="form-control">

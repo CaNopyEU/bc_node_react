@@ -17,6 +17,14 @@ export const createTeacher = {
       name: 'last_name',
       type: GraphQLString
     },
+    title_before: {
+      name: 'title_before',
+      type: GraphQLString
+    },
+    title_after: {
+      name: 'title_after',
+      type: GraphQLString
+    },
     email: {
       name: 'email',
       type: GraphQLString

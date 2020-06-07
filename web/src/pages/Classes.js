@@ -6,6 +6,9 @@ import AuthContext from '../context/auth-context';
 import * as Yup from "yup";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import Spinner from '../components/Spinner/Spinner';
+import Backdrop from '../components/Backdrop/Backdrop'
+import Modal from '../components/Modal/Modal'
+import Group from '../components/Groups/Group'
 
 class ClassPage extends Component {
   static contextType = AuthContext;
@@ -107,18 +110,47 @@ class ClassPage extends Component {
       });
   }
 
+  createGroup = (value) => {
+    const requestBody = {
+      query: `
+                    mutation CreateGroup($classId: Int!) {
+                        createGroup(title: 1, classId: $classId) {
+                            id
+                            title
+                        }
+                    }
+                `,
+      variables: {
+        classId: value
+      }
+    };
+    fetch('http://localhost:8000/', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
+        }
+        return res.json();
+      })
+      .catch(err => {
+        this.setState({errors: 'Húuups, došlo k neočakávanej chybe'})
+        console.log(err);
+      });
 
+  }
   submitHandler = (values) => {
-   let oneteacher = this.state.teachers.filter(teacher => teacher.id == values.teacherId).map(person => (this.setState({
-     teacher: {
-       first_name: person.first_name,
-       last_name: person.last_name
-     }
-   })))
-   console.log(oneteacher)
+    this.state.teachers.filter(teacher => teacher.id == values.teacherId).map(person => (this.setState({
+      teacher: {
+        first_name: person.first_name,
+        last_name: person.last_name
+      }
+    })))
 
-    console.log('teacher',this.state.teacher)
-    console.log('teacherid', values)
     const requestBody = {
       query: `
                     mutation CreateClass($classType: String!, $year: Int!, $teacherId: Int!) {
@@ -130,7 +162,7 @@ class ClassPage extends Component {
                     }
                 `,
       variables: {
-        classType: values.classType,
+        classType: values.classType.toUpperCase(),
         year: values.year,
         teacherId: parseFloat(values.teacherId)
       }
@@ -149,26 +181,37 @@ class ClassPage extends Component {
         return res.json();
       })
       .then(resData => {
-        this.setState(prevState => {
-          const updatedClasses = [...prevState.classes];
-          updatedClasses.unshift({
-            id: resData.data.createClass.id,
-            classType: resData.data.createClass.classType,
-            year: resData.data.createClass.year,
-            teacher: {
-              first_name: this.state.teacher.first_name,
-              last_name: this.state.teacher.last_name
-            }
-          });
-          return {classes: updatedClasses};
-        })
-
+        if (resData.data.createClass) {
+          this.setState(prevState => {
+            const updatedClasses = [...prevState.classes];
+            updatedClasses.unshift({
+              id: resData.data.createClass.id,
+              classType: resData.data.createClass.classType,
+              year: resData.data.createClass.year,
+              teacher: {
+                first_name: this.state.teacher.first_name,
+                last_name: this.state.teacher.last_name
+              }
+            });
+            this.createGroup(resData.data.createClass.id)
+            this.setState({
+              success: 'Vytvorenie triedy prebehlo úspešne.'
+            })
+            return {classes: updatedClasses};
+          })
+        } else {
+          this.setState({
+            errors: 'Triedu sa nepodatilo vytvoriť.'
+          })
+        }
       })
       .catch(err => {
         this.setState({errors: 'Húuups, došlo k neočakávanej chybe'})
         console.log(err);
       });
   };
+
+
   showDetailHandler = classId => {
     this.setState(prevState => {
       const selectedClass = prevState.classes.find(e => e.id === classId);
@@ -176,15 +219,27 @@ class ClassPage extends Component {
     })
   }
 
-
+  modalCancelHandler = () => {
+    this.setState({creating: false, selectedClass: null});
+  };
 
   render() {
-    console.log(this.state.selectedClass)
+    console.log('selected class', this.state.selectedClass)
+    console.log('lectures: ', this.state.lectures)
     return (
       <>
+        {(this.state.creating || this.state.selectedClass) && <Backdrop/>}
+        {this.state.selectedClass && (
+          <Modal
+            title={`Trieda ${this.state.selectedClass.year}. ${this.state.selectedClass.classType.toUpperCase()}`}
+            canCancel
+            onCancel={this.modalCancelHandler}
+          >
+            <Group classId={this.state.selectedClass.id}/>
+          </Modal>)}
         <h1>Administrácia Tried</h1>
         <Formik
-          initialValues={{classType: '', year: '', teacherId:''}}
+          initialValues={{classType: '', year: '', teacherId: ''}}
           validationSchema={Yup.object({
             classType: Yup.string()
               .required('Nazov predmetu je potrebé vyplniť!')
@@ -203,6 +258,12 @@ class ClassPage extends Component {
           }}
         >
           <Form className="auth-form">
+            {
+              this.state.errors &&
+              <div className="form-control errors">
+                <label>{this.state.errors}</label>
+              </div>
+            }
             {
               this.state.success &&
               <div className="form-control success">
@@ -248,7 +309,7 @@ class ClassPage extends Component {
                 <td>{classData.year}</td>
                 <td>{classData.teacher.first_name} {classData.teacher.last_name}</td>
                 <td>
-                  <button onClick={this.showDetailHandler.bind(this, classData.id)} className="btn" >Edit</button>
+                  <button onClick={this.showDetailHandler.bind(this, classData.id)} className="btn">Edit</button>
                 </td>
               </tr>
             ))}

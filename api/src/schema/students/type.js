@@ -1,5 +1,5 @@
 // Imports
-import {GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLFloat} from 'graphql'
+import {GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLFloat, GraphQLList} from 'graphql'
 import UserType from "../users/type";
 import ParentType from "../parents/type";
 import GroupType from "../groups/type";
@@ -21,7 +21,7 @@ const StudentType = new GraphQLObjectType({
     updatedAt: {type: GraphQLString},
     user: {type: UserType},
     parent: {type: ParentType},
-    group: {type: GroupType}
+    groups: {type: new GraphQLList(GroupType)}
   })
 })
 

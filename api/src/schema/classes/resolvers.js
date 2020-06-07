@@ -17,7 +17,7 @@ export async function getById(parentValue, {id}) {
 // Get all classes
 export async function getAll() {
   return await models.Class.findAll({
-    order: [['year', 'ASC']], include: [
+    order: [['classType', 'ASC'], ['year','ASC']], include: [
       {
         model: models.Teacher,
         where: {}
@@ -34,6 +34,10 @@ export async function create(parentValue, {
   teacherId
 })
 {
+  const classExists = await models.Class.findOne({where: {classType: classType, year: year}})
+  if (classExists) {
+    throw new Error('Class already exists');
+  }
   return await models.Class.create({
     classType,
     year,

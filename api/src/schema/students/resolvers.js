@@ -16,7 +16,7 @@ export async function getById(parentValue, {id}) {
       },
       {
         model: models.Group,
-        where: {}
+        as: 'groups'
       }]
   })
 }
@@ -51,7 +51,7 @@ export async function getAll() {
       },
       {
         model: models.Group,
-        where: {}
+        as: 'groups'
       }]
   })
 }

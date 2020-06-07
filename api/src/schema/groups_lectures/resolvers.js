@@ -18,19 +18,14 @@ export async function getById(parentValue, {id}) {
   })
 }
 
-// Get all GroupLectures
-export async function getAll() {
+// Get all GroupLectures by group
+export async function getAll(parentValue, {id}) {
   return await models.GroupLecture.findAll({
-    order: [['updatedAt', 'DESC']],
+    where: {groupId: id},
     include: [
       {
-        model: models.Group,
-        where: {}
-      },
-      {
-        model: models.Lecture,
-        where: {}
-      },
+        model: models.Lecture
+      }
     ]
   })
 }

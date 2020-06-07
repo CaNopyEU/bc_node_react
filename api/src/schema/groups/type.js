@@ -1,7 +1,10 @@
 // Imports
-import {GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLFloat} from 'graphql'
+import {GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLFloat, GraphQLList} from 'graphql'
 import ClassType from "../classes/type";
 import GroupLectureType from "../groups_lectures/type";
+import LectureType from "../lectures/type";
+import TeacherType from "../teachers/type";
+import StudentType from "../students/type";
 
 
 // Group type
@@ -15,7 +18,9 @@ const GroupType = new GraphQLObjectType({
     createdAt: {type: GraphQLString},
     updatedAt: {type: GraphQLString},
     class: {type: ClassType},
-    lectures: {type: GroupLectureType}
+    lectures: {type: new GraphQLList(LectureType)},
+    teachers: {type: new GraphQLList(TeacherType)},
+    students: {type: new GraphQLList(StudentType)}
   })
 })
 

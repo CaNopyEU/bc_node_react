@@ -8,7 +8,7 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.STRING
     },
     deadline: {
-      type: DataTypes.DATE
+      type: DataTypes.STRING
     }
   });
 

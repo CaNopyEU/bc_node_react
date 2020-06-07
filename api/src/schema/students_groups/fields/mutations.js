@@ -2,19 +2,19 @@
 import {GraphQLString, GraphQLInt} from 'graphql'
 
 // App Imports
-import TeacherLectureType from '../type'
+import StudentGroupType from '../type'
 import {create, remove} from '../resolvers'
 
 // TeacherLecture create
-export const createTeacherLecture = {
-    type: TeacherLectureType,
+export const createStudentGroup = {
+    type: StudentGroupType,
     args: {
-        lectureId: {
-            name: 'lectureId',
+        groupId: {
+            name: 'groupId',
             type: GraphQLInt
         },
-        teacherId: {
-            name: 'teacherId',
+        studentId: {
+            name: 'studentId',
             type: GraphQLInt
         }
     },
@@ -23,7 +23,7 @@ export const createTeacherLecture = {
 
 // TeacherLecture remove
 export const deleteTeacherLecture = {
-    type: TeacherLectureType,
+    type: StudentGroupType,
     args: {
         id: {
             name: 'id',
