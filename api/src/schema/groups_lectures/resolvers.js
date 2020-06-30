@@ -35,10 +35,15 @@ export async function create(parentValue, {
   lectureId,
   groupId
 }) {
-  return await models.GroupLecture.create({
-    lectureId,
-    groupId
-  })
+  try {
+    const GroupLecture = await models.GroupLecture.create({
+      lectureId,
+      groupId
+    })
+    return GroupLecture
+  } catch (err) {
+    throw err;
+  }
 }
 
 // Delete GroupLecture

@@ -24,6 +24,7 @@ class ClassPage extends Component {
       teacher: [],
       selectedClass: null
     }
+    this.createGroup = this.createGroup.bind(this);
   }
 
   componentDidMount() {
