@@ -14,10 +14,13 @@ class Users extends Component {
     users: [],
     selectedUser: null,
     userInfo: null,
+    classes: []
   }
   isActive = true;
+
   componentDidMount() {
     this.fetchUsers();
+    this.fetchClasses();
   }
 
   fetchUsers() {
@@ -58,24 +61,21 @@ class Users extends Component {
         this.setState({isLoading: false})
       });
   }
-
-  fetchTeacher(userId) {
+  fetchClasses() {
+    this.setState({isLoading: true});
     const requestBody = {
       query: `
                     query{
-                          teacherByUser(id:${userId}){
-                            id
-                            first_name
-                            last_name
-                            email
-                            city
-                            street
-                            street_num
-                            phone
-                            dob
-                            main_teacher
-                          }
+                      classes{
+                        id
+                        classType
+                        year
+                        groups{
+                          id
+                          title 
                         }
+                      }
+                    }
                 `
     };
 
@@ -93,7 +93,73 @@ class Users extends Component {
         return res.json();
       })
       .then(resData => {
-        const userInfo = resData.data.teacherByUser;
+        const classes = resData.data.classes;
+        if (this.isActive) {
+          this.setState({classes: classes, isLoading: false});
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        this.setState({isLoading: false})
+      });
+  }
+  fetchUser(userId, role) {
+    let requestBody = '';
+    if (role === 'teacher') {
+      requestBody = {
+        query: `
+                    query{
+                          teacherByUser(id:${userId}){
+                            id
+                            first_name
+                            last_name
+                            email
+                            city
+                            street
+                            street_num
+                            phone
+                            dob
+                            main_teacher
+                          }
+                        }
+                `
+      };
+    } else {
+      requestBody = {
+        query: `
+                    query{
+                          studentByUser(id:${userId}){
+                            id
+                            first_name
+                            last_name
+                           
+                          }
+                        }
+                `
+      };
+    }
+
+
+    fetch('http://localhost:8000', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        let userInfo = []
+        if (role === 'teacher'){
+          userInfo = resData.data.teacherByUser;
+        } else {
+          userInfo = resData.data.studentByUser;
+        }
         this.setState({userInfo: userInfo, isLoading: false});
       })
       .catch(err => {
@@ -104,9 +170,7 @@ class Users extends Component {
   showDetailHandler = userId => {
     this.setState(prevState => {
       const selectedUser = prevState.users.find(e => e.id === userId);
-      if (selectedUser.role === 'teacher') {
-        this.fetchTeacher(userId);
-      }
+        this.fetchUser(userId, selectedUser.role);
       return {selectedUser: selectedUser};
     })
   }
@@ -121,6 +185,7 @@ class Users extends Component {
   };
 
   render() {
+    console.log('user info:', this.state.userInfo)
     return (
       <>
         {(this.state.creating || this.state.selectedUser) && <Backdrop/>}
@@ -181,13 +246,38 @@ class Users extends Component {
                     <br/>
                     Prajete si ho vytvoriť?
                   </h1>
-                    <CreateProfile userId={this.state.selectedUser.id} role={this.state.selectedUser.role}/>
+                  <CreateProfile userId={this.state.selectedUser.id} role={this.state.selectedUser.role}/>
                 </>
               }
             </>
             }
             {this.state.selectedUser.role === 'student' &&
-            <h1>Toto je student</h1>
+            <>
+              {this.state.userInfo &&
+              <>
+                <tbody>
+                <tr>
+                  <td>Meno:</td>
+                  <td>{this.state.userInfo.first_name}</td>
+                </tr>
+                <tr>
+                  <td>Priezvisko:</td>
+                  <td>{this.state.userInfo.last_name}</td>
+                </tr>
+                </tbody>
+              </>
+              }
+              {
+                !this.state.userInfo &&
+                <>
+                  <h1>Tomuto študentovi doposiaľ nebol vytvorený profil.
+                    <br/>
+                    Prajete si ho vytvoriť?
+                  </h1>
+                  <CreateProfile userId={this.state.selectedUser.id} role={this.state.selectedUser.role} classes={this.state.classes}/>
+                </>
+              }
+            </>
             }
             {this.state.selectedUser.role === 'admin' &&
             <h1>Toto je admin</h1>

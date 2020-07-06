@@ -153,7 +153,7 @@ class LecturePage extends Component {
             <div className="form-control">
               <label htmlFor="lecture">Typ predmetu:</label>
               <Field name="lectureType" as="select">
-                <option value=""></option>
+                <option value="">--Vyberte--</option>
                 <option value="true">Známkovaný</option>
                 <option value="false">Výchovný</option>
               </Field>

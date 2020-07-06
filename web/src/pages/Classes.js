@@ -36,17 +36,28 @@ class ClassPage extends Component {
     this.setState({isLoading: true});
     let requestBody = {
       query: `
-                    query {
-                        classes {
-                            id
-                            classType
-                            year
-                            teacher {
-                              id
-                              first_name
-                              last_name
-                            }
+                    query{
+                      classes{
+                        id
+                        classType
+                        year
+                        teacher{
+                          id
+                          title_before
+                          title_after
+                          first_name
+                          last_name
                         }
+                        groups{
+                          id
+                          title
+                        }
+                        students{
+                          id
+                          first_name
+                          last_name
+                        }
+                      }
                     }
                 `
     };
@@ -236,7 +247,7 @@ class ClassPage extends Component {
             canCancel
             onCancel={this.modalCancelHandler}
           >
-            <Group classId={this.state.selectedClass.id}/>
+            <Group classId={this.state.selectedClass.id} class={this.state.selectedClass}/>
           </Modal>)}
         <h1>Administrácia Tried</h1>
         <Formik

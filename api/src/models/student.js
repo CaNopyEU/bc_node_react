@@ -32,10 +32,15 @@ export default (sequelize, DataTypes) => {
     Student.belongsTo(models.User, {
       foreignKey: 'userId',
     })
-
     Student.belongsTo(models.Parent, {
       foreignKey: {
         name: 'parentId',
+        allowNull: true
+      }
+    })
+    Student.belongsTo(models.Class, {
+      foreignKey: {
+        name: 'classId',
         allowNull: true
       }
     })

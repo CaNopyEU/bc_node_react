@@ -115,7 +115,7 @@ class RegistrationPage extends Component {
           <div className="form-control">
             <label htmlFor="role">Pozícia v systéme</label>
             <Field name="role" as="select">
-              <option value=""></option>
+              <option value="">--Vyberte--</option>
               <option value="admin">Administrátor</option>
               <option value="teacher">Učiteľ</option>
               <option value="student">Študent</option>

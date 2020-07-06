@@ -31,10 +31,11 @@ export async function getByUserId(parentValue, {id}) {
       },
       {
         model: models.Group,
-        where: {}
+        as: 'groups'
       }]
   })
 }
+
 
 // Get all students
 export async function getAll() {
@@ -67,7 +68,7 @@ export async function create(parentValue, {
   desc,
   userId,
   parentId,
-  groupId
+  classId
 }) {
 
   const Student = await models.Student.create({
@@ -80,7 +81,7 @@ export async function create(parentValue, {
     desc,
     userId,
     parentId,
-    groupId
+    classId
   })
   return Student;
 }

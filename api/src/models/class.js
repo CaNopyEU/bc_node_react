@@ -15,6 +15,12 @@ export default (sequelize, DataTypes) => {
     Class.belongsTo(models.Teacher, {
       foreignKey: 'teacherId',
     })
+    Class.hasMany(models.Group, {
+      foreignKey: 'classId'
+    })
+    Class.hasMany(models.Student, {
+      foreignKey: 'classId'
+    })
   }
   return Class
 }

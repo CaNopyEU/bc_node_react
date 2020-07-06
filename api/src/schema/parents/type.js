@@ -14,6 +14,8 @@ const ParentType = new GraphQLObjectType({
     email: {type: GraphQLString},
     dob: {type: GraphQLString},
     phone: {type: GraphQLFloat},
+    title_before: {type: GraphQLString},
+    title_after: {type: GraphQLString},
     createdAt: {type: GraphQLString},
     updatedAt: {type: GraphQLString},
   })

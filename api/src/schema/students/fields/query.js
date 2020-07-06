@@ -28,3 +28,5 @@ export const studentByUser = {
   },
   resolve: getByUserId
 }
+
+//Student by class

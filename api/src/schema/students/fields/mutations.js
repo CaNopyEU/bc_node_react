@@ -45,8 +45,8 @@ export const createStudent = {
       name: 'parentId',
       type: GraphQLInt
     },
-    groupId: {
-      name: 'groupId',
+    classId: {
+      name: 'classId',
       type: GraphQLInt
     },
   },

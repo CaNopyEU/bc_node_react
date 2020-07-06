@@ -1,26 +1,28 @@
 // App Imports
 import models from '../../models'
 
-// Get TeacherLecture by ID
-export async function getById(parentValue, {id}) {
-  return await models.TeacherLecture.findOne({
-    where: {id},
+// Get StudentGroup by ID
+export async function getById(parentValue, {studentId, groupId}) {
+  return await models.StudentGroup.findOne({
+    where: {},
     include: [
       {
-        model: models.Teacher,
-        where: {}
+        model: models.Student,
+        where: {id: studentId},
+        as: 'students'
       },
       {
-        model: models.Lecture,
-        where: {}
+        model: models.Group,
+        where: {id: groupId},
+        as: 'groups'
       },
     ]
   })
 }
 
-// Get all TeacherLectures
+// Get all StudentGroup
 export async function getAll() {
-  return await models.TeacherLecture.findAll({
+  return await models.StudentGroup.findAll({
     order: [['updatedAt', 'DESC']],
     include: [
       {

@@ -8,8 +8,8 @@ const GroupLectureType = new GraphQLObjectType({
     name: 'group_lecture',
 
     fields: () => ({
-        groupId: {type: GraphQLInt},
-        lectureId: {type: GraphQLInt},
+        groups: {type: GroupType},
+        lectures: {type: LectureType},
         createdAt: {type: GraphQLString},
         updatedAt: {type: GraphQLString},
     })

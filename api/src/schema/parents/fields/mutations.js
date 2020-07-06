@@ -29,6 +29,14 @@ export const createParent = {
       name: 'phone',
       type: GraphQLFloat
     },
+    title_before: {
+      name: 'title_before',
+      type: GraphQLString
+    },
+    title_after: {
+      name: 'title_after',
+      type: GraphQLString
+    }
   },
   resolve: create
 }

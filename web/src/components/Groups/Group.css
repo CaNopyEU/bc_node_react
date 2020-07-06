@@ -10,7 +10,19 @@
 }
 .groups-body {
     display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+}
+.groups-body-group {
+    display: flex;
     flex-flow: column;
+    width: 45%;
+    padding: 5% 0;
+}
+.groups-body-students {
+    display: flex;
+    flex-flow: column;
+    width: 45%;
     padding: 5% 0;
 }
 .plus-button::before {

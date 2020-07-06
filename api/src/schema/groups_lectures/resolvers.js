@@ -2,17 +2,19 @@
 import models from '../../models'
 
 // Get GroupLecture by ID
-export async function getById(parentValue, {id}) {
+export async function getById(parentValue, {groupId, lectureId}) {
   return await models.GroupLecture.findOne({
-    where: {id},
+    where: {},
     include: [
       {
         model: models.Group,
-        where: {}
+        where: {id: groupId},
+        as: 'groups'
       },
       {
         model: models.Lecture,
-        where: {}
+        where: {id: lectureId},
+        as: 'lectures'
       },
     ]
   })
@@ -36,11 +38,11 @@ export async function create(parentValue, {
   groupId
 }) {
   try {
-    const GroupLecture = await models.GroupLecture.create({
+    await models.GroupLecture.create({
       lectureId,
       groupId
     })
-    return GroupLecture
+    return await getById(parentValue, {groupId, lectureId})
   } catch (err) {
     throw err;
   }

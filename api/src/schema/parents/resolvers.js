@@ -6,6 +6,10 @@ export async function getById(parentValue, {id}) {
   return await models.Parent.findOne({where: {id}})
 }
 
+//Get Parent by Email
+export async function getByEmail(perentValue, {email}) {
+  return await models.Parent.findOne({where: {email}})
+}
 // Get all parents
 export async function getAll() {
   return await models.Parent.findAll({order: [['last_name', 'ASC']]})
@@ -17,7 +21,9 @@ export async function create(parentValue, {
   last_name,
   email,
   dob,
-  phone
+  phone,
+  title_before,
+  title_after
 }) {
   try {
     const Parent = await models.Parent.create({
@@ -25,7 +31,9 @@ export async function create(parentValue, {
       last_name,
       email,
       dob,
-      phone
+      phone,
+      title_before,
+      title_after
     })
     return Parent;
   } catch (err) {

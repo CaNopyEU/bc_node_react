@@ -19,7 +19,8 @@ export const groupLectures = {
 export const groupLecture = {
   type: GroupLectureType,
   args: {
-    id: {type: GraphQLInt}
+    lectureId: {type: GraphQLInt},
+    groupId: {type: GraphQLInt}
   },
   resolve: getById
 }

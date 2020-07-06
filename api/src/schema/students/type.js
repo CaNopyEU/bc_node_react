@@ -21,7 +21,7 @@ const StudentType = new GraphQLObjectType({
     updatedAt: {type: GraphQLString},
     user: {type: UserType},
     parent: {type: ParentType},
-    groups: {type: new GraphQLList(GroupType)}
+    group: {type: new GraphQLList(GroupType)}
   })
 })
 

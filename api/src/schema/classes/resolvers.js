@@ -9,6 +9,14 @@ export async function getById(parentValue, {id}) {
       {
         model: models.Teacher,
         where: {}
+      },
+      {
+        model: models.Group,
+        where: {}
+      },
+      {
+        model: models.Student,
+        where: {}
       }
     ]
   })
@@ -21,6 +29,14 @@ export async function getAll() {
       {
         model: models.Teacher,
         where: {}
+      },
+      {
+        model: models.Group,
+        where: {},
+        order: ['title', 'ASC']
+      },
+      {
+        model: models.Student
       }
     ]
   })

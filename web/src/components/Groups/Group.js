@@ -13,6 +13,7 @@ class Group extends Component {
       selectedGroup: '',
       lectures: [],
       groupLectures: [],
+      selectedLecture: ''
     };
     this.createGroup = this.createGroup.bind(this);
     this.addLectureToGroup = this.addLectureToGroup.bind(this);
@@ -22,7 +23,7 @@ class Group extends Component {
     let requestBody = {
       query: `
                     query {
-                        groupsByClass(classId: ${this.props.classId}) {
+                        groupsByClass(classId: ${this.props.class.id}) {
                             id
                             title
                         }
@@ -56,7 +57,7 @@ class Group extends Component {
   }
 
   lectureToGroup(e) {
-    console.log('maheeeeeeee',e)
+    console.log('maheeeeeeee', e)
     let requestBody = {
       query: `
                     query {
@@ -153,7 +154,7 @@ class Group extends Component {
                     }
                 `,
       variables: {
-        classId: this.props.classId,
+        classId: this.props.class.id,
         title: title
       }
     };
@@ -197,8 +198,14 @@ class Group extends Component {
       query: `
                     mutation CreateGroupLecture($lectureId: Int! $groupId: Int!) {
                         createGroupLecture(lectureId: $lectureId, groupId: $groupId) {
-                             lectureId
-                             groupId
+                             groups{
+                              id
+                            }
+                            lectures{
+                              id
+                              lecture
+                              lectureType
+                            }
                         }
                     }
                 `,
@@ -220,6 +227,26 @@ class Group extends Component {
         }
         return res.json();
       })
+      .then(resData => {
+        if (resData.data.createGroupLecture) {
+          this.setState(prevState => {
+            const updatedGroupLectures = [...prevState.groupLectures];
+            updatedGroupLectures.push({
+              id: resData.data.createGroupLecture.lectures.id,
+              lecture: resData.data.createGroupLecture.lectures.lecture,
+              lectureType: resData.data.createGroupLecture.lectures.lectureType,
+            });
+            this.setState({
+              success: 'Vytvorenie triedy prebehlo úspešne.'
+            })
+            return {groupLectures: updatedGroupLectures};
+          })
+        } else {
+          this.setState({
+            errors: 'Triedu sa nepodatilo vytvoriť.'
+          })
+        }
+      })
       .catch(err => {
         this.setState({errors: 'Húuups, došlo k neočakávanej chybe'})
         console.log(err);
@@ -236,7 +263,7 @@ class Group extends Component {
     console.log('selected group', this.state.selectedGroup)
     console.log('lectures', this.state.lectures)
     console.log('lectures from group', this.state.groupLectures)
-    console.log('selected class', this.props.classId)
+    console.log('selected class', this.props.class)
 
     const header = (
       <>
@@ -258,37 +285,80 @@ class Group extends Component {
             }
           </div>
           <div className="groups-body">
-            {this.state.groupLectures.map((lecture) => <div
-              className="groups-form-control">{lecture.lecture}({(lecture.lectureType) ? 'Známkovaný' : 'Výchovný'})</div>)}
+            <div className="groups-body-group">
+              {
+                this.state.selectedGroup.title === 1 ?
+                  <h2>Spoločné predmety:</h2>
+                  :
+                  <h2>Predmety:</h2>
+              }
+              {this.state.groupLectures.map((lecture) => <div
+                className="groups-form-control">{lecture.lecture}({(lecture.lectureType) ? 'Známkovaný' : 'Výchovný'})</div>)}
 
-            <Formik
-              initialValues={{lecture: ''}}
-              validationSchema={Yup.object({
-                lecture: Yup.string()
-                  .required('Predmet je potrebné vybrať')
-              })}
-              onSubmit={(values, {setSubmitting}) => {
-                setTimeout(() => {
-                  this.addLectureToGroup(values)
-                  setSubmitting(false);
-                }, 400);
-              }}
-            >
-              <Form>
-                <div className="groups-form-control">
-                  <Field name="lecture" as="select">
-                    <option value=""></option>
-                    {this.state.lectures.map((lecture) => <option
-                      value={lecture.id}>{lecture.lecture}({(lecture.lectureType) ? 'Známkovaný' : 'Výchovný'})</option>)}
-                  </Field>
-                  <ErrorMessage name="lecture"/>
-                  <button className="plus-button" type="submit"> Pridať predmet</button>
-                </div>
-              </Form>
-            </Formik>
+              <Formik
+                initialValues={{lecture: ''}}
+                validationSchema={Yup.object({
+                  lecture: Yup.string()
+                    .required('Predmet je potrebné vybrať')
+                })}
+                onSubmit={(values, {setSubmitting}) => {
+                  setTimeout(() => {
+                    this.addLectureToGroup(values)
+                    setSubmitting(false);
+                  }, 400);
+                }}
+              >
+                <Form>
+                  <div className="groups-form-control">
+                    <Field name="lecture" as="select">
+                      <option value="">--Vyberte--</option>
+                      {this.state.lectures.map((lecture) => <option
+                        value={lecture.id}>{lecture.lecture}({(lecture.lectureType) ? 'Známkovaný' : 'Výchovný'})</option>)}
+                    </Field>
+                    <ErrorMessage name="lecture"/>
+                    <button className="plus-button" type="submit"> Pridať predmet</button>
+                  </div>
+                </Form>
+              </Formik>
+            </div>
+            <div className="groups-body-students">
+              <h2>Študenti:</h2>
+              {this.state.selectedGroup.title === 1 ?
+                <>
+                {this.props.class.students.map((student) => <div
+                className="groups-form-control">{student.first_name} {student.last_name}</div>)}
+                </>
+              :
+                <Formik
+                  initialValues={{student: ''}}
+                  validationSchema={Yup.object({
+                    student: Yup.string()
+                      .required('Študenta je potrebné vybrať')
+                  })}
+                  onSubmit={(values, {setSubmitting}) => {
+                    setTimeout(() => {
+                      alert(JSON.stringify(values))
+                      //this.addLectureToGroup(values)
+                      setSubmitting(false);
+                    }, 400);
+                  }}
+                >
+                  <Form>
+                    <div className="groups-form-control">
+                      <Field name="student" as="select">
+                        <option value="">--Vyberte--</option>
+                        {this.props.class.students.map((student) => <option
+                          value={student.id}>{student.first_name} {student.last_name}</option>)}
+                      </Field>
+                      <ErrorMessage name="student"/>
+                      <button className="plus-button" type="submit"> Pridať študenta</button>
+                    </div>
+                  </Form>
+                </Formik>
+              }
+            </div>
           </div>
         </div>
-
       </>
     )
   }
