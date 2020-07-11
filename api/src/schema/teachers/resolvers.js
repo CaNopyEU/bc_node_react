@@ -28,6 +28,9 @@ export async function getByUserId(parentValue, {id}) {
       {
         model: models.Group,
         as: 'groups'
+      },
+      {
+        model: models.Class
       }
     ]
   })
@@ -37,10 +40,22 @@ export async function getByUserId(parentValue, {id}) {
 export async function getAll() {
   return await models.Teacher.findAll({
     order: [['last_name', 'ASC']],
-    include: [{
-      model: models.User,
-      where: {}
-    }]
+    include: [
+      {
+        model: models.User,
+        where: {}
+      },
+      {
+        model: models.Group,
+        as: 'groups'
+      },
+      {
+        model: models.Lecture,
+        as: 'lectures'
+      },
+      {
+        model: models.Class
+      }]
   })
 }
 

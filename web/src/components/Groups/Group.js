@@ -13,10 +13,13 @@ class Group extends Component {
       selectedGroup: '',
       lectures: [],
       groupLectures: [],
-      selectedLecture: ''
+      selectedLecture: '',
+      groupStudents: [],
+      groupTeachers: [],
     };
     this.createGroup = this.createGroup.bind(this);
     this.addLectureToGroup = this.addLectureToGroup.bind(this);
+    this.addStudentToGroup = this.addStudentToGroup.bind(this);
   }
 
   fetchGroups() {
@@ -57,7 +60,6 @@ class Group extends Component {
   }
 
   lectureToGroup(e) {
-    console.log('maheeeeeeee', e)
     let requestBody = {
       query: `
                     query {
@@ -68,6 +70,18 @@ class Group extends Component {
                               id
                               lecture
                               lectureType
+                            }
+                            students{
+                              id
+                              first_name
+                              last_name
+                            }
+                            teachers{
+                              id
+                              first_name
+                              last_name
+                              title_before
+                              title_after
                             }
                         }
                     }
@@ -89,7 +103,9 @@ class Group extends Component {
       })
       .then(resData => {
         this.setState({
-          groupLectures: resData.data.group.lectures
+          groupLectures: resData.data.group.lectures,
+          groupStudents: resData.data.group.students,
+          groupTeachers: resData.data.group.teachers
         })
       })
       .catch(err => {
@@ -254,6 +270,70 @@ class Group extends Component {
 
   }
 
+  addStudentToGroup = (values) => {
+    console.log('student id', values.student);
+    console.log('groupd id', this.state.selectedGroup.id)
+
+    const requestBody = {
+      query: `
+                    mutation CreateStudentGroup($studentId: Int! $groupId: Int!) {
+                        createStudentGroup(studentId: $studentId, groupId: $groupId) {
+                             groups{
+                              id
+                            }
+                            students{
+                              id
+                              first_name
+                              last_name
+                            }
+                        }
+                    }
+                `,
+      variables: {
+        studentId: parseInt(values.student, 10),
+        groupId: this.state.selectedGroup.id
+      }
+    };
+    fetch('http://localhost:8000/', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        if (resData.data.createStudentGroup) {
+          this.setState(prevState => {
+            const updatedStudentGroup = [...prevState.groupStudents];
+            updatedStudentGroup.push({
+              id: resData.data.createStudentGroup.students.id,
+              first_name: resData.data.createStudentGroup.students.first_name,
+              last_name: resData.data.createStudentGroup.students.last_name,
+            });
+            this.setState({
+              success: 'Vytvorenie triedy prebehlo úspešne.'
+            })
+            return {groupStudents: updatedStudentGroup};
+          })
+        } else {
+          this.setState({
+            errors: 'Triedu sa nepodatilo vytvoriť.'
+          })
+        }
+      })
+      .catch(err => {
+        this.setState({errors: 'Húuups, došlo k neočakávanej chybe'})
+        console.log(err);
+      });
+
+  }
+
   componentDidMount() {
     this.fetchGroups();
     this.fetchLectures();
@@ -264,6 +344,7 @@ class Group extends Component {
     console.log('lectures', this.state.lectures)
     console.log('lectures from group', this.state.groupLectures)
     console.log('selected class', this.props.class)
+    console.log('selected group students', this.state.groupStudents)
 
     const header = (
       <>
@@ -323,12 +404,9 @@ class Group extends Component {
             </div>
             <div className="groups-body-students">
               <h2>Študenti:</h2>
-              {this.state.selectedGroup.title === 1 ?
-                <>
-                {this.props.class.students.map((student) => <div
+              {this.state.groupStudents.map((student) => <div
                 className="groups-form-control">{student.first_name} {student.last_name}</div>)}
-                </>
-              :
+              {this.state.selectedGroup.title !== 1 &&
                 <Formik
                   initialValues={{student: ''}}
                   validationSchema={Yup.object({
@@ -337,8 +415,7 @@ class Group extends Component {
                   })}
                   onSubmit={(values, {setSubmitting}) => {
                     setTimeout(() => {
-                      alert(JSON.stringify(values))
-                      //this.addLectureToGroup(values)
+                      this.addStudentToGroup(values)
                       setSubmitting(false);
                     }, 400);
                   }}
@@ -355,6 +432,38 @@ class Group extends Component {
                     </div>
                   </Form>
                 </Formik>
+              }
+            </div>
+            <div className="groups-body-students">
+              <h2>Vyučujúci:</h2>
+              {this.state.groupTeachers.map((teacher) => <div
+                className="groups-form-control">{teacher.title_before} {teacher.first_name} {teacher.last_name} {teacher.title_after}</div>)}
+              {this.state.selectedGroup.title !== 1 &&
+              <Formik
+                initialValues={{teacher: ''}}
+                validationSchema={Yup.object({
+                  teacher: Yup.string()
+                    .required('Učiteľa je potrebné vybrať')
+                })}
+                onSubmit={(values, {setSubmitting}) => {
+                  setTimeout(() => {
+                    this.addStudentToGroup(values)
+                    setSubmitting(false);
+                  }, 400);
+                }}
+              >
+                <Form>
+                  <div className="groups-form-control">
+                    {/*<Field name="teacher" as="select">
+                      <option value="">--Vyberte--</option>
+                      {this.props.class.teachers.map((teacher) => <option
+                        value={teacher.id}>{teacher.title_before} {teacher.first_name} {teacher.last_name} {teacher.title_after}</option>)}
+                    </Field>*/}
+                    <ErrorMessage name="teacher"/>
+                    <button className="plus-button" type="submit"> Pridať učiteľa</button>
+                  </div>
+                </Form>
+              </Formik>
               }
             </div>
           </div>

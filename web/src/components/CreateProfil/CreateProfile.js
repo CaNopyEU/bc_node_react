@@ -6,6 +6,7 @@ import * as Yup from "yup";
 function CreateProfile(props) {
   const [step, setStep] = useState(false);
   const [parentId, setParentId] = useState('');
+  const [groupId, setGroupId] = useState('');
 
   function submitHandler(values) {
     let requestBody = [];
@@ -32,7 +33,7 @@ function CreateProfile(props) {
         }
       };
     } else {
-      if (!step){
+      if (!step) {
         requestBody = {
           query: `
                     mutation CreateParent($first_name: String!, $last_name: String!, $email:  String!, $phone: Float!, $dob: String!, $title_before: String!, $title_after: String!){
@@ -86,10 +87,51 @@ function CreateProfile(props) {
         return res.json();
       })
       .then(resData => {
-        if(props.role === 'student' && !step){
+        if (props.role === 'student' && !step) {
           setStep(true)
           setParentId(resData.data.createParent.id)
+        } else if (props.role === 'student' && step) {
+          setStep(false)
+          signStudentGroup(resData.data.createStudent.id)
         }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+  function signStudentGroup(studentId) {
+    console.log(studentId)
+    const requestBody = {
+      query: `
+                    mutation{
+                      createStudentGroup(groupId: ${groupId}, studentId: ${studentId}){
+                        groups{
+                          id
+                        }
+                        students{
+                          id
+                        }                       
+                      }
+                    }
+                `,
+      variables: {}
+    };
+    fetch('http://localhost:8000/', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        setStep(false)
       })
       .catch(err => {
         console.log(err);
@@ -98,166 +140,181 @@ function CreateProfile(props) {
 
   return (
     <>
+      {console.log('triedt', props.classes)}
+      {console.log('selected group id', groupId)}
       {props.role === 'teacher' &&
-      <Formik
-        initialValues={{
-          first_name: '',
-          last_name: '',
-          email: '',
-          city: '',
-          street: '',
-          street_num: '',
-          phone: '',
-          dob: '',
-          main_teacher: false
-        }}
-        validationSchema={Yup.object({
-          first_name: Yup.string()
-            .max(15, 'Môže byť maximálne 15 znakov dlhé')
-            .required('Povinné!'),
-          last_name: Yup.string()
-            .max(20, 'Môže byť maximálne 20 znakov dlhé')
-            .required('Povinné!'),
-          email: Yup.string()
-            .required('Povinné!'),
-          city: Yup.string()
-            .required('Povinné!'),
-          street: Yup.string()
-            .required('Povinné!'),
-          street_num: Yup.string()
-            .required('Povinné!'),
-          phone: Yup.string()
-            .required('Povinné!'),
-          dob: Yup.string()
-            .required('Povinné!'),
-        })}
-        onSubmit={(values, {setSubmitting}) => {
-          setTimeout(() => {
-            submitHandler(values)
-            setSubmitting(false);
-          }, 400);
-        }}
-      >
-        <Form className="auth-form">
-          <div className="form-control">
-            <label htmlFor="first_name">Krstné meno:</label>
-            <Field name="first_name" type="text"/>
-            <ErrorMessage name="first_name"/>
-          </div>
-          <div className="form-control">
-            <label htmlFor="last_name">Priezvisko:</label>
-            <Field name="last_name" type="text"/>
-            <ErrorMessage name="last_name"/>
-          </div>
-          <div className="form-control">
-            <label htmlFor="email">Email:</label>
-            <Field name="email" type="text"/>
-            <ErrorMessage name="email"/>
-          </div>
-          <div className="form-control">
-            <label htmlFor="city">Mesto:</label>
-            <Field name="city" type="text"/>
-            <ErrorMessage name="city"/>
-          </div>
-          <div className="form-control">
-            <label htmlFor="street">Ulica:</label>
-            <Field name="street" type="text"/>
-            <ErrorMessage name="street"/>
-          </div>
-          <div className="form-control">
-            <label htmlFor="street_num">Číslo domu:</label>
-            <Field name="street_num" type="number"/>
-            <ErrorMessage name="street_num"/>
-          </div>
-          <div className="form-control">
-            <label htmlFor="phone">Telefónne číslo:</label>
-            <Field name="phone" type="number"/>
-            <ErrorMessage name="phone"/>
-          </div>
-          <div className="form-control">
-            <label htmlFor="dob">Dátum narodenia:</label>
-            <Field name="dob" type="date"/>
-            <ErrorMessage name="dob"/>
-          </div>
-          <div className="form-control flex">
-            <label htmlFor="main_teacher" className="form-check-label">Je triednym učiteľom?</label>
-            <Field type="checkbox" name="main_teacher" className="check"/>
-          </div>
-          <button className="btn" type="submit">Vytvoriť</button>
-        </Form>
-      </Formik>
+      <>
+        <h1>Tomuto učiteľovi doposiaľ nebol vytvorený profil.
+          <br/>
+          Prajete si ho vytvoriť?
+        </h1>
+        <Formik
+          initialValues={{
+            first_name: '',
+            last_name: '',
+            email: '',
+            city: '',
+            street: '',
+            street_num: '',
+            phone: '',
+            dob: '',
+            main_teacher: false
+          }}
+          validationSchema={Yup.object({
+            first_name: Yup.string()
+              .max(15, 'Môže byť maximálne 15 znakov dlhé')
+              .required('Povinné!'),
+            last_name: Yup.string()
+              .max(20, 'Môže byť maximálne 20 znakov dlhé')
+              .required('Povinné!'),
+            email: Yup.string()
+              .required('Povinné!'),
+            city: Yup.string()
+              .required('Povinné!'),
+            street: Yup.string()
+              .required('Povinné!'),
+            street_num: Yup.string()
+              .required('Povinné!'),
+            phone: Yup.string()
+              .required('Povinné!'),
+            dob: Yup.string()
+              .required('Povinné!'),
+          })}
+          onSubmit={(values, {setSubmitting}) => {
+            setTimeout(() => {
+              submitHandler(values)
+              setSubmitting(false);
+            }, 400);
+          }}
+        >
+          <Form className="auth-form">
+            <div className="form-control">
+              <label htmlFor="first_name">Krstné meno:</label>
+              <Field name="first_name" type="text"/>
+              <ErrorMessage name="first_name"/>
+            </div>
+            <div className="form-control">
+              <label htmlFor="last_name">Priezvisko:</label>
+              <Field name="last_name" type="text"/>
+              <ErrorMessage name="last_name"/>
+            </div>
+            <div className="form-control">
+              <label htmlFor="email">Email:</label>
+              <Field name="email" type="text"/>
+              <ErrorMessage name="email"/>
+            </div>
+            <div className="form-control">
+              <label htmlFor="city">Mesto:</label>
+              <Field name="city" type="text"/>
+              <ErrorMessage name="city"/>
+            </div>
+            <div className="form-control">
+              <label htmlFor="street">Ulica:</label>
+              <Field name="street" type="text"/>
+              <ErrorMessage name="street"/>
+            </div>
+            <div className="form-control">
+              <label htmlFor="street_num">Číslo domu:</label>
+              <Field name="street_num" type="number"/>
+              <ErrorMessage name="street_num"/>
+            </div>
+            <div className="form-control">
+              <label htmlFor="phone">Telefónne číslo:</label>
+              <Field name="phone" type="number"/>
+              <ErrorMessage name="phone"/>
+            </div>
+            <div className="form-control">
+              <label htmlFor="dob">Dátum narodenia:</label>
+              <Field name="dob" type="date"/>
+              <ErrorMessage name="dob"/>
+            </div>
+            <div className="form-control flex">
+              <label htmlFor="main_teacher" className="form-check-label">Je triednym učiteľom?</label>
+              <Field type="checkbox" name="main_teacher" className="check"/>
+            </div>
+            <button className="btn" type="submit">Vytvoriť</button>
+          </Form>
+        </Formik>
+      </>
       }
       {(props.role === 'student' && !step) &&
-      <Formik
-        initialValues={{
-          first_name: '',
-          last_name: '',
-          email: '',
-          dob: '',
-          phone: '',
-          title_before: '',
-          title_after: ''
-        }}
-        validationSchema={Yup.object({
-          first_name: Yup.string()
-            .max(15, 'Môže byť maximálne 15 znakov dlhé')
-            .required('Povinné!'),
-          last_name: Yup.string()
-            .max(20, 'Môže byť maximálne 20 znakov dlhé')
-            .required('Povinné!'),
-          email: Yup.string()
-            .required('Povinné!'),
-          phone: Yup.string()
-            .required('Povinné!'),
-          dob: Yup.string()
-            .required('Povinné!')
-        })}
-        onSubmit={(values, {setSubmitting}) => {
-          setTimeout(() => {
-            submitHandler(values)
-            setSubmitting(false);
-          }, 400);
-        }}
-      >
-        <Form className="auth-form">
-          <div className="form-control">
-            <label htmlFor="first_name">Krstné meno:</label>
-            <Field name="first_name" type="text"/>
-            <ErrorMessage name="first_name"/>
-          </div>
-          <div className="form-control">
-            <label htmlFor="last_name">Priezvisko:</label>
-            <Field name="last_name" type="text"/>
-            <ErrorMessage name="last_name"/>
-          </div>
-          <div className="form-control">
-            <label htmlFor="email">email:</label>
-            <Field name="email" type="text"/>
-            <ErrorMessage name="email"/>
-          </div>
-          <div className="form-control">
-            <label htmlFor="dob">Dátum narodenia:</label>
-            <Field name="dob" type="date"/>
-            <ErrorMessage name="dob"/>
-          </div>
-          <div className="form-control">
-            <label htmlFor="phone">Telefónne číslo:</label>
-            <Field name="phone" type="number"/>
-            <ErrorMessage name="phone"/>
-          </div>
-          <div className="form-control">
-            <label htmlFor="title_before">Titul pred menom:</label>
-            <Field name="title_before" type="text"/>
-            <ErrorMessage name="title_before"/>
-          </div>
-          <div className="form-control">
-            <label htmlFor="title_after">Titul za menom:</label>
-            <Field name="title_after" type="text"/>
-            <ErrorMessage name="title_after"/>
-          </div>
-          <button className="btn" type="submit">Vytvoriť</button>
-        </Form>
-      </Formik>
+      <>
+        <h1>
+          Tomuto študentovi doposiaľ nebol vytvorený profil.
+          <br/>
+          Pre vytvorenie profilu študenta je potrebne najskôr vytvoriť, alebo priradiť zákonného zástupcu.
+        </h1>
+        <Formik
+          initialValues={{
+            first_name: '',
+            last_name: '',
+            email: '',
+            dob: '',
+            phone: '',
+            title_before: '',
+            title_after: ''
+          }}
+          validationSchema={Yup.object({
+            first_name: Yup.string()
+              .max(15, 'Môže byť maximálne 15 znakov dlhé')
+              .required('Povinné!'),
+            last_name: Yup.string()
+              .max(20, 'Môže byť maximálne 20 znakov dlhé')
+              .required('Povinné!'),
+            email: Yup.string()
+              .required('Povinné!'),
+            phone: Yup.string()
+              .required('Povinné!'),
+            dob: Yup.string()
+              .required('Povinné!')
+          })}
+          onSubmit={(values, {setSubmitting}) => {
+            setTimeout(() => {
+              submitHandler(values)
+              setSubmitting(false);
+            }, 400);
+          }}
+        >
+          <Form className="auth-form">
+            <div className="form-control">
+              <label htmlFor="first_name">Krstné meno:</label>
+              <Field name="first_name" type="text"/>
+              <ErrorMessage name="first_name"/>
+            </div>
+            <div className="form-control">
+              <label htmlFor="last_name">Priezvisko:</label>
+              <Field name="last_name" type="text"/>
+              <ErrorMessage name="last_name"/>
+            </div>
+            <div className="form-control">
+              <label htmlFor="email">email:</label>
+              <Field name="email" type="text"/>
+              <ErrorMessage name="email"/>
+            </div>
+            <div className="form-control">
+              <label htmlFor="dob">Dátum narodenia:</label>
+              <Field name="dob" type="date"/>
+              <ErrorMessage name="dob"/>
+            </div>
+            <div className="form-control">
+              <label htmlFor="phone">Telefónne číslo:</label>
+              <Field name="phone" type="number"/>
+              <ErrorMessage name="phone"/>
+            </div>
+            <div className="form-control">
+              <label htmlFor="title_before">Titul pred menom:</label>
+              <Field name="title_before" type="text"/>
+              <ErrorMessage name="title_before"/>
+            </div>
+            <div className="form-control">
+              <label htmlFor="title_after">Titul za menom:</label>
+              <Field name="title_after" type="text"/>
+              <ErrorMessage name="title_after"/>
+            </div>
+            <button className="btn" type="submit">Vytvoriť</button>
+          </Form>
+        </Formik>
+      </>
       }
       {(props.role === 'student' && step) &&
       <Formik
@@ -337,15 +394,20 @@ function CreateProfile(props) {
             <Field name="class" as="select">
               <option value="">--Vyberte--</option>
               {props.classes.map(oneClass => (
-                <option value={oneClass.id}>{oneClass.year}. {oneClass.classType.toUpperCase()}</option>
-                ))}
+                <option onClick={() => setGroupId(oneClass.groups[0].id)}
+                        value={oneClass.id}>{oneClass.year}. {oneClass.classType.toUpperCase()}</option>
+              ))}
             </Field>
-            <ErrorMessage name="class" />
+            <ErrorMessage name="class"/>
           </div>
           <button className="btn" type="submit">Vytvoriť</button>
         </Form>
       </Formik>
       }
+      {props.role === 'admin' &&
+      <h1>
+        Toto je admin
+      </h1>}
     </>
   )
 }

@@ -15,7 +15,8 @@ import * as group from './groups/fields/mutations'
 import * as attendance from './attendances/fields/mutations'
 import * as group_lecture from './groups_lectures/fields/mutations'
 import * as teacher_lecture from './teachers_lectures/fields/mutations'
-import * as teacher_group from "./teachers_groups/fields/mutations";
+import * as teacher_group from './teachers_groups/fields/mutations'
+import * as student_group from './students_groups/fields/mutations'
 
 // Mutation
 const mutation = new GraphQLObjectType({
@@ -36,7 +37,8 @@ const mutation = new GraphQLObjectType({
     ...attendance,
     ...group_lecture,
     ...teacher_lecture,
-    ...teacher_group
+    ...teacher_group,
+    ...student_group,
   }
 })
 

@@ -26,8 +26,7 @@ export async function getByUserId(parentValue, {id}) {
     where: {userId: id},
     include: [
       {
-        model: models.Parent,
-        where: {}
+        model: models.Parent
       },
       {
         model: models.Group,
@@ -47,8 +46,7 @@ export async function getAll() {
         where: {}
       },
       {
-        model: models.Parent,
-        where: {}
+        model: models.Parent
       },
       {
         model: models.Group,

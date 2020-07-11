@@ -2,7 +2,7 @@
 import {GraphQLInt, GraphQLList} from 'graphql'
 
 // App Imports
-import {getAll, getByClassId, getById} from '../resolvers'
+import {getAll, getByClassId, getById, getByTeacher} from '../resolvers'
 import GroupType from "../type";
 
 // Group All
@@ -28,4 +28,13 @@ export const groupsByClass = {
     classId: {type: GraphQLInt}
   },
   resolve: getByClassId
+}
+
+// Groups By class ID
+export const groupsByTeacher = {
+  type: new GraphQLList(GroupType),
+  args: {
+    teacherId: {type: GraphQLInt}
+  },
+  resolve: getByTeacher
 }

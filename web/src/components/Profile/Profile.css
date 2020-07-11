@@ -1,0 +1,11 @@
+.plus-button:before{
+    content: '+';
+}
+
+.in-row{
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0;
+}

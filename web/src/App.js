@@ -4,7 +4,6 @@ import decoded from 'jwt-decode';
 
 import AuthPage from "./pages/Auth";
 import EventsPage from "./pages/Events";
-import BookingPage from "./pages/Booking";
 import UsersPage from "./pages/Users";
 import PeoplePage from "./pages/People";
 import RegistrationPage from "./pages/Registration";
@@ -24,7 +23,7 @@ class App extends Component {
   }
   currentUser = () => {
     const user = JSON.parse(localStorage.getItem('token'));
-    if(user) {
+    if (user) {
       console.log(decoded(user))
     }
   }
@@ -37,12 +36,14 @@ class App extends Component {
     this.setState({token: null, userId: null, role: null});
     localStorage.removeItem('token');
   };
+
   componentDidMount() {
     const token = JSON.parse(localStorage.getItem('token'));
-    if(token) {
+    if (token) {
       const dtoken = decoded(token);
       this.setState({token: token, userId: dtoken.userId, role: dtoken.role})
-    };
+    }
+    ;
   }
 
   render() {
@@ -62,18 +63,26 @@ class App extends Component {
             <Switch>
               {!this.state.token && <Redirect from="/" to="/auth" exact/>}
               {!this.state.token && <Redirect from="/users" to="/" exact/>}
-              {this.state.token && <Redirect from="/" to="/users" exact/>}
-              {this.state.token && <Redirect from="/auth" to="/users" exact/>}
+              {!this.state.token && <Redirect from="/people" to="/" exact/>}
+              {!this.state.token && <Redirect from="/class" to="/" exact/>}
+              {!this.state.token && <Redirect from="/registration" to="/" exact/>}
+              {!this.state.token && <Redirect from="/events" to="/" exact/>}
+              {!this.state.token && <Redirect from="/lectures" to="/" exact/>}
+              {this.state.token && <Redirect from="/auth" to="/people" exact/>}
+
               {!this.state.token && (
                 <Route path="/auth" component={AuthPage}/>
               )}
-              <Route path="/people" component={PeoplePage}/>
-              <Route path="/class" component={ClassPage}/>
-              <Route path="/registration" component={RegistrationPage}/>
-              <Route path="/events" component={EventsPage}/>
-              <Route path="/users" component={UsersPage}/>
-              <Route path="/lectures" component={LecturePage}/>
-              {!this.state.token && <Redirect from="*" to="/auth" exact/>}
+              {this.state.token && (
+                <>
+                  <Route path="/people" component={PeoplePage}/>
+                  <Route path="/class" component={ClassPage}/>
+                  <Route path="/registration" component={RegistrationPage}/>
+                  <Route path="/events" component={EventsPage}/>
+                  <Route path="/users" component={UsersPage}/>
+                  <Route path="/lectures" component={LecturePage}/>
+                </>
+              )}
             </Switch>
           </main>
         </AuthContext.Provider>

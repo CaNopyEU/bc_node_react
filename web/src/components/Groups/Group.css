@@ -25,6 +25,18 @@
     width: 45%;
     padding: 5% 0;
 }
+.plus-button{
+    height: fit-content;
+    background: #4aa1ff;
+    font: inherit;
+    border: 1px solid #4aa1ff;
+    border-radius: 3px;
+    padding: 0.5rem 1rem;
+    margin-right: 1rem;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.26);
+    color: white;
+    cursor: pointer;
+}
 .plus-button::before {
     content: '+';
 }

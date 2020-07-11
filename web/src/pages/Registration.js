@@ -130,38 +130,3 @@ class RegistrationPage extends Component {
 }
 
 export default RegistrationPage;
-/*
-
-<form className="auth-form" onSubmit={this.submitHandler}>
-  {this.state.errors &&
-  <div className="form-control errors">
-    <label>{this.state.errors}</label>
-  </div>
-  }
-  {
-    this.state.success &&
-    <div className="form-control success">
-      <label>{this.state.success}</label>
-    </div>
-  }
-  <div className="form-control">
-    <label htmlFor="text">Prihlasovacie meno:</label>
-    <input type="text" id="text" ref={this.usernameEl}/>
-  </div>
-  <div className="form-control">
-    <label htmlFor="password">Heslo:</label>
-    <input type="password" id="password" ref={this.passwordEl}/>
-  </div>
-  <div className="form-control">
-    <label htmlFor="role">Pozícia v systéme</label>
-    <select id="role" ref={this.roleEl} defaultValue="asd">
-      <option value={null}></option>
-      <option value="admin">Administrátor</option>
-      <option value="teacher">Učiteľ</option>
-      <option value="student">Študent</option>
-    </select>
-  </div>
-  <div className="form-actions">
-    <button type="input">Registrovať</button>
-  </div>
-</form>*/

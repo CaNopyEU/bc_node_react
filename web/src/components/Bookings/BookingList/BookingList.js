@@ -8,8 +8,8 @@ const bookingList = props => (
             return (
                 <li key={student.id} className="bookings__item">
                     <div className="bookings__item-data">
-                        {student.first_name} - {' '}
-                        {new Date(student.createdAt).toLocaleDateString()}
+                        {student.title_before} {student.first_name} {student.last_name} {student.title_after} - {student.email}
+                        {' '} {new Date(student.dob).toLocaleDateString()}
                     </div>
                     <div className="bookings_item-actions">
                         <button className="btn" onClick={props.onDelete.bind(this, student.id)}>Zobraziť detail</button>

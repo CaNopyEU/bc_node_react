@@ -46,6 +46,11 @@ export default (sequelize, DataTypes) => {
       foreignKey: 'teacherId',
       as: 'groups'
     });
+    Teacher.hasOne(models.Class, {
+      foreignKey: {
+        name: 'teacherId'
+      }
+    })
     Teacher.belongsTo(models.User, {
       foreignKey: {
         name: 'userId'

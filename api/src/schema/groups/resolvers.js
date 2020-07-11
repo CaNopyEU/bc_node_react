@@ -35,18 +35,66 @@ export async function getByClassId(parentValue, {classId}) {
       {
         model: models.Class,
         where: {}
+      },
+      {
+        model: models.Teacher,
+        as: 'teachers'
+      },
+      {
+        model: models.Lecture,
+        as: 'lectures'
+      },
+      {
+        model: models.Student,
+        as: 'students'
       }
     ]
   })
 }
 
+
+export async function getByTeacher(parentValue, {teacherId}) {
+  return await models.Group.findAll({
+    order: [['title', 'ASC']],
+    include: [
+      {
+        model: models.Class,
+        where: {}
+      },
+      {
+        model: models.Teacher,
+        as: 'teachers',
+        where: {id: teacherId}
+      },
+      {
+        model: models.Lecture,
+        as: 'lectures'
+      },
+      {
+        model: models.Student,
+        as: 'students'
+      }
+    ]
+  })
+}
 // Get all Groups
 export async function getAll() {
   return await models.Group.findAll({
     order: [['createdAt', 'DESC']], include: [
       {
         model: models.Class,
-        where: {}
+      },
+      {
+        model: models.Teacher,
+        as: 'teachers'
+      },
+      {
+        model: models.Lecture,
+        as: 'lectures'
+      },
+      {
+        model: models.Student,
+        as: 'students'
       }
     ]
   })

@@ -6,6 +6,7 @@ import Spinner from '../components/Spinner/Spinner';
 import './Users.css';
 import Backdrop from "../components/Backdrop/Backdrop";
 import CreateProfile from "../components/CreateProfil/CreateProfile";
+import Profile from "../components/Profile/Profile";
 
 class Users extends Component {
   state = {
@@ -61,6 +62,7 @@ class Users extends Component {
         this.setState({isLoading: false})
       });
   }
+
   fetchClasses() {
     this.setState({isLoading: true});
     const requestBody = {
@@ -103,6 +105,7 @@ class Users extends Component {
         this.setState({isLoading: false})
       });
   }
+
   fetchUser(userId, role) {
     let requestBody = '';
     if (role === 'teacher') {
@@ -113,6 +116,8 @@ class Users extends Component {
                             id
                             first_name
                             last_name
+                            title_before
+                            title_after
                             email
                             city
                             street
@@ -120,6 +125,20 @@ class Users extends Component {
                             phone
                             dob
                             main_teacher
+                            class{
+                              id
+                              classType
+                              year
+                            }
+                            lectures{
+                              id
+                              lecture
+                              lectureType
+                            }
+                            groups{
+                              id
+                              title 
+                            }
                           }
                         }
                 `
@@ -132,7 +151,21 @@ class Users extends Component {
                             id
                             first_name
                             last_name
-                           
+                            city
+                            street
+                            street_num
+                            dob
+                            desc
+                            parent{
+                              id
+                              first_name
+                              last_name
+                              email
+                              dob
+                              phone
+                              title_before
+                              title_after
+                            }
                           }
                         }
                 `
@@ -155,7 +188,7 @@ class Users extends Component {
       })
       .then(resData => {
         let userInfo = []
-        if (role === 'teacher'){
+        if (role === 'teacher') {
           userInfo = resData.data.teacherByUser;
         } else {
           userInfo = resData.data.studentByUser;
@@ -170,13 +203,13 @@ class Users extends Component {
   showDetailHandler = userId => {
     this.setState(prevState => {
       const selectedUser = prevState.users.find(e => e.id === userId);
-        this.fetchUser(userId, selectedUser.role);
+      this.fetchUser(userId, selectedUser.role);
       return {selectedUser: selectedUser};
     })
   }
 
-  modalCreateProfileHandler = (userId, role) => {
-    return <CreateProfile/>
+  modalEditProfileHandler = (userId, role) => {
+    return alert('cozeee')
   }
 
 
@@ -196,96 +229,27 @@ class Users extends Component {
             canEdit
             onCancel={this.modalCancelHandler}
             editText="Upraviť používateľa"
-            onEdit={this.modalCreateProfileHandler(this.state.selectedUser.id, this.state.selectedUser.role)}
+            onEdit={() => this.modalEditProfileHandler(this.state.selectedUser.id, this.state.selectedUser.role)}
           >
-            {this.state.selectedUser.role === 'teacher' &&
-
-            <>
-              {this.state.userInfo &&
-              <>
-                <tbody>
-                <tr>
-                  <td>Meno:</td>
-                  <td>{this.state.userInfo.first_name}</td>
-                </tr>
-                <tr>
-                  <td>Priezvisko:</td>
-                  <td>{this.state.userInfo.last_name}</td>
-                </tr>
-                <tr>
-                  <td>Email:</td>
-                  <td>{this.state.userInfo.email}</td>
-                </tr>
-                <tr>
-                  <td>Mesto:</td>
-                  <td>{this.state.userInfo.city}</td>
-                </tr>
-                <tr>
-                  <td>Ulica:</td>
-                  <td>{this.state.userInfo.street} / {this.state.userInfo.street_num}</td>
-                </tr>
-                <tr>
-                  <td>Tel. číslo:</td>
-                  <td>{this.state.userInfo.phone}</td>
-                </tr>
-                <tr>
-                  <td>Dátum narodenia:</td>
-                  <td>{this.state.userInfo.dob}</td>
-                </tr>
-                <tr>
-                  <td>Je tridnym učiteľom?</td>
-                  <td>{this.state.userInfo.main_teacher ? 'Áno' : 'Nie'}</td>
-                </tr>
-                </tbody>
-              </>
-              }
-              {
-                !this.state.userInfo &&
-                <>
-                  <h1>Tomuto učiteľovi doposiaľ nebol vytvorený profil.
-                    <br/>
-                    Prajete si ho vytvoriť?
-                  </h1>
-                  <CreateProfile userId={this.state.selectedUser.id} role={this.state.selectedUser.role}/>
-                </>
-              }
-            </>
+            {this.state.userInfo ?
+              <Profile
+                role={this.state.selectedUser.role}
+                user={this.state.userInfo}
+              />
+              :
+              <CreateProfile
+                userId={this.state.selectedUser.id}
+                role={this.state.selectedUser.role}
+                classes={this.state.classes}
+              />
             }
-            {this.state.selectedUser.role === 'student' &&
-            <>
-              {this.state.userInfo &&
-              <>
-                <tbody>
-                <tr>
-                  <td>Meno:</td>
-                  <td>{this.state.userInfo.first_name}</td>
-                </tr>
-                <tr>
-                  <td>Priezvisko:</td>
-                  <td>{this.state.userInfo.last_name}</td>
-                </tr>
-                </tbody>
-              </>
-              }
-              {
-                !this.state.userInfo &&
-                <>
-                  <h1>Tomuto študentovi doposiaľ nebol vytvorený profil.
-                    <br/>
-                    Prajete si ho vytvoriť?
-                  </h1>
-                  <CreateProfile userId={this.state.selectedUser.id} role={this.state.selectedUser.role} classes={this.state.classes}/>
-                </>
-              }
-            </>
-            }
-            {this.state.selectedUser.role === 'admin' &&
-            <h1>Toto je admin</h1>
-            }
-
           </Modal>)}
         {this.state.isLoading ? <Spinner/> :
-          <UsersList users={this.state.users} onViewDetail={this.showDetailHandler}/>}
+          <UsersList
+            users={this.state.users}
+            onViewDetail={this.showDetailHandler}
+          />
+        }
       </>
     )
   }

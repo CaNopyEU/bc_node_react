@@ -42,10 +42,16 @@ export async function create(parentValue, {
   groupId,
   studentId
 }) {
-  return await models.StudentGroup.create({
-    groupId,
-    studentId
-  })
+  try {
+    await models.StudentGroup.create({
+      groupId,
+      studentId
+    })
+    return await getById(parentValue, {studentId, groupId})
+  } catch (err) {
+    throw err;
+  }
+
 }
 
 // Delete TeacherLecture

@@ -17,6 +17,7 @@ const StudentType = new GraphQLObjectType({
     street: {type: GraphQLString},
     street_num: {type: GraphQLFloat},
     dob: {type: GraphQLString},
+    desc: {type: GraphQLString},
     createdAt: {type: GraphQLString},
     updatedAt: {type: GraphQLString},
     user: {type: UserType},

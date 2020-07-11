@@ -16,6 +16,7 @@ import * as attendance from './attendances/fields/query'
 import * as group_lecture from './groups_lectures/fields/query'
 import * as teacher_lecture from './teachers_lectures/fields/query'
 import * as teacher_group from './teachers_groups/fields/query'
+import * as student_group from './students_groups/fields/query'
 
 // Query
 const query = new GraphQLObjectType({
@@ -36,7 +37,8 @@ const query = new GraphQLObjectType({
     ...attendance,
     ...group_lecture,
     ...teacher_lecture,
-    ...teacher_group
+    ...teacher_group,
+    ...student_group
   })
 })
 

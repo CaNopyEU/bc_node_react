@@ -40,10 +40,7 @@ class PeoplePage extends Component {
                 email
                 dob
               }
-              groups {
-                id
-                title
-              }
+              
             }
           }
 `
@@ -79,6 +76,8 @@ class PeoplePage extends Component {
               id
               first_name
               last_name
+              title_before
+              title_after
               email
               city
               street
@@ -86,6 +85,11 @@ class PeoplePage extends Component {
               phone
               dob
               main_teacher
+              class{
+                id
+                classType
+                year
+              }
             }
 }
 `
