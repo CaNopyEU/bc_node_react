@@ -115,9 +115,11 @@ export async function update(parentValue, {
       }]
   });
   if (first_name) {
+    first_name = first_name.trim();
     Student.first_name = first_name;
   }
   if (last_name) {
+    last_name = last_name.trim();
     Student.last_name = last_name;
   }
   if (city) {

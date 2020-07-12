@@ -94,6 +94,8 @@ class ClassPage extends Component {
                             id
                             first_name
                             last_name
+                            title_before
+                            title_after
                         }
                     }
                 `
@@ -247,7 +249,7 @@ class ClassPage extends Component {
             canCancel
             onCancel={this.modalCancelHandler}
           >
-            <Group classId={this.state.selectedClass.id} class={this.state.selectedClass}/>
+            <Group classId={this.state.selectedClass.id} class={this.state.selectedClass} teachers={this.state.teachers}/>
           </Modal>)}
         <h1>Administrácia Tried</h1>
         <Formik
@@ -321,7 +323,7 @@ class ClassPage extends Component {
                 <td>{classData.year}</td>
                 <td>{classData.teacher.first_name} {classData.teacher.last_name}</td>
                 <td>
-                  <button onClick={this.showDetailHandler.bind(this, classData.id)} className="btn">Edit</button>
+                  <button onClick={this.showDetailHandler.bind(this, classData.id)} className="btn">Detail triedy</button>
                 </td>
               </tr>
             ))}

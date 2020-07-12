@@ -17,6 +17,7 @@ class Group extends Component {
       groupStudents: [],
       groupTeachers: [],
     };
+    this.deleteGroup = this.deleteGroup.bind(this);
     this.createGroup = this.createGroup.bind(this);
     this.addLectureToGroup = this.addLectureToGroup.bind(this);
     this.addStudentToGroup = this.addStudentToGroup.bind(this);
@@ -157,7 +158,47 @@ class Group extends Component {
       return {selectedGroup: selectedGroup};
     })
   }
-
+  deleteGroup = () => {
+    let title = this.state.groups.length
+    const requestBody = {
+      query: `
+                    mutation DeleteGroup($title: Int! $classId: Int!) {
+                        deleteGroup(title: $title, classId: $classId) {
+                            id
+                            title
+                        }
+                    }
+                `,
+      variables: {
+        classId: this.props.class.id,
+        title: title
+      }
+    };
+    fetch('http://localhost:8000/', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
+        }
+        return res.json();
+      })
+      .then(resData => {
+          this.setState(prevState => {
+            const updatedGroups = [...prevState.groups];
+            updatedGroups.pop();
+            return {groups: updatedGroups};
+          })
+      })
+      .catch(err => {
+        this.setState({errors: 'Húuups, došlo k neočakávanej chybe'})
+        console.log(err);
+      });
+  }
   createGroup = () => {
     let title = this.state.groups.length + 1
     const requestBody = {
@@ -334,6 +375,71 @@ class Group extends Component {
 
   }
 
+  addTeacherToGroup = (values) => {
+    console.log('teacher id', values.teacher);
+    console.log('groupd id', this.state.selectedGroup.id)
+
+    const requestBody = {
+      query: `
+                    mutation CreateTeacherGroup($teacherId: Int! $groupId: Int!) {
+                        createTeacherGroup(teacherId: $teacherId, groupId: $groupId) {
+                             groups{
+                              id
+                            }
+                            teachers{
+                              id
+                              first_name
+                              last_name
+                              title_before
+                              title_after
+                            }
+                        }
+                    }
+                `,
+      variables: {
+        teacherId: parseInt(values.teacher, 10),
+        groupId: this.state.selectedGroup.id
+      }
+    };
+    fetch('http://localhost:8000/', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        if (resData.data.createTeacherGroup) {
+          this.setState(prevState => {
+            const updatedTeacherGroup = [...prevState.groupTeachers];
+            updatedTeacherGroup.push({
+              id: resData.data.createTeacherGroup.teachers.id,
+              first_name: resData.data.createTeacherGroup.teachers.first_name,
+              last_name: resData.data.createTeacherGroup.teachers.last_name,
+              title_before: resData.data.createTeacherGroup.teachers.title_before,
+              title_after: resData.data.createTeacherGroup.teachers.title_after,
+            })
+            return {groupTeachers: updatedTeacherGroup};
+          })
+        } else {
+          this.setState({
+            errors: 'Triedu sa nepodatilo vytvoriť.'
+          })
+        }
+      })
+      .catch(err => {
+        this.setState({errors: 'Húuups, došlo k neočakávanej chybe'})
+        console.log(err);
+      });
+
+  }
+
   componentDidMount() {
     this.fetchGroups();
     this.fetchLectures();
@@ -345,6 +451,8 @@ class Group extends Component {
     console.log('lectures from group', this.state.groupLectures)
     console.log('selected class', this.props.class)
     console.log('selected group students', this.state.groupStudents)
+    console.log('selected group teachers', this.state.groupTeachers)
+    console.log('all teachers', this.props.teachers)
 
     const header = (
       <>
@@ -354,7 +462,7 @@ class Group extends Component {
         </button>)
         }
         <button onClick={this.createGroup} className="btn" style={{backgroundColor: 'green'}}>+</button>
-        <button className="btn" style={{backgroundColor: 'red'}}>-</button>
+        <button onClick={this.deleteGroup} className="btn" style={{backgroundColor: 'red'}}>-</button>
       </>
     )
     return (
@@ -446,18 +554,18 @@ class Group extends Component {
                 })}
                 onSubmit={(values, {setSubmitting}) => {
                   setTimeout(() => {
-                    this.addStudentToGroup(values)
+                    this.addTeacherToGroup(values)
                     setSubmitting(false);
                   }, 400);
                 }}
               >
                 <Form>
                   <div className="groups-form-control">
-                    {/*<Field name="teacher" as="select">
+                    <Field name="teacher" as="select">
                       <option value="">--Vyberte--</option>
-                      {this.props.class.teachers.map((teacher) => <option
+                      {this.props.teachers.map((teacher) => <option
                         value={teacher.id}>{teacher.title_before} {teacher.first_name} {teacher.last_name} {teacher.title_after}</option>)}
-                    </Field>*/}
+                    </Field>
                     <ErrorMessage name="teacher"/>
                     <button className="plus-button" type="submit"> Pridať učiteľa</button>
                   </div>

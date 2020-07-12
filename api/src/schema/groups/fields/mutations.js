@@ -25,8 +25,12 @@ export const createGroup = {
 export const deleteGroup = {
   type: GroupType,
   args: {
-    id: {
-      name: 'id',
+    classId: {
+      name: 'classId',
+      type: GraphQLInt
+    },
+    title: {
+      name: 'title',
       type: GraphQLInt
     }
   },

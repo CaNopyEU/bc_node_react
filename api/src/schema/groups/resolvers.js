@@ -116,6 +116,6 @@ export async function create(parentValue, {
 }
 
 // Delete group
-export async function remove(parentValue, {id}) {
-  return await models.Group.destroy({where: {id}})
+export async function remove(parentValue, {classId, title}) {
+  return await models.Group.destroy({where: {classId: classId, title: title}})
 }

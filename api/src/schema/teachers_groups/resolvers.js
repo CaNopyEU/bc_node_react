@@ -2,17 +2,19 @@
 import models from '../../models'
 
 // Get TeacherLecture by ID
-export async function getById(parentValue, {id}) {
-  return await models.TeacherLecture.findOne({
-    where: {id},
+export async function getById(parentValue, {teacherId, groupId}) {
+  return await models.TeacherGroup.findOne({
+    where: {},
     include: [
       {
         model: models.Teacher,
-        where: {}
+        where: { id: teacherId},
+        as: 'teachers'
       },
       {
-        model: models.Lecture,
-        where: {}
+        model: models.Group,
+        where: { id: groupId},
+        as: 'groups'
       },
     ]
   })
@@ -25,11 +27,13 @@ export async function getAll() {
     include: [
       {
         model: models.Teacher,
-        where: {}
+        where: {},
+        as: 'teachers'
       },
       {
         model: models.Lecture,
-        where: {}
+        where: {},
+        as: ''
       },
     ]
   })
@@ -40,13 +44,18 @@ export async function create(parentValue, {
   groupId,
   teacherId
 }) {
-  return await models.TeacherGroup.create({
-    groupId,
-    teacherId
-  })
+  try {
+    await models.TeacherGroup.create({
+      groupId,
+      teacherId
+    })
+    return await getById(parentValue, {teacherId, groupId})
+  } catch (err) {
+    throw err;
+  }
 }
 
 // Delete TeacherLecture
 export async function remove(parentValue, {id}) {
-  return await models.TeacherLecture.destroy({where: {id}})
+  return await models.TeacherGroup.destroy({where: {id}})
 }

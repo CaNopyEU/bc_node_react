@@ -81,6 +81,8 @@ export async function create(parentValue, {
   userId
 }) {
   try {
+    first_name = first_name.trim();
+    last_name = last_name.trim();
     const Teacher = await models.Teacher.create({
       first_name,
       last_name,
@@ -117,9 +119,11 @@ export async function update(parentValue, {
   try {
     const Teacher = await models.Teacher.findOne({where: {id: id}})
     if (first_name) {
+      first_name = first_name.trim();
       Teacher.first_name = first_name;
     }
     if (last_name) {
+      last_name = last_name.trim();
       Teacher.last_name = last_name;
     }
     if (email) {
