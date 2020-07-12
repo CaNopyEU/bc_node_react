@@ -9,3 +9,8 @@
     width: 100%;
     margin: 0;
 }
+
+.profile-lectures-control {
+    display: flex;
+    flex-flow: column;
+}

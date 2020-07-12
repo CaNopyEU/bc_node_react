@@ -8,8 +8,8 @@ const TeacherLectureType = new GraphQLObjectType({
   name: 'teacher_lecture',
 
   fields: () => ({
-    lecture: {type: LectureType},
-    teacher: {type: TeacherType},
+    lectures: {type: LectureType},
+    teachers: {type: TeacherType},
     createdAt: {type: GraphQLString},
     updatedAt: {type: GraphQLString},
   })

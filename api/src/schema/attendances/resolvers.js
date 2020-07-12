@@ -44,12 +44,34 @@ export async function create(parentValue, {
   studentId
 }) {
   return await models.Attendance.create({
-      desc,
-      date,
-      pardon,
-      teacherId,
-      studentId
+    desc,
+    date,
+    pardon,
+    teacherId,
+    studentId
   })
+}
+
+// Update Attendance
+export async function update(parentValue, {
+  id,
+  desc,
+  date,
+  pardon
+}) {
+  const Attendance = await models.Attendance.findOne({where: {id: id}})
+  if (desc) {
+    Attendance.desc = desc
+  }
+  if (date) {
+    Attendance.date = date
+  }
+  if (pardon || pardon === false) {
+    Attendance.pardon = pardon;
+  }
+  Attendance.save()
+  return Attendance;
+
 }
 
 // Delete Attendance

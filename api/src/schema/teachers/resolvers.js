@@ -80,16 +80,6 @@ export async function create(parentValue, {
   main_teacher,
   userId
 }) {
-  console.log(first_name)
-  console.log(last_name)
-  console.log(email)
-  console.log(city)
-  console.log(street)
-  console.log(street_num)
-  console.log(phone)
-  console.log(dob)
-  console.log(main_teacher)
-  console.log(userId)
   try {
     const Teacher = await models.Teacher.create({
       first_name,
@@ -103,6 +93,57 @@ export async function create(parentValue, {
       main_teacher,
       userId
     })
+    return Teacher;
+  } catch (err) {
+    throw err;
+  }
+
+
+}
+
+// Update users
+export async function update(parentValue, {
+  id,
+  first_name,
+  last_name,
+  email,
+  city,
+  street,
+  street_num,
+  phone,
+  dob,
+  main_teacher
+}) {
+  try {
+    const Teacher = await models.Teacher.findOne({where: {id: id}})
+    if (first_name) {
+      Teacher.first_name = first_name;
+    }
+    if (last_name) {
+      Teacher.last_name = last_name;
+    }
+    if (email) {
+      Teacher.email = email;
+    }
+    if (city) {
+      Teacher.city = city;
+    }
+    if (street) {
+      Teacher.street = street;
+    }
+    if (street_num) {
+      Teacher.street_num = street_num;
+    }
+    if (phone) {
+      Teacher.phone = phone;
+    }
+    if (dob) {
+      Teacher.dob = dob;
+    }
+    if (main_teacher || main_teacher === false) {
+      Teacher.main_teacher = main_teacher;
+    }
+    await Teacher.save();
     return Teacher;
   } catch (err) {
     throw err;

@@ -45,8 +45,7 @@ function ProfileTeacher(props) {
       </tr>
       }
       </tbody>
-      <ProfileTeacherGroup groups={props.user.groups} id={props.user.id}/>
-      <ProfileTeacherLecture/>
+      <ProfileTeacherLecture lectures={props.user.lectures} id={props.user.id} />
     </div>
   )
 }

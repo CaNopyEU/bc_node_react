@@ -6,7 +6,7 @@ export async function getById(parentValue, {id}) {
   return await models.Grade.findOne({
     where: {id}, include: [
       {
-        model: models.Class,
+        model: models.Lecture,
         where: {}
       },
       {
@@ -26,7 +26,7 @@ export async function getAll() {
   return await models.Grade.findAll({
     order: [['date', 'DESC']], include: [
       {
-        model: models.Class,
+        model: models.Lecture,
         where: {}
       },
       {

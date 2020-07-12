@@ -21,9 +21,8 @@ export async function create(parentValue, {
   password,
   role
 }) {
-  console.log(username)
-  console.log(password)
-  console.log(role)
+  username = username.trim();
+  password = password.trim();
   try {
     if (password.length < 5) {
       throw new Error('Heslo musí byť v rozmedzí 5 až 20 znakov');
@@ -40,6 +39,30 @@ export async function create(parentValue, {
       role
     })
     return user;
+  } catch (err) {
+    throw err;
+  }
+}
+// Create users
+export async function update(parentValue, {
+  id,
+  username,
+  password,
+  role
+}) {
+  try {
+    const thisUser = await models.User.findOne({where: {id: id}});
+    if (username) {
+      username = username.trim();
+      thisUser.username = username
+    }
+    if (password) {
+      password = password.trim();
+      thisUser.password = await bcrypt.hash(password, 12);
+    }
+    thisUser.role = role
+    await thisUser.save();
+    return thisUser;
   } catch (err) {
     throw err;
   }

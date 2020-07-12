@@ -3,7 +3,7 @@ import {GraphQLString, GraphQLInt, GraphQLBoolean} from 'graphql'
 
 // App Imports
 import LectureType from '../type'
-import {create, remove} from '../resolvers'
+import {create, remove, update} from '../resolvers'
 
 // Lecture create
 export const createLecture = {
@@ -19,6 +19,24 @@ export const createLecture = {
         }
     },
     resolve: create
+}
+export const updateLecture = {
+    type: LectureType,
+    args: {
+        id: {
+            name: 'id',
+            type: GraphQLInt
+        },
+        lecture: {
+            name: 'lecture',
+            type: GraphQLString
+        },
+        lectureType: {
+            name: 'lectureType',
+            type: GraphQLBoolean
+        }
+    },
+    resolve: update
 }
 
 // Lecture remove

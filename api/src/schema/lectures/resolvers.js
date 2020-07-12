@@ -9,6 +9,10 @@ export async function getById(parentValue, {id}) {
       {
         model: models.Group,
         as: 'groups'
+      },
+      {
+        model: models.Teacher,
+        as: 'teachers'
       }
     ]
   })
@@ -17,14 +21,41 @@ export async function getById(parentValue, {id}) {
 
 // Get all lectures
 export async function getAll() {
-  return await models.Lecture.findAll({order: [['createdAt', 'DESC']]})
+  return await models.Lecture.findAll({
+    order: [['createdAt', 'DESC']],
+    include: [
+      {
+        model: models.Teacher,
+        as: 'teachers'
+      },
+      {
+        model: models.Group,
+        as: 'groups'
+      }
+    ]
+  })
 }
 
 // Create leacture
 export async function create(parentValue, {
   lecture, lectureType
 }) {
+
   return await models.Lecture.create({lecture, lectureType})
+}
+
+export async function update(parentValue, {
+  id, lecture, lectureType
+}) {
+  const thisLecture = await models.Lecture.findOne({where: {id: id}});
+  if (lecture) {
+    thisLecture.lecture = lecture;
+  }
+  if (lectureType || lectureType === false) {
+    thisLecture.lectureType = lectureType;
+  }
+  await thisLecture.save()
+  return thisLecture;
 }
 
 // Delete lecture

@@ -88,12 +88,10 @@ function ProfileTeacherGroup(props) {
         console.log(err);
       });
   }
-  const teacherGroups = props.groups.map((group) => (<div>{group.id}</div>));
   return (
     <>
       {console.log('this props', props.groups)}
       {console.log('selected Skupina', groups)}
-      {teacherGroups}
       <Formik
         initialValues={{class: '', group: ''}}
         validationSchema={Yup.object({

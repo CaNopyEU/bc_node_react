@@ -3,7 +3,7 @@ import {GraphQLString, GraphQLInt} from 'graphql'
 
 // App Imports
 import HomeworkType from '../type'
-import {create, remove} from '../resolvers'
+import {create, remove, update} from '../resolvers'
 
 // Homework create
 export const homeworkCreate = {
@@ -35,6 +35,34 @@ export const homeworkCreate = {
     }
   },
   resolve: create
+}
+
+//Homework update
+export const homeworkUpdate = {
+  type: HomeworkType,
+  args: {
+    id: {
+      name: 'id',
+      type: GraphQLInt
+    },
+    name: {
+      name: 'name',
+      type: GraphQLString
+    },
+    desc: {
+      name: 'desc',
+      type: GraphQLString
+    },
+    deadline: {
+      name: 'deadline',
+      type: GraphQLString
+    },
+    lectureId: {
+      name: 'lectureId',
+      type: GraphQLInt
+    }
+  },
+  resolve: update
 }
 
 // Homework remove

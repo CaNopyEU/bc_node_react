@@ -15,7 +15,8 @@ export const teacherLectures = {
 export const teacherLecture = {
   type: TeacherLecture,
   args: {
-    id: {type: GraphQLInt}
+    teacherId: {type: GraphQLInt},
+    lectureId: {type: GraphQLList}
   },
   resolve: getById
 }

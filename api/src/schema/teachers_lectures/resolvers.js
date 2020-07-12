@@ -2,17 +2,19 @@
 import models from '../../models'
 
 // Get TeacherLecture by ID
-export async function getById(parentValue, {id}) {
+export async function getById(parentValue, {lectureId, teacherId}) {
   return await models.TeacherLecture.findOne({
-    where: {id},
+    where: {},
     include: [
       {
         model: models.Teacher,
-        where: {}
+        where: {id: teacherId},
+        as: 'teachers'
       },
       {
         model: models.Lecture,
-        where: {}
+        where: {id: lectureId},
+        as: 'lectures'
       },
     ]
   })
@@ -40,10 +42,15 @@ export async function create(parentValue, {
   lectureId,
   teacherId
 }) {
-  return await models.TeacherLecture.create({
-    lectureId,
-    teacherId
-  })
+  try {
+    await models.TeacherLecture.create({
+      lectureId,
+      teacherId
+    })
+    return await getById(parentValue, {teacherId, lectureId})
+  } catch (err) {
+    throw err;
+  }
 }
 
 // Delete TeacherLecture

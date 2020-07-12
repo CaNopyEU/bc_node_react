@@ -28,16 +28,13 @@ export async function getAll() {
   return await models.Homework.findAll({
     order: [['deadline', 'DESC']], include: [
       {
-        model: models.Group,
-        where: {}
+        model: models.Group
       },
       {
-        model: models.Teacher,
-        where: {}
+        model: models.Teacher
       },
       {
-        model: models.Lecture,
-        where: {}
+        model: models.Lecture
       }
     ]
   })
@@ -60,6 +57,36 @@ export async function create(parentValue, {
     teacherId,
     lectureId
   })
+}
+
+// Update Homework
+export async function update(parentValue, {
+  id,
+  name,
+  desc,
+  deadline,
+  lectureId
+}) {
+  const Homework = await models.Homework.findOne({
+    where: {id: id},
+    include: [{
+      model: models.Lecture
+    }]
+  });
+  if (name) {
+    Homework.name = name;
+  }
+  if (desc) {
+    Homework.desc = desc;
+  }
+  if (deadline) {
+    Homework.deadline = deadline;
+  }
+  if (lectureId) {
+    Homework.lectureId = lectureId;
+  }
+  await Homework.save();
+  return Homework
 }
 
 // Delete homework

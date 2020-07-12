@@ -3,9 +3,9 @@ import {GraphQLString, GraphQLInt} from 'graphql'
 
 // App Imports
 import ClassType from '../type'
-import {create, remove} from '../resolvers'
+import {create, remove, update} from '../resolvers'
 
-// Thought create
+// Class create
 export const createClass = {
   type: ClassType,
   args: {
@@ -27,6 +27,34 @@ export const createClass = {
     }
   },
   resolve: create
+}
+
+// Class update
+export const updateClass = {
+  type: ClassType,
+  args: {
+    id: {
+      name: 'id',
+      type: GraphQLInt
+    },
+    classType: {
+      name: 'classType',
+      type: GraphQLString
+    },
+    year: {
+      name: 'year',
+      type: GraphQLInt
+    },
+    schedule: {
+      name: 'schedule',
+      type: GraphQLString
+    },
+    teacherId: {
+      name: 'teacherId',
+      type: GraphQLInt
+    }
+  },
+  resolve: update
 }
 
 // Class remove

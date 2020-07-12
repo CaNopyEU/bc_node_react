@@ -407,38 +407,37 @@ class Group extends Component {
               {this.state.groupStudents.map((student) => <div
                 className="groups-form-control">{student.first_name} {student.last_name}</div>)}
               {this.state.selectedGroup.title !== 1 &&
-                <Formik
-                  initialValues={{student: ''}}
-                  validationSchema={Yup.object({
-                    student: Yup.string()
-                      .required('Študenta je potrebné vybrať')
-                  })}
-                  onSubmit={(values, {setSubmitting}) => {
-                    setTimeout(() => {
-                      this.addStudentToGroup(values)
-                      setSubmitting(false);
-                    }, 400);
-                  }}
-                >
-                  <Form>
-                    <div className="groups-form-control">
-                      <Field name="student" as="select">
-                        <option value="">--Vyberte--</option>
-                        {this.props.class.students.map((student) => <option
-                          value={student.id}>{student.first_name} {student.last_name}</option>)}
-                      </Field>
-                      <ErrorMessage name="student"/>
-                      <button className="plus-button" type="submit"> Pridať študenta</button>
-                    </div>
-                  </Form>
-                </Formik>
+              <Formik
+                initialValues={{student: ''}}
+                validationSchema={Yup.object({
+                  student: Yup.string()
+                    .required('Študenta je potrebné vybrať')
+                })}
+                onSubmit={(values, {setSubmitting}) => {
+                  setTimeout(() => {
+                    this.addStudentToGroup(values)
+                    setSubmitting(false);
+                  }, 400);
+                }}
+              >
+                <Form>
+                  <div className="groups-form-control">
+                    <Field name="student" as="select">
+                      <option value="">--Vyberte--</option>
+                      {this.props.class.students.map((student) => <option
+                        value={student.id}>{student.first_name} {student.last_name}</option>)}
+                    </Field>
+                    <ErrorMessage name="student"/>
+                    <button className="plus-button" type="submit"> Pridať študenta</button>
+                  </div>
+                </Form>
+              </Formik>
               }
             </div>
             <div className="groups-body-students">
               <h2>Vyučujúci:</h2>
               {this.state.groupTeachers.map((teacher) => <div
                 className="groups-form-control">{teacher.title_before} {teacher.first_name} {teacher.last_name} {teacher.title_after}</div>)}
-              {this.state.selectedGroup.title !== 1 &&
               <Formik
                 initialValues={{teacher: ''}}
                 validationSchema={Yup.object({
@@ -464,7 +463,6 @@ class Group extends Component {
                   </div>
                 </Form>
               </Formik>
-              }
             </div>
           </div>
         </div>

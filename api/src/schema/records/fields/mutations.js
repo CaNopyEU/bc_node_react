@@ -3,7 +3,7 @@ import {GraphQLString, GraphQLInt} from 'graphql'
 
 // App Imports
 import RecordType from '../type'
-import {create, remove} from '../resolvers'
+import {create, remove, update} from '../resolvers'
 
 // Record create
 export const createRecord = {
@@ -27,6 +27,26 @@ export const createRecord = {
     }
   },
   resolve: create
+}
+
+// Record create
+export const updateRecord = {
+  type: RecordType,
+  args: {
+    id: {
+      name: 'id',
+      type: GraphQLInt
+    },
+    desc: {
+      name: 'lecture',
+      type: GraphQLString
+    },
+    date: {
+      name: 'date',
+      type: GraphQLString
+    }
+  },
+  resolve: update
 }
 
 // Record remove

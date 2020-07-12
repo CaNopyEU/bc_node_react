@@ -26,7 +26,7 @@ export async function create(parentValue, {
   title_after
 }) {
   try {
-    const Parent = await models.Parent.create({
+    return await models.Parent.create({
       first_name,
       last_name,
       email,
@@ -35,12 +35,52 @@ export async function create(parentValue, {
       title_before,
       title_after
     })
+  } catch (err) {
+    throw err;
+  }
+}
+
+// Update parent
+export async function update(parentValue, {
+  id,
+  first_name,
+  last_name,
+  email,
+  dob,
+  phone,
+  title_before,
+  title_after
+}) {
+  try {
+    const Parent = await models.Parent.findOne({where: {id: id}});
+
+    if (first_name) {
+      Parent.first_name = first_name;
+    }
+    if (last_name) {
+      Parent.last_name = last_name;
+    }
+    if (email) {
+      Parent.email = email;
+    }
+    if (dob) {
+      Parent.dob = dob;
+    }
+    if (phone) {
+      Parent.phone = phone;
+    }
+    if (title_before) {
+      Parent.title_before = title_before;
+    }
+    if (title_after) {
+      Parent.title_after = title_after;
+    }
+
+    await Parent.save();
     return Parent;
   } catch (err) {
     throw err;
   }
-
-
 }
 
 // Delete parent

@@ -8,11 +8,9 @@ export async function getById(parentValue, {id}) {
     include: [
       {
         model: models.Teacher,
-        where: {}
       },
       {
         model: models.Student,
-        where: {}
       }
     ]
   })
@@ -24,12 +22,10 @@ export async function getAll() {
     order: [['createdAt', 'DESC']],
     include: [
       {
-        model: models.Teacher,
-        where: {}
+        model: models.Teacher
       },
       {
-        model: models.Student,
-        where: {}
+        model: models.Student
       }
     ]
   })
@@ -48,6 +44,32 @@ export async function create(parentValue, {
     teacherId,
     studentId
   })
+}
+
+// Update record
+export async function update(parentValue, {
+  id,
+  desc,
+  date,
+}) {
+  const Record = await models.Record.findOne({where: {id: id},
+  include: [
+    {
+      model: models.Teacher
+    },
+    {
+      model: models.Student
+    }
+  ]})
+
+  if (desc) {
+    Record.desc = desc;
+  }
+  if (date) {
+    Record.desc = date;
+  }
+  await Record.save();
+  return Record;
 }
 
 // Delete record
