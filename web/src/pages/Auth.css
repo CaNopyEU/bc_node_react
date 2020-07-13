@@ -6,6 +6,13 @@
     flex-flow: column;
     justify-content: flex-start;
 }
+.change-teacher-form {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    flex-flow: row;
+    align-items: center;
+}
 .form-control-input {
     padding: 2% 2%;
     width: 96% !important;

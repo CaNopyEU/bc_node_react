@@ -77,13 +77,16 @@ export async function update(parentValue, {
       }
       ]
   })
+  if( (classType || year ) && (classType !== oneClass.classType || year !== oneClass.year)){
+    const classExists = await models.Class.findOne({where: {classType: classType, year: year}})
+    if (classExists) {
+      throw new Error('Class already exists');
+    } else {
+        oneClass.classType = classType
+        oneClass.year = year
+    }
+  }
 
-  if (classType) {
-    oneClass.classType = classType
-  }
-  if (year) {
-    oneClass.year = year
-  }
   if (schedule) {
     oneClass.schedule = schedule
   }

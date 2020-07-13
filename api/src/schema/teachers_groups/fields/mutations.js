@@ -22,11 +22,15 @@ export const createTeacherGroup = {
 }
 
 // TeacherLecture remove
-export const deleteTeacherLecture = {
+export const deleteTeacherGroup = {
     type: TeacherGroupType,
     args: {
-        id: {
-            name: 'id',
+        teacherId: {
+            name: 'teacherId',
+            type: GraphQLInt
+        },
+        groupId: {
+            name: 'groupId',
             type: GraphQLInt
         }
     },

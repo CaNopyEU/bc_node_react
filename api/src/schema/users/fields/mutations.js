@@ -1,9 +1,9 @@
 // Imports
-import {GraphQLString, GraphQLInt, GraphQLFloat} from 'graphql'
+import {GraphQLString, GraphQLInt, GraphQLFloat, GraphQLBoolean} from 'graphql'
 
 // App Imports
 import UserType from '../type'
-import {create, remove, update} from '../resolvers'
+import {create, remove, update, active} from '../resolvers'
 
 // User create
 export const createUser = {
@@ -20,6 +20,10 @@ export const createUser = {
     role: {
       name: 'role',
       type: GraphQLString
+    },
+    active: {
+      name: 'active',
+      type: GraphQLBoolean
     }
   },
   resolve: create
@@ -43,13 +47,17 @@ export const updateUser = {
     role: {
       name: 'role',
       type: GraphQLString
+    },
+    active: {
+      name: 'active',
+      type: GraphQLBoolean
     }
   },
   resolve: update
 }
 
 // User remove
-export const deleteUser = {
+export const activateUser = {
   type: UserType,
   args: {
     id: {
@@ -57,5 +65,5 @@ export const deleteUser = {
       type: GraphQLInt
     }
   },
-  resolve: remove
+  resolve: active
 }

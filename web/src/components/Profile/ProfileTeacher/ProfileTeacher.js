@@ -1,51 +1,21 @@
 import React, {useState} from 'react';
-import {Formik, Form, Field, ErrorMessage} from 'formik';
-import * as Yup from "yup";
-import ProfileTeacherGroup from "./ProfileTeacherGroup";
 import ProfileTeacherLecture from "./ProfileTeacherLecture";
 import '../Profile.css';
+import ProfileTeacherView from "./ProfileTeacherView";
+import ProfileTeacherEdit from "./ProfileTeacherEdit";
 
 function ProfileTeacher(props) {
+  const [editing, setEditing] = useState(false);
 
+  function editTeacherHandler() {
+    setEditing(!editing);
+  }
   return (
     <div className="in-row">
-      <tbody>
-      <tr>
-        <td>Meno:</td>
-        <td>{props.user.first_name}</td>
-      </tr>
-      <tr>
-        <td>Priezvisko:</td>
-        <td>{props.user.last_name}</td>
-      </tr>
-      <tr>
-        <td>Email:</td>
-        <td>{props.user.email}</td>
-      </tr>
-      <tr>
-        <td>Mesto:</td>
-        <td>{props.user.city}</td>
-      </tr>
-      <tr>
-        <td>Ulica:</td>
-        <td>{props.user.street} / {props.user.street_num}</td>
-      </tr>
-      <tr>
-        <td>Tel. číslo:</td>
-        <td>{props.user.phone}</td>
-      </tr>
-      <tr>
-        <td>Dátum narodenia:</td>
-        <td>{new Date(props.user.dob).toLocaleDateString()}</td>
-      </tr>
-      {props.user.main_teacher &&
-      <tr>
-        <td>Triedny učiteľ:</td>
-        <td>{props.user.class.year}. {props.user.class.classType}</td>
-      </tr>
-      }
-      </tbody>
-      <ProfileTeacherLecture lectures={props.user.lectures} id={props.user.id} />
+      <div>
+      {editing  ? <ProfileTeacherEdit user={props.user} editHandler={editTeacherHandler} update={props.update}/>  : <ProfileTeacherView user={props.user} editHandler={editTeacherHandler}/>}
+      </div>
+      <ProfileTeacherLecture lectures={props.user.lectures} id={props.user.id}/>
     </div>
   )
 }

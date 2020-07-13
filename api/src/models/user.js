@@ -20,6 +20,10 @@ export default (sequelize, DataTypes) => {
     },
     role: {
       type: DataTypes.STRING
+    },
+    active: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true
     }
   })
   return User

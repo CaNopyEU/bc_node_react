@@ -78,6 +78,9 @@ export async function logUser(parentValue, {username, password}) {
   if (!isEqual) {
     throw new Error('Password is incorrect!')
   }
+  if (user.active === false) {
+    throw new Error('Ucet bol zablokovany')
+  }
   const token = jwt.sign({
       userId: user.id,
       role: user.role
@@ -90,6 +93,12 @@ export async function logUser(parentValue, {username, password}) {
   return {userId: user.id, role: user.role, token: token, tokenExpiration: 1}
 }
 
+export async function active(parentValue, {id}) {
+  const user = await models.User.findOne({where:{id: id}})
+  user.active = !user.active;
+  user.save()
+  return user
+}
 
 // Delete users
 export async function remove(parentValue, {id}) {

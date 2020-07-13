@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 
-function ProfileParent(props) {
+function ProfileParentView(props) {
   return (
     <>
-      <table>
-        <thead><p>Informácie o zástupcovi</p></thead>
+      <table className="in-column">
+        <p>Informácie o zástupcovi</p>
         <tbody>
         <tr>
           <td>Meno a priezvisko:</td>
@@ -24,7 +24,9 @@ function ProfileParent(props) {
         </tr>
         </tbody>
       </table>
-      </>
+      <button onClick={props.editHandler} className="btn">Upraviť zástupcu</button>
+    </>
   )
 }
-export default ProfileParent
+
+export default ProfileParentView

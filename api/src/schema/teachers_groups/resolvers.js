@@ -8,12 +8,12 @@ export async function getById(parentValue, {teacherId, groupId}) {
     include: [
       {
         model: models.Teacher,
-        where: { id: teacherId},
+        where: {id: teacherId},
         as: 'teachers'
       },
       {
         model: models.Group,
-        where: { id: groupId},
+        where: {id: groupId},
         as: 'groups'
       },
     ]
@@ -56,6 +56,11 @@ export async function create(parentValue, {
 }
 
 // Delete TeacherLecture
-export async function remove(parentValue, {id}) {
-  return await models.TeacherGroup.destroy({where: {id}})
+export async function remove(parentValue, {groupId, teacherId}) {
+  return await models.TeacherGroup.destroy({
+    where: {
+      groupId: groupId,
+      teacherId: teacherId
+    }
+  })
 }

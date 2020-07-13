@@ -41,6 +41,39 @@ body {
     cursor: pointer;
 }
 
+.red {
+    background: #ff5050;
+    border-color: #ff5050;
+}
+
+.red:hover,
+.red:active {
+    background: #ff3201 !important;
+    border-color: #ff3201 !important;
+}
+
+.green {
+    background: green;
+    border-color: green;
+}
+
+.green:hover,
+.green:active {
+    background: darkgreen !important;
+    border-color: darkgreen !important;
+}
+
+.selected {
+    background: #356fff;
+    border-color: #356fff;
+}
+
+.selected:hover,
+.selected:active {
+    background: #4aa1ff !important;
+    border-color: #4aa1ff !important;
+}
+
 .form-actions button:hover,
 .form-actions button:active,
 .btn:hover,
@@ -60,6 +93,7 @@ body {
     padding: 10px;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.26);
 }
+
 .success {
     background-color: #dff0d8;
     border: solid #d6e9c6 1px;
@@ -71,6 +105,19 @@ body {
     padding: 10px;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.26);
 }
+
+.center {
+    display: flex;
+    align-items: center;
+    margin: 0 10px;
+}
+
+hr {
+    color: silver;
+    background-color: silver;
+    height: 1px;
+}
+
 h1 {
     padding-top: 30px;
     text-align: center;

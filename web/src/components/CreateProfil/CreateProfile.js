@@ -13,8 +13,8 @@ function CreateProfile(props) {
     if (props.role === 'teacher') {
       requestBody = {
         query: `
-                    mutation CreateTeacher($first_name: String!, $last_name: String!, $email:  String!,$city: String!, $street: String!, $street_num: Float!, $phone: Float!, $dob: String!, $main_teacher: Boolean!){
-                        createTeacher(first_name: $first_name, last_name: $last_name, email: $email ,city: $city, street: $street, street_num: $street_num, phone: $phone, dob: $dob, main_teacher: $main_teacher,userId: ${props.userId}) {
+                    mutation CreateTeacher($first_name: String!, $last_name: String!, $title_before: String, $title_after: String, $email:  String!,$city: String!, $street: String!, $street_num: Float!, $phone: Float!, $dob: String!, $main_teacher: Boolean!){
+                        createTeacher(first_name: $first_name, last_name: $last_name, title_before: $title_before, title_after: $title_after email: $email, city: $city, street: $street, street_num: $street_num, phone: $phone, dob: $dob, main_teacher: $main_teacher,userId: ${props.userId}) {
                             id
                             first_name
                         }
@@ -23,6 +23,8 @@ function CreateProfile(props) {
         variables: {
           first_name: values.first_name,
           last_name: values.last_name,
+          title_before: values.title_before,
+          title_after: values.title_after,
           email: values.email,
           city: values.city,
           street: values.street,
@@ -36,7 +38,7 @@ function CreateProfile(props) {
       if (!step) {
         requestBody = {
           query: `
-                    mutation CreateParent($first_name: String!, $last_name: String!, $email:  String!, $phone: Float!, $dob: String!, $title_before: String!, $title_after: String!){
+                    mutation CreateParent($first_name: String!, $last_name: String!, $email:  String!, $phone: Float!, $dob: String!, $title_before: String, $title_after: String){
                         createParent(first_name: $first_name, last_name: $last_name, email: $email, phone: $phone, dob: $dob, title_before: $title_before, title_after: $title_after) {
                             id
                         }
@@ -68,6 +70,7 @@ function CreateProfile(props) {
             street: values.street,
             street_num: values.street_num,
             dob: values.dob,
+            desc: values.desc,
             classId: Number(values.class)
           }
         };
@@ -94,6 +97,7 @@ function CreateProfile(props) {
           setStep(false)
           signStudentGroup(resData.data.createStudent.id)
         }
+        props.handleCreated();
       })
       .catch(err => {
         console.log(err);
@@ -152,6 +156,8 @@ function CreateProfile(props) {
           initialValues={{
             first_name: '',
             last_name: '',
+            title_before: '',
+            title_after: '',
             email: '',
             city: '',
             street: '',
@@ -197,6 +203,14 @@ function CreateProfile(props) {
               <label htmlFor="last_name">Priezvisko:</label>
               <Field name="last_name" type="text"/>
               <ErrorMessage name="last_name"/>
+            </div>
+            <div className="form-control">
+              <label htmlFor="title_before">Titul pred menom:</label>
+              <Field name="title_before" type="text"/>
+            </div>
+            <div className="form-control">
+              <label htmlFor="title_after">Titul za menom:</label>
+              <Field name="title_after" type="text"/>
             </div>
             <div className="form-control">
               <label htmlFor="email">Email:</label>

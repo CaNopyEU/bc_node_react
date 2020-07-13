@@ -7,6 +7,7 @@
 .groups-header {
     display: flex;
     flex-flow: row;
+    padding: 3%;
 }
 .groups-body {
     display: flex;
@@ -17,13 +18,20 @@
     display: flex;
     flex-flow: column;
     width: 45%;
-    padding: 5% 0;
+    margin: 1%;
+    padding: 2%;
+    border-radius: 5px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.26);
 }
 .groups-body-students {
     display: flex;
     flex-flow: column;
     width: 45%;
-    padding: 5% 0;
+    padding: 2%;
+    border: #4e5164 1px;
+    margin: 1%;
+    border-radius: 5px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.26);
 }
 .plus-button{
     height: fit-content;
@@ -43,4 +51,6 @@
 .groups-form-control {
     display: flex;
     flex-flow: row;
+    justify-content: space-between;
+    margin: 3px 0;
 }

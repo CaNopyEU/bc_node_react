@@ -3,6 +3,9 @@ import React, {Component} from 'react';
 import './Group.css'
 import * as Yup from "yup";
 import {ErrorMessage, Field, Form, Formik} from "formik";
+import GroupRemoveLecture from './GroupRemoveLecture'
+import GroupRemoveTeacher from "./GroupsRemoveTeacher";
+import GroupRemoveStudent from "./GroupRemoveStudent";
 
 class Group extends Component {
 
@@ -188,11 +191,11 @@ class Group extends Component {
         return res.json();
       })
       .then(resData => {
-          this.setState(prevState => {
-            const updatedGroups = [...prevState.groups];
-            updatedGroups.pop();
-            return {groups: updatedGroups};
-          })
+        this.setState(prevState => {
+          const updatedGroups = [...prevState.groups];
+          updatedGroups.pop();
+          return {groups: updatedGroups};
+        })
       })
       .catch(err => {
         this.setState({errors: 'Húuups, došlo k neočakávanej chybe'})
@@ -439,6 +442,27 @@ class Group extends Component {
       });
 
   }
+  deleteLectureHandler = id => {
+    const newLectures = this.state.groupLectures.filter(lecture => lecture.id !== id);
+    this.setState({
+      groupLectures: newLectures
+    })
+  }
+
+  deleteStudentHandler = id => {
+    const newStudents = this.state.groupStudents.filter(student => student.id !== id);
+    this.setState({
+      groupStudents: newStudents
+    })
+  }
+
+  deleteTeacherHandler = id => {
+    const newTeachers = this.state.groupTeachers.filter(teacher => teacher.id !== id);
+    this.setState({
+      groupTeachers: newTeachers
+    })
+  }
+
 
   componentDidMount() {
     this.fetchGroups();
@@ -456,13 +480,17 @@ class Group extends Component {
 
     const header = (
       <>
-        {this.state.groups.map((group) => <button className="btn"
-                                                  onClick={this.showDetailHandler.bind(this, group.id)}>
+        <div className="center">
+          Skupiny:
+        </div>
+        {this.state.groups.map((group) => <button
+          className={`btn ${this.state.selectedGroup.id === group.id ? 'selected' : ''}`}
+          onClick={this.showDetailHandler.bind(this, group.id)}>
           {group.title}
         </button>)
         }
-        <button onClick={this.createGroup} className="btn" style={{backgroundColor: 'green'}}>+</button>
-        <button onClick={this.deleteGroup} className="btn" style={{backgroundColor: 'red'}}>-</button>
+        <button onClick={this.deleteGroup} className="btn red">-</button>
+        <button onClick={this.createGroup} className="btn green" style={{backgroundColor: 'green'}}>+</button>
       </>
     )
     return (
@@ -481,8 +509,14 @@ class Group extends Component {
                   :
                   <h2>Predmety:</h2>
               }
-              {this.state.groupLectures.map((lecture) => <div
-                className="groups-form-control">{lecture.lecture}({(lecture.lectureType) ? 'Známkovaný' : 'Výchovný'})</div>)}
+              {this.state.groupLectures.map((lecture) => <>
+                <div
+                  className="groups-form-control">
+                  <p>{lecture.lecture}({(lecture.lectureType) ? 'Známkovaný' : 'Výchovný'})</p><GroupRemoveLecture
+                  remove={this.deleteLectureHandler} groupId={this.state.selectedGroup.id} lectureId={lecture.id}/>
+                </div>
+
+              </>)}
 
               <Formik
                 initialValues={{lecture: ''}}
@@ -513,7 +547,11 @@ class Group extends Component {
             <div className="groups-body-students">
               <h2>Študenti:</h2>
               {this.state.groupStudents.map((student) => <div
-                className="groups-form-control">{student.first_name} {student.last_name}</div>)}
+                className="groups-form-control">
+                <p>{student.first_name} {student.last_name}</p>{this.state.selectedGroup.title !== 1 &&
+              <GroupRemoveStudent
+                remove={this.deleteStudentHandler} groupId={this.state.selectedGroup.id} studentId={student.id}/>}
+              </div>)}
               {this.state.selectedGroup.title !== 1 &&
               <Formik
                 initialValues={{student: ''}}
@@ -545,7 +583,10 @@ class Group extends Component {
             <div className="groups-body-students">
               <h2>Vyučujúci:</h2>
               {this.state.groupTeachers.map((teacher) => <div
-                className="groups-form-control">{teacher.title_before} {teacher.first_name} {teacher.last_name} {teacher.title_after}</div>)}
+                className="groups-form-control">
+                <p>{teacher.title_before} {teacher.first_name} {teacher.last_name} {teacher.title_after}</p>
+                <GroupRemoveTeacher remove={this.deleteTeacherHandler} groupId={this.state.selectedGroup.id}
+                                    teacherId={teacher.id}/></div>)}
               <Formik
                 initialValues={{teacher: ''}}
                 validationSchema={Yup.object({

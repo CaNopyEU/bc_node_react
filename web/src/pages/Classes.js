@@ -9,6 +9,8 @@ import Spinner from '../components/Spinner/Spinner';
 import Backdrop from '../components/Backdrop/Backdrop'
 import Modal from '../components/Modal/Modal'
 import Group from '../components/Groups/Group'
+import ClassTeacherUpdate from "../components/Groups/ClassTeacherUpdate";
+import LectureEdit from "../components/LectureEdit/LectureEdit";
 
 class ClassPage extends Component {
   static contextType = AuthContext;
@@ -18,6 +20,7 @@ class ClassPage extends Component {
     this.state = {
       classes: [],
       teachers: [],
+      teachersNoClass: [],
       isLoading: false,
       errors: '',
       success: '',
@@ -25,12 +28,15 @@ class ClassPage extends Component {
       selectedClass: null
     }
     this.createGroup = this.createGroup.bind(this);
+    this.updateHandler = this.updateHandler.bind(this)
   }
 
   componentDidMount() {
     this.fetchTeachers();
+    this.fetchNoClassTeachers();
     this.fetchClasses();
   }
+
 
   fetchClasses() {
     this.setState({isLoading: true});
@@ -124,6 +130,49 @@ class ClassPage extends Component {
       });
   }
 
+  fetchNoClassTeachers() {
+    this.setState({isLoading: true});
+    let requestBody = {
+      query: `
+                    query {
+                        teachersWith {
+                            id
+                            first_name
+                            last_name
+                            title_before
+                            title_after
+                            class {
+                              id
+                            }
+                        }
+                    }
+                `
+    };
+
+    fetch('http://localhost:8000', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        const woClass = resData.data.teachersWith.filter(teacher => teacher.class === null);
+        this.setState({teachersNoClass: woClass, isLoading: false});
+
+      })
+      .catch(err => {
+        console.log(err);
+        this.setState({isLoading: false})
+      });
+  }
+
   createGroup = (value) => {
     const requestBody = {
       query: `
@@ -156,14 +205,15 @@ class ClassPage extends Component {
         console.log(err);
       });
 
-  }
+  };
+
   submitHandler = (values) => {
     this.state.teachers.filter(teacher => teacher.id == values.teacherId).map(person => (this.setState({
       teacher: {
         first_name: person.first_name,
         last_name: person.last_name
       }
-    })))
+    })));
 
     const requestBody = {
       query: `
@@ -225,6 +275,39 @@ class ClassPage extends Component {
       });
   };
 
+  updateHandler(id, oneClass) {
+    this.setState({
+      selectedClass: {
+        id: oneClass.id,
+        classType: oneClass.classType,
+        year: oneClass.year,
+        teacher: {
+          id: oneClass.teacher.id,
+          first_name: oneClass.teacher.first_name,
+          last_name: oneClass.teacher.last_name,
+          title_before: oneClass.teacher.title_before,
+          title_after: oneClass.teacher.title_after
+        }
+      }
+    });
+    const elIndex = this.state.classes.findIndex(oClass => oClass.id === id);
+    let newClasses = [...this.state.classes];
+    newClasses[elIndex] = {
+      ...newClasses[elIndex],
+      classType: oneClass.classType,
+      year: oneClass.year,
+      teacher: {
+        id: oneClass.teacher.id,
+        first_name: oneClass.teacher.first_name,
+        last_name: oneClass.teacher.last_name,
+        title_before: oneClass.teacher.title_before,
+        title_after: oneClass.teacher.title_after
+      }
+    };
+    this.setState({
+      classes: newClasses
+    })
+  }
 
   showDetailHandler = classId => {
     this.setState(prevState => {
@@ -249,7 +332,14 @@ class ClassPage extends Component {
             canCancel
             onCancel={this.modalCancelHandler}
           >
-            <Group classId={this.state.selectedClass.id} class={this.state.selectedClass} teachers={this.state.teachers}/>
+            <ClassTeacherUpdate id={this.state.selectedClass.id}
+                                updateHandler={this.updateHandler}
+                                thisClass={this.state.selectedClass}
+                                teachers={this.state.teachersNoClass}/>
+            <hr/>
+            <Group classId={this.state.selectedClass.id}
+                   class={this.state.selectedClass}
+                   teachers={this.state.teachers}/>
           </Modal>)}
         <h1>Administrácia Tried</h1>
         <Formik
@@ -298,8 +388,9 @@ class ClassPage extends Component {
               <label htmlFor="teacherId">Výber učiteľa:</label>
               <Field name="teacherId" as="select">
                 <option value="">--Vyberte--</option>
-                {this.state.teachers.map(teacher => (
-                  <option value={teacher.id}>{teacher.first_name} {teacher.last_name}</option>
+                {this.state.teachersNoClass.map(teacher => (
+                  <option
+                    value={teacher.id}>{teacher.title_before} {teacher.first_name} {teacher.last_name} {teacher.title_after}</option>
                 ))}
               </Field>
               <ErrorMessage name="lectureType"/>
@@ -321,9 +412,10 @@ class ClassPage extends Component {
               <tr key={classData.id}>
                 <td>{classData.classType.toUpperCase()}</td>
                 <td>{classData.year}</td>
-                <td>{classData.teacher.first_name} {classData.teacher.last_name}</td>
+                <td>{classData.teacher.title_before} {classData.teacher.first_name} {classData.teacher.last_name} {classData.teacher.title_after}</td>
                 <td>
-                  <button onClick={this.showDetailHandler.bind(this, classData.id)} className="btn">Detail triedy</button>
+                  <button onClick={this.showDetailHandler.bind(this, classData.id)} className="btn">Detail triedy
+                  </button>
                 </td>
               </tr>
             ))}

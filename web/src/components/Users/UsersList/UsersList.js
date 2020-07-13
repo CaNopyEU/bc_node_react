@@ -10,10 +10,13 @@ const userList = props => {
         return (
             <UserItem
                 key={user.id}
+                user={user}
                 id={user.id}
                 username={user.username}
                 role={user.role}
                 onDetail={props.onViewDetail}
+                delete={props.onDelete}
+                onEdit={props.onEdit}
             />
         )
     })
@@ -23,7 +26,7 @@ const userList = props => {
                 <th>ID používateľa:</th>
                 <th>Prihlasovacie meno:</th>
                 <th>Oprávnenie:</th>
-                <th>Detail:</th>
+                <th>Nastavenia:</th>
             </tr>
             {users}
         </table>)

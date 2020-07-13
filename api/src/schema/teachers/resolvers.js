@@ -61,16 +61,23 @@ export async function getAll() {
 
 // Get all teachers with class
 export async function getAllwithClass() {
-  return await models.Teacher.findAll({
+  const Teachers = await models.Teacher.findAll({
     order: [['last_name', 'ASC']],
-    where: {main_teacher: true}
+    where: {main_teacher: true},
+    include: [{
+      model: models.Class,
+      required: false,
+    }]
   })
+  return Teachers
 }
 
 // Create users
 export async function create(parentValue, {
   first_name,
   last_name,
+  title_before,
+  title_after,
   email,
   city,
   street,
@@ -86,6 +93,8 @@ export async function create(parentValue, {
     const Teacher = await models.Teacher.create({
       first_name,
       last_name,
+      title_before,
+      title_after,
       email,
       city,
       street,
@@ -108,6 +117,8 @@ export async function update(parentValue, {
   id,
   first_name,
   last_name,
+  title_before,
+  title_after,
   email,
   city,
   street,
@@ -125,6 +136,12 @@ export async function update(parentValue, {
     if (last_name) {
       last_name = last_name.trim();
       Teacher.last_name = last_name;
+    }
+    if (title_before) {
+      Teacher.title_before = title_before;
+    }
+    if (title_after) {
+      Teacher.title_after = title_after;
     }
     if (email) {
       Teacher.email = email;

@@ -25,8 +25,12 @@ export const createGroupLecture = {
 export const deleteGroupLecture = {
     type: GroupLectureType,
     args: {
-        id: {
-            name: 'id',
+        groupId: {
+            name: 'groupId',
+            type: GraphQLInt
+        },
+        lectureId: {
+            name: 'lectureId',
             type: GraphQLInt
         }
     },

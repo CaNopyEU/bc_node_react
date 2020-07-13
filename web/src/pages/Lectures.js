@@ -6,6 +6,8 @@ import AuthContext from '../context/auth-context';
 import * as Yup from "yup";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import Spinner from '../components/Spinner/Spinner';
+import Modal from "../components/Modal/Modal";
+import LectureEdit from "../components/LectureEdit/LectureEdit";
 
 class LecturePage extends Component {
   static contextType = AuthContext;
@@ -16,8 +18,29 @@ class LecturePage extends Component {
       lectures: [],
       isLoading: false,
       errors: '',
-      success: ''
+      success: '',
+      selectedLecture: ''
     }
+    this.updateHandler = this.updateHandler.bind(this)
+  }
+
+  updateHandler(id, lecture, type) {
+    this.setState({
+      selectedLecture: {
+        lecture: lecture,
+        lectureType: type
+      }
+    });
+    const elIndex = this.state.lectures.findIndex(lecture => lecture.id === id);
+    let newLectures = [...this.state.lectures];
+    newLectures[elIndex] = {
+      ...newLectures[elIndex],
+      lecture: lecture,
+      lectureType: type
+    }
+    this.setState({
+      lectures: newLectures
+    })
   }
 
   componentDidMount() {
@@ -114,10 +137,72 @@ class LecturePage extends Component {
       });
   };
 
+  showDetailHandler = id => {
+    this.setState(prevState => {
+      const selectedLecture = prevState.lectures.find(e => e.id === id);
+      return {selectedLecture: selectedLecture};
+    })
+  }
+
+  deleteLectureHandler = id => {
+    const newLectures = this.state.lectures.filter(lecture => lecture.id !== id);
+    this.setState({
+      lectures: newLectures
+    })
+  }
+  deleteLectures(id) {
+    const requestBody = {
+      query: `
+                    mutation{
+                      deleteLecture(id: ${id}){
+                        id
+                      }
+                    }
+                `
+    };
+
+    fetch('http://localhost:8000', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        this.deleteLectureHandler(id)
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+  confirmDelete = (id, lecture) => {
+    let r = window.confirm(`Prajete si predmet "${lecture}" odstaniť?`);
+    if (r === true) {
+      this.deleteLectures(id)
+    }
+  }
+  modalCancelHandler = () => {
+    this.setState({creating: false, selectedLecture: null});
+  };
+
   render() {
     console.log(this.state.lectures)
     return (
       <>
+        {this.state.selectedLecture && (
+          <Modal
+            title={`Úprava predmetu ${this.state.selectedLecture.lecture}`}
+            canCancel
+            onCancel={this.modalCancelHandler}
+          >
+            <LectureEdit updateHandler={this.updateHandler} lecture={this.state.selectedLecture} cancel={this.modalCancelHandler}/>
+          </Modal>)}
         <h1>Administrácia predmetov</h1>
         <Formik
           initialValues={{lecture: '', lectureType: ''}}
@@ -177,7 +262,10 @@ class LecturePage extends Component {
                 <td>{lecture.id}</td>
                 <td>{lecture.lecture}</td>
                 <td>{(lecture.lectureType) ? 'Známkovaný' : 'Výchovný'}</td>
-                <td><button className="btn">Edit</button></td>
+                <td>
+                  <button onClick={this.showDetailHandler.bind(this, lecture.id)} className="btn">Upraviť</button>
+                  <button onClick={this.confirmDelete.bind(this, lecture.id, lecture.lecture)} className="btn red">Odstrániť</button>
+                </td>
               </tr>
             ))}
             </tbody>

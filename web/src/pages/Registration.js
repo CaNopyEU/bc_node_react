@@ -19,11 +19,11 @@ class RegistrationPage extends Component {
     }
   }
 
-  submitHandler = (values) => {
+  submitRegister = (values) => {
     const requestBody = {
       query: `
                     mutation CreateUser($username: String!, $password: String!, $role: String!) {
-                        createUser(username: $username, password: $password, role: $role) {
+                        createUser(username: $username, password: $password, role: $role, active: true) {
                             id
                             username
                             role
@@ -50,12 +50,12 @@ class RegistrationPage extends Component {
         return res.json();
       })
       .then(resData => {
-        if(resData.data.createUser.username){
-          this.setState({
-            success: `Nový používateľ "${resData.data.createUser.username}" bol úspešne vytvorený`
-          })
+          if (resData.data.createUser.username) {
+            this.setState({
+              success: `Nový používateľ "${resData.data.createUser.username}" bol úspešne vytvorený`
+            })
+          }
         }
-      }
       )
       .catch(err => {
         this.setState({errors: 'Nepodarilo sa nového používateľa vytvoriť'})
@@ -70,11 +70,11 @@ class RegistrationPage extends Component {
         validationSchema={Yup.object({
           username: Yup.string()
             .max(15, 'Môže byť maximálne 15 znakov dlhé')
-            .min(5,'Musí byť minimalne 5 znakov dlhé')
+            .min(5, 'Musí byť minimalne 5 znakov dlhé')
             .required('Prihlasovacie meno je potrebé vyplniť!'),
           password: Yup.string()
             .max(20, 'Môže byť maximálne 20 znakov dlhé')
-            .min(5,'Musí byť minimalne 5 znakov dlhé')
+            .min(5, 'Musí byť minimalne 5 znakov dlhé')
             .required('Heslo je potrebé vyplniť!'),
           role: Yup.string()
             .oneOf(
@@ -84,7 +84,7 @@ class RegistrationPage extends Component {
         })}
         onSubmit={(values, {setSubmitting}) => {
           setTimeout(() => {
-            this.submitHandler(values)
+            this.submitRegister(values)
             setSubmitting(false);
           }, 400);
         }}
@@ -105,10 +105,10 @@ class RegistrationPage extends Component {
           <div className="form-control">
             <label htmlFor="username">Prihlasovacie meno:</label>
             <Field name="username" type="text"/>
-            <ErrorMessage  name="username"/>
+            <ErrorMessage name="username"/>
           </div>
           <div className="form-control">
-            <label htmlFor="password" >Heslo:</label>
+            <label htmlFor="password">Heslo:</label>
             <Field name="password" type="password"/>
             <ErrorMessage name="password"/>
           </div>
@@ -120,7 +120,7 @@ class RegistrationPage extends Component {
               <option value="teacher">Učiteľ</option>
               <option value="student">Študent</option>
             </Field>
-            <ErrorMessage name="role" />
+            <ErrorMessage name="role"/>
           </div>
           <button className="btn" type="submit">Vytvoriť účet</button>
         </Form>

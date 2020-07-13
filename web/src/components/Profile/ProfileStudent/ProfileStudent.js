@@ -1,42 +1,40 @@
 import React, {useState} from 'react';
-import {Formik, Form, Field, ErrorMessage} from 'formik';
-import * as Yup from "yup";
-import ProfileParent from "./ProfileParent";
+
+import ProfileStudentView from "./ProfileStudentView";
+import ProfileStudentEdit from "./ProfileStudentEdit";
+import ProfileParentEdit from "./ProfileParentEdit";
+import ProfileParentView from "./ProfileParentView";
 
 function ProfileStudent(props) {
+
+  const [editStudent, setEditStudent] = useState(false);
+  const [editParent, setEditParent] = useState(false);
+
+  function editStudentHandler() {
+    setEditStudent(!editStudent);
+  }
+  function editParentHandler() {
+    setEditParent(!editParent);
+  }
+
   return (
     <div className="in-row">
-
-      <table>
-        <thead><p>Informácie o študentovi</p></thead>
-        <tbody>
-        <tr>
-          <td>Meno:</td>
-          <td>{props.user.first_name}</td>
-        </tr>
-        <tr>
-          <td>Priezvisko:</td>
-          <td>{props.user.last_name}</td>
-        </tr>
-        <tr>
-          <td>Mesto:</td>
-          <td>{props.user.city}</td>
-        </tr>
-        <tr>
-          <td>Ulica:</td>
-          <td>{props.user.street} / {props.user.street_num}</td>
-        </tr>
-        <tr>
-          <td>Dátum narodenia:</td>
-          <td>{new Date(props.user.dob).toLocaleDateString()}</td>
-        </tr>
-        <tr>
-          <td>Poznámka ku študentovi:</td>
-          <td>{props.user.desc}</td>
-        </tr>
-        </tbody>
-      </table>
-      <ProfileParent parent={props.user.parent}/>
+      <div className="in-column">
+        {
+          editStudent ?
+            <ProfileStudentEdit user={props.user} editHandler={editStudentHandler} classes={props.classes} update={props.update}/>
+            :
+            <ProfileStudentView user={props.user} editHandler={editStudentHandler}/>
+        }
+      </div>
+      <div className="in-column">
+        {
+          editParent ?
+            <ProfileParentEdit user={props.user.parent} editHandler={editParentHandler}  update={props.update}/>
+            :
+            <ProfileParentView parent={props.user.parent} editHandler={editParentHandler}/>
+        }
+      </div>
     </div>
   )
 }
