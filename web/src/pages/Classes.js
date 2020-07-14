@@ -399,9 +399,9 @@ class ClassPage extends Component {
           </Form>
         </Formik>
         {this.state.isLoading ? <Spinner/> :
-          <table>
+          <table className="lectures_table">
             <thead className="table__header">
-            <tr>
+            <tr className="classes_tr">
               <td>Trieda:</td>
               <td>Ročník:</td>
               <td>Triedny učiteľ:</td>
@@ -409,7 +409,7 @@ class ClassPage extends Component {
             </thead>
             <tbody>
             {this.state.classes.map(classData => (
-              <tr key={classData.id}>
+              <tr key={classData.id} className="classes_tr">
                 <td>{classData.classType.toUpperCase()}</td>
                 <td>{classData.year}</td>
                 <td>{classData.teacher.title_before} {classData.teacher.first_name} {classData.teacher.last_name} {classData.teacher.title_after}</td>

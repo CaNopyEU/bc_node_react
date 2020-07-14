@@ -12,7 +12,7 @@ function ProfileTeacher(props) {
   }
   return (
     <div className="in-row">
-      <div>
+      <div className="in-column-profile-teacher">
       {editing  ? <ProfileTeacherEdit user={props.user} editHandler={editTeacherHandler} update={props.update}/>  : <ProfileTeacherView user={props.user} editHandler={editTeacherHandler}/>}
       </div>
       <ProfileTeacherLecture lectures={props.user.lectures} id={props.user.id}/>

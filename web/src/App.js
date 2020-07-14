@@ -9,6 +9,7 @@ import PeoplePage from "./pages/People";
 import RegistrationPage from "./pages/Registration";
 import LecturePage from "./pages/Lectures";
 import ClassPage from "./pages/Classes";
+import ProfilePage from "./pages/Profile";
 
 import MainNavigation from "./components/Navigation/MainNavigation";
 import AuthContext from './context/auth-context';
@@ -75,6 +76,7 @@ class App extends Component {
               )}
               {this.state.token && (
                 <>
+                  <Route path="/profile" component={ProfilePage}/>
                   <Route path="/people" component={PeoplePage}/>
                   <Route path="/class" component={ClassPage}/>
                   <Route path="/registration" component={RegistrationPage}/>

@@ -3,7 +3,7 @@ import React from "react";
 function ProfileStudentView(props) {
   return (
     <>
-      <table className="in-column">
+      <table>
         <p>Informácie o študentovi</p>
         <tbody>
         <tr>

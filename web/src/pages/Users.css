@@ -1,0 +1,18 @@
+table {
+    width: 100% !important;
+}
+
+.in-column {
+    width: 100% !important;
+    padding: 0!important;
+}
+
+.in-column-profile-student {
+    padding-left: 10% !important;
+    width: 100% !important;
+}
+
+.in-column-profile-teacher {
+    padding-left: 10% !important;
+    width: 100% !important;
+}

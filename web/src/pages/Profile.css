@@ -1,0 +1,65 @@
+.profile {
+    width: 50%;
+    background: #f6f6ff;
+    margin: 35px auto;
+    padding: 3% 120px;
+    border-radius: 8px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 150, 0.26);
+    color: #356fff;
+}
+
+.is-row-evenly {
+    width: 50%;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-around;
+}
+
+.is-row {
+    width: 70%;
+    display: flex;
+    flex-flow: row;
+}
+
+
+.my-profile-student-table {
+     width: 50% !important;
+     text-align: start !important;
+ }
+
+.my-profile-teacher-table {
+    width: 50% !important;
+    text-align: center !important;
+}
+
+table {
+    width: 40%;
+    text-align: start;
+}
+
+.profile-table {
+    width: 40% !important;
+}
+
+tr {
+    display: flex;
+    justify-content: space-around;
+    margin: 15px 0;
+}
+
+.black {
+    color: black;
+}
+
+tbody {
+    background-color: transparent;
+    width: 100%;
+}
+
+td {
+    width: 50%;
+}
+
+p {
+    margin: 0;
+}

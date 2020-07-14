@@ -19,7 +19,7 @@ function ProfileStudent(props) {
 
   return (
     <div className="in-row">
-      <div className="in-column">
+      <div className="in-column-profile-student">
         {
           editStudent ?
             <ProfileStudentEdit user={props.user} editHandler={editStudentHandler} classes={props.classes} update={props.update}/>
@@ -27,7 +27,7 @@ function ProfileStudent(props) {
             <ProfileStudentView user={props.user} editHandler={editStudentHandler}/>
         }
       </div>
-      <div className="in-column">
+      <div className="in-column-profile-student">
         {
           editParent ?
             <ProfileParentEdit user={props.user.parent} editHandler={editParentHandler}  update={props.update}/>

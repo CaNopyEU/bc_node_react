@@ -248,7 +248,7 @@ class LecturePage extends Component {
           </Form>
         </Formik>
         {this.state.isLoading ? <Spinner/> :
-          <table>
+          <table className="lectures_table">
             <thead className="table__header">
             <tr>
               <td>ID predmetu:</td>

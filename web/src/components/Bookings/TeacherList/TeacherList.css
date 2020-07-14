@@ -8,9 +8,20 @@
 
 .bookings__item {
     margin: 0.5rem 0;
-    padding: 0.5rem;
-    border: 1px solid #4aa1ff;
+    padding: 2rem;
+    border: 2px solid #4aa1ff;
+    border-radius: 5px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 150, 0.26);
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+}
+.bookings__item-data {
+    width: 100%;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+}
+p{
+    margin: 13px;
 }

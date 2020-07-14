@@ -40,7 +40,14 @@ const mainNavigation = props => (
                 {context.role === 'teacher' &&
                 <>
                   <li>
-                    <NavLink to="/events">Events</NavLink>
+                    <NavLink to="/profile">Môj účet</NavLink>
+                  </li>
+                </>
+                }
+                {context.role === 'student' &&
+                <>
+                  <li>
+                    <NavLink to="/profile">Môj účet</NavLink>
                   </li>
                 </>
                 }

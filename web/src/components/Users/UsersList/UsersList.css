@@ -1,6 +1,6 @@
 .users__list {
-    width: 90%;
-    max-width: 1200px;
+    width: 90% !important;
+    max-width: 1400px;
     margin: 2rem auto;
     padding: 0;
     list-style: none;

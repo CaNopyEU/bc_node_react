@@ -5,6 +5,16 @@ table {
     text-align: center;
 }
 
+.lectures_table{
+    align-self: center;
+    margin: 0 auto;
+    width: 50% !important;
+    text-align: center;
+}
+
+.classes_tr {
+    align-items: center;
+}
 .table__header {
     background-color: #356fff;
     border: solid 2px #4aa1ff;
