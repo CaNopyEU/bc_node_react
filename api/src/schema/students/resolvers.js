@@ -17,6 +17,10 @@ export async function getById(parentValue, {id}) {
       {
         model: models.Group,
         as: 'groups'
+      },
+      {
+        model: models.Grade,
+        as: 'grades'
       }]
   })
 }

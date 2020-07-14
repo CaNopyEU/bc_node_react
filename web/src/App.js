@@ -10,6 +10,7 @@ import RegistrationPage from "./pages/Registration";
 import LecturePage from "./pages/Lectures";
 import ClassPage from "./pages/Classes";
 import ProfilePage from "./pages/Profile";
+import ClassTeacherPage from "./pages/ClassesTeacher";
 
 import MainNavigation from "./components/Navigation/MainNavigation";
 import AuthContext from './context/auth-context';
@@ -20,6 +21,7 @@ class App extends Component {
   state = {
     token: null,
     userId: null,
+    myId: null,
     role: null
   }
   currentUser = () => {
@@ -28,13 +30,13 @@ class App extends Component {
       console.log(decoded(user))
     }
   }
-  login = (token, userId, tokenExpiration, role) => {
-    this.setState({token: token, userId: userId, role: role});
+  login = (token, userId, tokenExpiration, role, myId) => {
+    this.setState({token: token, userId: userId, role: role, myId: myId});
     localStorage.setItem('token', JSON.stringify(token));
   }
 
   logout = () => {
-    this.setState({token: null, userId: null, role: null});
+    this.setState({token: null, userId: null, role: null, myId: null});
     localStorage.removeItem('token');
   };
 
@@ -42,7 +44,7 @@ class App extends Component {
     const token = JSON.parse(localStorage.getItem('token'));
     if (token) {
       const dtoken = decoded(token);
-      this.setState({token: token, userId: dtoken.userId, role: dtoken.role})
+      this.setState({token: token, userId: dtoken.userId, role: dtoken.role, myId: dtoken.myId})
     }
     ;
   }
@@ -54,6 +56,7 @@ class App extends Component {
           value={{
             token: this.state.token,
             userId: this.state.userId,
+            myId: this.state.myId,
             role: this.state.role,
             login: this.login,
             logout: this.logout,
@@ -83,6 +86,7 @@ class App extends Component {
                   <Route path="/events" component={EventsPage}/>
                   <Route path="/users" component={UsersPage}/>
                   <Route path="/lectures" component={LecturePage}/>
+                  <Route path="/triedy" component={ClassTeacherPage}/>
                 </>
               )}
             </Switch>

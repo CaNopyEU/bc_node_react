@@ -41,6 +41,26 @@ export async function getAll() {
   })
 }
 
+// Get all by studentId grade
+export async function getAllByStudent(parentValue, {studentId, lectureId}) {
+  return await models.Grade.findAll({
+    order: [['date', 'DESC']], include: [
+      {
+        model: models.Lecture,
+        where: {id: lectureId}
+      },
+      {
+        model: models.Student,
+        where: {id: studentId}
+      },
+      {
+        model: models.Teacher,
+        where: {}
+      }
+    ]
+  })
+}
+
 // Create grade
 export async function create(parentValue, {
   grade,

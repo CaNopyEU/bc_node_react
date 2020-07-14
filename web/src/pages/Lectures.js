@@ -254,6 +254,7 @@ class LecturePage extends Component {
               <td>ID predmetu:</td>
               <td>Názov predmetu:</td>
               <td>Klasifikácia predmetu:</td>
+              <td>Nastavenia</td>
             </tr>
             </thead>
             <tbody>

@@ -3,6 +3,7 @@ import {GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLFloat} from 'graphq
 import UserType from "../users/type";
 import LectureType from "../lectures/type";
 import GroupType from "../groups/type";
+import TeacherType from "../teachers/type";
 
 // Homework type
 const HomeworkType = new GraphQLObjectType({
@@ -17,8 +18,10 @@ const HomeworkType = new GraphQLObjectType({
     createdAt: {type: GraphQLString},
     updatedAt: {type: GraphQLString},
     group: {type: GroupType},
-    teacher: {type: UserType},
-    lecture: {type: LectureType}
+    teacher: {type: TeacherType},
+    lecture: {type: LectureType},
+    teacherId: {type: GraphQLInt},
+    lectureId: {type: GraphQLInt}
   })
 })
 

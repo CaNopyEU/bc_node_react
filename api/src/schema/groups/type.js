@@ -5,6 +5,7 @@ import GroupLectureType from "../groups_lectures/type";
 import LectureType from "../lectures/type";
 import TeacherType from "../teachers/type";
 import StudentType from "../students/type";
+import HomeworkType from "../homeworks/type";
 
 
 // Group type
@@ -20,7 +21,8 @@ const GroupType = new GraphQLObjectType({
     class: {type: ClassType},
     lectures: {type: new GraphQLList(LectureType)},
     teachers: {type: new GraphQLList(TeacherType)},
-    students: {type: new GraphQLList(StudentType)}
+    students: {type: new GraphQLList(StudentType)},
+    homeworks: {type: new GraphQLList(HomeworkType)}
   })
 })
 

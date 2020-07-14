@@ -42,6 +42,9 @@ const mainNavigation = props => (
                   <li>
                     <NavLink to="/profile">Môj účet</NavLink>
                   </li>
+                  <li>
+                    <NavLink to="/class">Triedy</NavLink>
+                  </li>
                 </>
                 }
                 {context.role === 'student' &&

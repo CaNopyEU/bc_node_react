@@ -40,6 +40,24 @@ export async function getAll() {
   })
 }
 
+// Get all homeworks by group
+export async function getAllbyGroup(parentValue, {groupId}) {
+  return await models.Homework.findAll({
+    order: [['deadline', 'DESC']], include: [
+      {
+        model: models.Group,
+        where: {id: groupId}
+      },
+      {
+        model: models.Teacher
+      },
+      {
+        model: models.Lecture
+      }
+    ]
+  })
+}
+
 // Create Homework
 export async function create(parentValue, {
   name,

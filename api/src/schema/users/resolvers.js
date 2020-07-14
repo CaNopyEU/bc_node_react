@@ -81,16 +81,26 @@ export async function logUser(parentValue, {username, password}) {
   if (user.active === false) {
     throw new Error('Ucet bol zablokovany')
   }
+  let myId = 9999;
+  if (user.role === 'teacher') {
+    const Teacher = await models.Teacher.findOne({where:{ userId: user.id}})
+        myId = Teacher.id
+  } else if (user.role === 'student') {
+    const Student  = await models.Student.findOne({ where: {userId: user.id}})
+        myId = Student.id
+  }
+
   const token = jwt.sign({
       userId: user.id,
-      role: user.role
+      role: user.role,
+      myId: myId
     },
     'someSuperSacretKey',
     {
       expiresIn: '1h'
     }
   )
-  return {userId: user.id, role: user.role, token: token, tokenExpiration: 1}
+  return {userId: user.id, role: user.role, myId: myId, token: token, tokenExpiration: 1}
 }
 
 export async function active(parentValue, {id}) {

@@ -3,6 +3,7 @@ import {GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLFloat, GraphQLList}
 import UserType from "../users/type";
 import ParentType from "../parents/type";
 import GroupType from "../groups/type";
+import GradeType from "../grades/type";
 
 // Student type
 const StudentType = new GraphQLObjectType({
@@ -23,6 +24,7 @@ const StudentType = new GraphQLObjectType({
     user: {type: UserType},
     parent: {type: ParentType},
     groups: {type: new GraphQLList(GroupType)},
+    grades: {type: new GraphQLList(GradeType)},
     classId: {type: GraphQLInt}
   })
 })

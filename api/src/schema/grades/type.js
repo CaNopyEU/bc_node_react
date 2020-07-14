@@ -18,6 +18,9 @@ const GradeType = new GraphQLObjectType({
     teacher: {type: TeacherType},
     student: {type: StudentType},
     lecture: {type: LectureType},
+    lectureId: {type: GraphQLInt},
+    teacherId: {type: GraphQLInt},
+    studentId: {type: GraphQLInt}
   })
 })
 

@@ -21,6 +21,10 @@ export async function getById(parentValue, {id}) {
       },
       {
         model: models.Class
+      },
+      {
+        model: models.Homework,
+        as: 'homeworks'
       }
     ]
   })
@@ -47,6 +51,10 @@ export async function getByClassId(parentValue, {classId}) {
       {
         model: models.Student,
         as: 'students'
+      },
+      {
+        model: models.Homework,
+        as: 'homeworks',
       }
     ]
   })
@@ -73,6 +81,10 @@ export async function getByTeacher(parentValue, {teacherId}) {
       {
         model: models.Student,
         as: 'students'
+      },
+      {
+        model: models.Homework,
+        as: 'homeworks'
       }
     ]
   })
@@ -95,6 +107,10 @@ export async function getAll() {
       {
         model: models.Student,
         as: 'students'
+      },
+      {
+        model: models.Homework,
+        as: 'homeworks'
       }
     ]
   })

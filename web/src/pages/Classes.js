@@ -332,72 +332,76 @@ class ClassPage extends Component {
             canCancel
             onCancel={this.modalCancelHandler}
           >
+            {this.context.role === 'admin' &&
             <ClassTeacherUpdate id={this.state.selectedClass.id}
                                 updateHandler={this.updateHandler}
                                 thisClass={this.state.selectedClass}
                                 teachers={this.state.teachersNoClass}/>
+
+            }
             <hr/>
             <Group classId={this.state.selectedClass.id}
                    class={this.state.selectedClass}
                    teachers={this.state.teachers}/>
           </Modal>)}
-        <h1>Administrácia Tried</h1>
-        <Formik
-          initialValues={{classType: '', year: '', teacherId: ''}}
-          validationSchema={Yup.object({
-            classType: Yup.string()
-              .required('Nazov predmetu je potrebé vyplniť!')
-              .max(1, 'Označenie triedy nesmie presahovať jeden znak!'),
-            year: Yup.number()
-              .required('Rok je nutné vyplniť!')
-              .max(9, 'Označenie triedy nesmie presahovať jedenomiestne číslo!'),
-            teacherId: Yup.string()
-              .required('Učiteľa je potrebné vybrať')
-          })}
-          onSubmit={(values, {setSubmitting}) => {
-            setTimeout(() => {
-              this.submitHandler(values)
-              setSubmitting(false);
-            }, 400);
-          }}
-        >
-          <Form className="auth-form">
-            {
-              this.state.errors &&
-              <div className="form-control errors">
-                <label>{this.state.errors}</label>
+        {this.context.role === 'admin' && <><h1>Administrácia Tried</h1>
+          <Formik
+            initialValues={{classType: '', year: '', teacherId: ''}}
+            validationSchema={Yup.object({
+              classType: Yup.string()
+                .required('Nazov predmetu je potrebé vyplniť!')
+                .max(1, 'Označenie triedy nesmie presahovať jeden znak!'),
+              year: Yup.number()
+                .required('Rok je nutné vyplniť!')
+                .max(9, 'Označenie triedy nesmie presahovať jedenomiestne číslo!'),
+              teacherId: Yup.string()
+                .required('Učiteľa je potrebné vybrať')
+            })}
+            onSubmit={(values, {setSubmitting}) => {
+              setTimeout(() => {
+                this.submitHandler(values)
+                setSubmitting(false);
+              }, 400);
+            }}
+          >
+            <Form className="auth-form">
+              {
+                this.state.errors &&
+                <div className="form-control errors">
+                  <label>{this.state.errors}</label>
+                </div>
+              }
+              {
+                this.state.success &&
+                <div className="form-control success">
+                  <label>{this.state.success}</label>
+                </div>
+              }
+              <div className="form-control">
+                <label htmlFor="classType">Trieda:</label>
+                <Field name="classType" type="text"/>
+                <ErrorMessage name="classType"/>
               </div>
-            }
-            {
-              this.state.success &&
-              <div className="form-control success">
-                <label>{this.state.success}</label>
+              <div className="form-control">
+                <label htmlFor="year">Ročník:</label>
+                <Field name="year" type="number"/>
+                <ErrorMessage name="year"/>
               </div>
-            }
-            <div className="form-control">
-              <label htmlFor="classType">Trieda:</label>
-              <Field name="classType" type="text"/>
-              <ErrorMessage name="classType"/>
-            </div>
-            <div className="form-control">
-              <label htmlFor="year">Ročník:</label>
-              <Field name="year" type="number"/>
-              <ErrorMessage name="year"/>
-            </div>
-            <div className="form-control">
-              <label htmlFor="teacherId">Výber učiteľa:</label>
-              <Field name="teacherId" as="select">
-                <option value="">--Vyberte--</option>
-                {this.state.teachersNoClass.map(teacher => (
-                  <option
-                    value={teacher.id}>{teacher.title_before} {teacher.first_name} {teacher.last_name} {teacher.title_after}</option>
-                ))}
-              </Field>
-              <ErrorMessage name="lectureType"/>
-            </div>
-            <button className="btn" type="submit">Vytvoriť triedu</button>
-          </Form>
-        </Formik>
+              <div className="form-control">
+                <label htmlFor="teacherId">Výber učiteľa:</label>
+                <Field name="teacherId" as="select">
+                  <option value="">--Vyberte--</option>
+                  {this.state.teachersNoClass.map(teacher => (
+                    <option
+                      value={teacher.id}>{teacher.title_before} {teacher.first_name} {teacher.last_name} {teacher.title_after}</option>
+                  ))}
+                </Field>
+                <ErrorMessage name="lectureType"/>
+              </div>
+              <button className="btn" type="submit">Vytvoriť triedu</button>
+            </Form>
+          </Formik>
+        </>}
         {this.state.isLoading ? <Spinner/> :
           <table className="lectures_table">
             <thead className="table__header">
@@ -405,6 +409,7 @@ class ClassPage extends Component {
               <td>Trieda:</td>
               <td>Ročník:</td>
               <td>Triedny učiteľ:</td>
+              <td>Nastavenia</td>
             </tr>
             </thead>
             <tbody>

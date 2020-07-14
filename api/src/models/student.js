@@ -44,6 +44,11 @@ export default (sequelize, DataTypes) => {
         allowNull: true
       }
     })
+    Student.hasMany(models.Grade, {
+      foreignKey: {
+        name: 'studentId'
+      }
+    })
   }
   return Student
 }

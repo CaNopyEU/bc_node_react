@@ -1,0 +1,31 @@
+.homework-body {
+    display: flex;
+    flex-flow: column;
+    width: 50%;
+}
+.homework-body-view{
+    display: flex;
+    flex-flow: column;
+}
+.homework-body-view-item{
+    display: flex;
+    flex-flow: column;
+
+}
+.homework-body-view-item-block {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    background-color: #4aa1ff;
+    color: #f1f1f1;
+    margin: 30px auto;
+    width: 80%;
+    padding: 2%;
+    border-radius: 8px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.26);
+}
+
+.row {
+    display: flex;
+    flex-flow: row;
+}
