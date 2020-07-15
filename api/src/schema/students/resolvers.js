@@ -21,6 +21,15 @@ export async function getById(parentValue, {id}) {
       {
         model: models.Grade,
         as: 'grades'
+      },
+      {
+        model: models.Attendance,
+        as: 'attendances',
+        order: [['date', 'DESC']]
+      },
+      {
+        model: models.Record,
+        as: 'records'
       }]
   })
 }

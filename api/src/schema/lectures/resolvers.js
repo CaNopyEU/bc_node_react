@@ -36,6 +36,31 @@ export async function getAll() {
   })
 }
 
+// Get all lectures
+export async function getAllByStudent(parentValue, {studentId}) {
+  return await models.Lecture.findAll({
+    order: [['createdAt', 'DESC']],
+    include: [
+      {
+        model: models.Teacher,
+        as: 'teachers'
+      },
+      {
+        model: models.Group,
+        where: {},
+        as: 'groups',
+        include : [
+          {
+            model: models.Student,
+            as: 'students',
+            where: {id: studentId}
+          }
+        ]
+      },
+    ]
+  })
+}
+
 // Create leacture
 export async function create(parentValue, {
   lecture, lectureType

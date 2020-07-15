@@ -35,6 +35,25 @@ export async function getAll() {
   })
 }
 
+// Get all Attendances
+export async function getAllByStudent(parentValue, {
+  studentId
+}) {
+  return await models.Attendance.findAll({
+    order: [['date', 'DESC']],
+    include: [
+      {
+        model: models.Teacher,
+        where: {}
+      },
+      {
+        model: models.Student,
+        where: {id: studentId}
+      }
+    ]
+  })
+}
+
 // Create Attendance
 export async function create(parentValue, {
   desc,
@@ -71,7 +90,13 @@ export async function update(parentValue, {
   }
   Attendance.save()
   return Attendance;
+}
 
+export async function active(parentValue, {id}) {
+  const Attendance = await models.Attendance.findOne({where:{id: id}})
+  Attendance.pardon = !Attendance.pardon;
+  Attendance.save()
+  return Attendance
 }
 
 // Delete Attendance

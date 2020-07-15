@@ -8,6 +8,7 @@ import {ErrorMessage, Field, Form, Formik} from "formik";
 import Spinner from '../components/Spinner/Spinner';
 import Modal from "../components/Modal/Modal";
 import LectureEdit from "../components/LectureEdit/LectureEdit";
+import Backdrop from "../components/Backdrop/Backdrop";
 
 class LecturePage extends Component {
   static contextType = AuthContext;
@@ -192,9 +193,9 @@ class LecturePage extends Component {
   };
 
   render() {
-    console.log(this.state.lectures)
     return (
       <>
+        {(this.state.selectedLecture) && <Backdrop/>}
         {this.state.selectedLecture && (
           <Modal
             title={`Úprava predmetu ${this.state.selectedLecture.lecture}`}

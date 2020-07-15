@@ -8,7 +8,18 @@ export async function getById(parentValue, {id}) {
     include: [{
       model: models.User,
       where: {}
-    }]
+    },
+      {
+        model: models.Lecture,
+        as: 'lectures'
+      },
+      {
+        model: models.Group,
+        as: 'groups'
+      },
+      {
+        model: models.Class
+      }]
   })
 }
 

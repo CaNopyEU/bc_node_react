@@ -32,8 +32,11 @@ function ProfileStudentView(props) {
         </tr>
         </tbody>
       </table>
-      <button onClick={props.editHandler} className="btn">Upraviť študenta</button>
-    </>
+      {
+        !props.onlyView  &&
+        <button onClick={props.editHandler} className="btn">Upraviť študenta</button>
+      }
+      </>
   )
 }
 

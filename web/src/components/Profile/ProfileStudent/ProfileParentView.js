@@ -24,7 +24,11 @@ function ProfileParentView(props) {
         </tr>
         </tbody>
       </table>
-      <button onClick={props.editHandler} className="btn">Upraviť zástupcu</button>
+      {
+        !props.onlyView &&
+        <button onClick={props.editHandler} className="btn">Upraviť zástupcu</button>
+      }
+
     </>
   )
 }

@@ -3,7 +3,7 @@ import {GraphQLString, GraphQLInt, GraphQLBoolean} from 'graphql'
 
 // App Imports
 import AttendanceType from '../type'
-import {create, remove, update} from '../resolvers'
+import {create, remove, update, active} from '../resolvers'
 
 // Attendance create
 export const createAttendance = {
@@ -67,4 +67,15 @@ export const deleteAttendance = {
         }
     },
     resolve: remove
+}
+
+export const activateAttendance = {
+    type: AttendanceType,
+    args: {
+        id: {
+            name: 'id',
+            type: GraphQLInt
+        }
+    },
+    resolve: active
 }

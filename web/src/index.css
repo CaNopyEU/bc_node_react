@@ -122,3 +122,129 @@ h1 {
     padding-top: 30px;
     text-align: center;
 }
+
+.in-column-profile-student-class {
+    padding-left: 5% !important;
+    width: 100% !important;
+}
+
+.attendance-body {
+    display: flex;
+    flex-flow: column;
+}
+
+.attendance-item {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    background-color: #f1f1f1;
+    border-radius: 9px;
+    padding: 3%;
+    margin: 3% 0;
+}
+
+.record {
+    color: #f1f1f1;
+    flex-flow: column;
+    display: flex;
+    margin: 30px auto;
+    width: 40%;
+    padding: 2%;
+    background-color: #a91720;
+    border-radius: 8px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.26);
+}
+
+.attendance-block-success {
+    display: flex;
+    flex-flow: column;
+    margin: 30px auto;
+    width: 45%;
+    padding: 2%;
+    background-color: #80a908;
+    border-radius: 8px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.26);
+    align-items: center;
+}
+
+.attendance-block-error {
+    color: #f1f1f1;
+    flex-flow: column;
+    display: flex;
+    margin: 30px auto;
+    width: 45%;
+    padding: 2%;
+    align-items: center;
+    background-color: #a91720;
+    border-radius: 8px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.26);
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+}
+
+.homework-item {
+    color: #f1f1f1;
+    flex-flow: row;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin: 30px auto;
+    width: 50%;
+    padding: 2%;
+    background-color: #4aa1ff;
+    border-radius: 8px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.26);
+}
+
+.hw-item-left {
+    width: 70%;
+}
+
+.homework-btn {
+    background: white;
+    display: flex;
+    align-items: center;
+    height: fit-content;
+    justify-content: center;
+    width: fit-content;
+    font: inherit;
+    font-size: 26px;
+    border: 1px solid white;
+    border-radius: 3px;
+    padding: 0.5rem 1rem;
+    margin-right: 1rem;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.26);
+    color: #4aa1ff;
+    cursor: pointer;
+}
+.gradebook-btns {
+    width: 72%;
+    display: flex;
+    flex-flow: row;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    padding: 20px;
+    font-size: 22px;
+}
+.gradebook-platform {
+    width: 70%;
+    background: #f6f6ff;
+    padding: 3% 20px;
+    border-radius: 8px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 150, 0.26);
+    color: #356fff;
+    margin: 35px auto;
+}
+.gradebook-platform-lecture{
+    text-shadow: 1px 1px 5px rgba(0, 0, 150, 0.26);
+    font-weight: 400;
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.table-grades {
+    text-align: center;
+}

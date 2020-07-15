@@ -42,6 +42,12 @@ const mainNavigation = props => (
                   <li>
                     <NavLink to="/profile">Môj účet</NavLink>
                   </li>
+                  {context.mTeacher &&
+                  <li>
+                    <NavLink to="/myclass">Moja trieda</NavLink>
+                  </li>
+                  }
+
                   <li>
                     <NavLink to="/class">Triedy</NavLink>
                   </li>
@@ -52,10 +58,22 @@ const mainNavigation = props => (
                   <li>
                     <NavLink to="/profile">Môj účet</NavLink>
                   </li>
+                  <li>
+                    <NavLink to="/grades">Žiacka knižka</NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/homework">Domáce úlohy</NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/record">Poznámky</NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/attendance">Neprítomnosti</NavLink>
+                  </li>
                 </>
                 }
                 <li>
-                  <NavLink to="/people">Ľudia na škole</NavLink>
+                  <NavLink to="/people">{context.role === 'student'? 'Moji spolužiaci a učitelia':'Ľudia na škole'}</NavLink>
                 </li>
                 <li>
                   <button onClick={context.logout}>Odhlásiť</button>

@@ -11,6 +11,10 @@ import LecturePage from "./pages/Lectures";
 import ClassPage from "./pages/Classes";
 import ProfilePage from "./pages/Profile";
 import ClassTeacherPage from "./pages/ClassesTeacher";
+import AttendancePage from "./pages/Attendance";
+import RecordPage from "./pages/Record";
+import HomeworkPage from "./pages/Homework";
+import GradeBookPage from "./pages/GradeBook";
 
 import MainNavigation from "./components/Navigation/MainNavigation";
 import AuthContext from './context/auth-context';
@@ -22,7 +26,8 @@ class App extends Component {
     token: null,
     userId: null,
     myId: null,
-    role: null
+    role: null,
+    mTeacher: false,
   }
   currentUser = () => {
     const user = JSON.parse(localStorage.getItem('token'));
@@ -30,13 +35,13 @@ class App extends Component {
       console.log(decoded(user))
     }
   }
-  login = (token, userId, tokenExpiration, role, myId) => {
-    this.setState({token: token, userId: userId, role: role, myId: myId});
+  login = (token, userId, tokenExpiration, role, myId, mTeacher) => {
+    this.setState({token: token, userId: userId, role: role, myId: myId, mTeacher: mTeacher});
     localStorage.setItem('token', JSON.stringify(token));
   }
 
   logout = () => {
-    this.setState({token: null, userId: null, role: null, myId: null});
+    this.setState({token: null, userId: null, role: null, myId: null, mTeacher: false});
     localStorage.removeItem('token');
   };
 
@@ -44,7 +49,13 @@ class App extends Component {
     const token = JSON.parse(localStorage.getItem('token'));
     if (token) {
       const dtoken = decoded(token);
-      this.setState({token: token, userId: dtoken.userId, role: dtoken.role, myId: dtoken.myId})
+      this.setState({
+        token: token,
+        userId: dtoken.userId,
+        role: dtoken.role,
+        myId: dtoken.myId,
+        mTeacher: dtoken.mTeacher
+      })
     }
     ;
   }
@@ -58,6 +69,7 @@ class App extends Component {
             userId: this.state.userId,
             myId: this.state.myId,
             role: this.state.role,
+            mTeacher: this.state.mTeacher,
             login: this.login,
             logout: this.logout,
             currentUser: this.currentUser
@@ -86,7 +98,11 @@ class App extends Component {
                   <Route path="/events" component={EventsPage}/>
                   <Route path="/users" component={UsersPage}/>
                   <Route path="/lectures" component={LecturePage}/>
-                  <Route path="/triedy" component={ClassTeacherPage}/>
+                  <Route path="/myclass" component={ClassTeacherPage}/>
+                  <Route path="/attendance" component={AttendancePage}/>
+                  <Route path="/record" component={RecordPage}/>
+                  <Route path="/homework" component={HomeworkPage} />
+                  <Route path="/grades" component={GradeBookPage} />
                 </>
               )}
             </Switch>

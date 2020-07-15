@@ -3,7 +3,7 @@ import {GraphQLInt, GraphQLList} from 'graphql'
 
 // App Imports
 import RecordType from '../type'
-import {getAll, getById} from '../resolvers'
+import {getAll, getById, getAllByStudent} from '../resolvers'
 
 // Records All
 export const records = {
@@ -18,4 +18,13 @@ export const record = {
     id: {type: GraphQLInt}
   },
   resolve: getById
+}
+
+// Records All
+export const recordsByStudent = {
+  type: new GraphQLList(RecordType),
+  args: {
+    studentId: {type: GraphQLInt}
+  },
+  resolve: getAllByStudent
 }

@@ -80,7 +80,7 @@ class RegistrationPage extends Component {
             .oneOf(
               ['admin', 'teacher', 'student'], 'Nesprávna hodnota'
             )
-            .required('req')
+            .required('Povinné!')
         })}
         onSubmit={(values, {setSubmitting}) => {
           setTimeout(() => {

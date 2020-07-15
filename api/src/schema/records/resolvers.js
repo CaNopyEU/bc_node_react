@@ -31,6 +31,21 @@ export async function getAll() {
   })
 }
 
+export async function getAllByStudent(parentValue, {studentId}) {
+  return await models.Record.findAll({
+    order: [['createdAt', 'DESC']],
+    include: [
+      {
+        model: models.Teacher
+      },
+      {
+        model: models.Student,
+        where: {id: studentId}
+      }
+    ]
+  })
+}
+
 // Create record
 export async function create(parentValue, {
   desc,

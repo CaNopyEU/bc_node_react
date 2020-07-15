@@ -182,7 +182,7 @@ class PeoplePage extends Component {
   }
 
   render() {
-    console.log(this.state.classes)
+    console.log('am I main teacher?', this.context.teacherId)
 
     let content = <Spinner/>
     if (!this.state.isLoading) {

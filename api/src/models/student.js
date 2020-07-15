@@ -49,6 +49,16 @@ export default (sequelize, DataTypes) => {
         name: 'studentId'
       }
     })
+    Student.hasMany(models.Attendance, {
+      foreignKey: {
+        name: 'studentId'
+      }
+    })
+    Student.hasMany(models.Record, {
+      foreignKey: {
+        name: 'studentId'
+      }
+    })
   }
   return Student
 }

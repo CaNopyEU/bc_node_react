@@ -4,6 +4,7 @@ export default React.createContext({
     token: null,
     userId: null,
     myId: null,
-    login: (token, userId, tokenExpiration, role, myId) => {},
+    mTeacher: false,
+    login: (token, userId, tokenExpiration, role, myId, mTeacher) => {},
     logout: () => {}
 });

@@ -3,12 +3,21 @@ import {GraphQLInt, GraphQLList} from 'graphql'
 
 // App Imports
 import HomeworkType from '../type'
-import {getAll, getAllbyGroup, getById} from '../resolvers'
+import {getAll, getAllbyGroup, getById, getAllByStudent} from '../resolvers'
 
 // Homeworks All
 export const homeworks = {
   type: new GraphQLList(HomeworkType),
   resolve: getAll
+}
+
+// Homeworks by Student
+export const homeworksByStudent = {
+  type: new GraphQLList(HomeworkType),
+  args: {
+    studentId: {type: GraphQLInt}
+  },
+  resolve: getAllByStudent
 }
 
 // Homeworks by Group

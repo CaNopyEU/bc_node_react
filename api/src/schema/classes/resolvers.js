@@ -11,12 +11,10 @@ export async function getById(parentValue, {id}) {
         where: {}
       },
       {
-        model: models.Group,
-        where: {}
+        model: models.Group
       },
       {
-        model: models.Student,
-        where: {}
+        model: models.Student
       }
     ]
   })
