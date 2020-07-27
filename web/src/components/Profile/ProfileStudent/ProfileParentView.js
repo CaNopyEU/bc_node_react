@@ -4,7 +4,7 @@ function ProfileParentView(props) {
   return (
     <>
       <table className="in-column">
-        <p>Informácie o zástupcovi</p>
+        <h1>Informácie o zástupcovi</h1>
         <tbody>
         <tr>
           <td>Meno a priezvisko:</td>

@@ -26,6 +26,7 @@ class Group extends Component {
       groupTeachers: [],
       groupHomeworks: [],
       selectedStudent: '',
+      gradesLectures: []
     };
     this.deleteGroup = this.deleteGroup.bind(this);
     this.createGroup = this.createGroup.bind(this);
@@ -63,7 +64,7 @@ class Group extends Component {
           groups: resData.data.groupsByClass,
           selectedGroup: resData.data.groupsByClass[0]
         });
-        this.lectureToGroup(this.state.selectedGroup.id)
+        this.lectureToGroup(this.state.selectedGroup.id);
       })
       .catch(err => {
         console.log(err);
@@ -127,6 +128,7 @@ class Group extends Component {
           groupTeachers: resData.data.group.teachers,
           groupHomeworks: resData.data.group.homeworks
         })
+        this.fetchLecturesByTeacherGroup(this.state.selectedGroup.id);
       })
       .catch(err => {
         console.log(err);
@@ -494,6 +496,40 @@ class Group extends Component {
       });
 
   }
+
+  fetchLecturesByTeacherGroup = () => {
+    const requestBody = {
+      query: `
+                    query{
+                        lecturesByClassTeacher(groupId:${this.state.selectedGroup.id}, teacherId: ${this.context.myId}){
+                          id
+                          lecture
+                          lectureType
+                        }
+                      }
+                `,
+    };
+    fetch('http://localhost:8000/', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        this.setState({gradesLectures: resData.data.lecturesByClassTeacher})
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
+  }
   deleteLectureHandler = id => {
     const newLectures = this.state.groupLectures.filter(lecture => lecture.id !== id);
     this.setState({
@@ -598,7 +634,6 @@ class Group extends Component {
                       {this.state.lectures.map((lecture) => <option
                         value={lecture.id}>{lecture.lecture}({(lecture.lectureType) ? 'Známkovaný' : 'Výchovný'})</option>)}
                     </Field>
-                    <ErrorMessage name="lecture"/>
                     <button className="plus-button" type="submit"> Pridať predmet</button>
                   </div>
                 </Form>
@@ -612,7 +647,7 @@ class Group extends Component {
                 {
                   oneFromArray(this.state.groupTeachers, this.context.myId).length === 1 ?
                     <button onClick={() => this.setState({selectedStudent: student})}
-                            className={`btn grades-btn ${student.id === this.state.selectedStudent.id ? 'selected':''}`}>{student.first_name} {student.last_name}</button>
+                            className={`btn grades-btn ${student.id === this.state.selectedStudent.id ? 'selected' : ''}`}>{student.first_name} {student.last_name}</button>
                     :
                     <p>{student.first_name} {student.last_name}</p>
                 }
@@ -641,7 +676,6 @@ class Group extends Component {
                       {this.props.class.students.map((student) => <option
                         value={student.id}>{student.first_name} {student.last_name}</option>)}
                     </Field>
-                    <ErrorMessage name="student"/>
                     <button className="plus-button" type="submit"> Pridať študenta</button>
                   </div>
                 </Form>
@@ -680,24 +714,26 @@ class Group extends Component {
                       {this.props.teachers.map((teacher) => <option
                         value={teacher.id}>{teacher.title_before} {teacher.first_name} {teacher.last_name} {teacher.title_after}</option>)}
                     </Field>
-                    <ErrorMessage name="teacher"/>
                     <button className="plus-button" type="submit"> Pridať učiteľa</button>
                   </div>
                 </Form>
               </Formik>
               }
             </div>
+            {console.log('lectures to grade', this.state.gradesLectures)}
           </div>
+          {this.context.role === 'teacher' &&
           <div className="groups-control-handler">
             <Homework onDelete={this.deleteHomework} skupina={this.state.selectedGroup} myId={this.context.myId}
                       homeworks={this.state.groupHomeworks} teachers={this.state.groupTeachers}
-                      lectures={this.state.groupLectures}/>
+                      lectures={this.state.gradesLectures}/>
             {
               this.state.selectedStudent &&
               <Grades teacherId={this.context.myId} student={this.state.selectedStudent}
-                      lectures={this.state.lectures}/>
+                      lectures={this.state.gradesLectures}/>
             }
           </div>
+          }
         </div>
       </>
     )

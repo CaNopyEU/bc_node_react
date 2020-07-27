@@ -18,6 +18,15 @@
     margin: 0;
 }
 
+button {
+    border: none;
+    cursor: pointer;
+    background: #4aa1ff;
+    color: white;
+    float: right;
+    font-size: 38px;
+}
+
 .modal__header h1 {
     margin: 0;
     font-size: 1.25rem;
@@ -31,6 +40,10 @@
     display: flex;
     justify-content: flex-end;
     padding: 1rem;
+}
+header {
+    position: sticky;
+    top: 0;
 }
 
 ul, li {

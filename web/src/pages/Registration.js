@@ -65,66 +65,69 @@ class RegistrationPage extends Component {
 
   render() {
     return (
-      <Formik
-        initialValues={{username: '', password: '', role: ''}}
-        validationSchema={Yup.object({
-          username: Yup.string()
-            .max(15, 'Môže byť maximálne 15 znakov dlhé')
-            .min(5, 'Musí byť minimalne 5 znakov dlhé')
-            .required('Prihlasovacie meno je potrebé vyplniť!'),
-          password: Yup.string()
-            .max(20, 'Môže byť maximálne 20 znakov dlhé')
-            .min(5, 'Musí byť minimalne 5 znakov dlhé')
-            .required('Heslo je potrebé vyplniť!'),
-          role: Yup.string()
-            .oneOf(
-              ['admin', 'teacher', 'student'], 'Nesprávna hodnota'
-            )
-            .required('Povinné!')
-        })}
-        onSubmit={(values, {setSubmitting}) => {
-          setTimeout(() => {
-            this.submitRegister(values)
-            setSubmitting(false);
-          }, 400);
-        }}
-      >
-        <Form className="auth-form">
-          {
-            this.state.success &&
-            <div className="form-control success">
-              <label>{this.state.success}</label>
+      <>
+        <h1>Registrácia nového používateľa</h1>
+        <Formik
+          initialValues={{username: '', password: '', role: ''}}
+          validationSchema={Yup.object({
+            username: Yup.string()
+              .max(15, 'Môže byť maximálne 15 znakov dlhé')
+              .min(5, 'Musí byť minimalne 5 znakov dlhé')
+              .required('Prihlasovacie meno je potrebé vyplniť!'),
+            password: Yup.string()
+              .max(20, 'Môže byť maximálne 20 znakov dlhé')
+              .min(5, 'Musí byť minimalne 5 znakov dlhé')
+              .required('Heslo je potrebé vyplniť!'),
+            role: Yup.string()
+              .oneOf(
+                ['admin', 'teacher', 'student'], 'Nesprávna hodnota'
+              )
+              .required('Povinné!')
+          })}
+          onSubmit={(values, {setSubmitting}) => {
+            setTimeout(() => {
+              this.submitRegister(values)
+              setSubmitting(false);
+            }, 400);
+          }}
+        >
+          <Form className="auth-form">
+            {
+              this.state.success &&
+              <div className="form-control success">
+                <label>{this.state.success}</label>
+              </div>
+            }
+            {
+              this.state.errors &&
+              <div className="form-control errors">
+                <label>{this.state.errors}</label>
+              </div>
+            }
+            <div className="form-control">
+              <label htmlFor="username">Prihlasovacie meno:</label>
+              <Field name="username" type="text"/>
+              <ErrorMessage name="username"/>
             </div>
-          }
-          {
-            this.state.errors &&
-            <div className="form-control errors">
-              <label>{this.state.errors}</label>
+            <div className="form-control">
+              <label htmlFor="password">Heslo:</label>
+              <Field name="password" type="password"/>
+              <ErrorMessage name="password"/>
             </div>
-          }
-          <div className="form-control">
-            <label htmlFor="username">Prihlasovacie meno:</label>
-            <Field name="username" type="text"/>
-            <ErrorMessage name="username"/>
-          </div>
-          <div className="form-control">
-            <label htmlFor="password">Heslo:</label>
-            <Field name="password" type="password"/>
-            <ErrorMessage name="password"/>
-          </div>
-          <div className="form-control">
-            <label htmlFor="role">Pozícia v systéme</label>
-            <Field name="role" as="select">
-              <option value="">--Vyberte--</option>
-              <option value="admin">Administrátor</option>
-              <option value="teacher">Učiteľ</option>
-              <option value="student">Študent</option>
-            </Field>
-            <ErrorMessage name="role"/>
-          </div>
-          <button className="btn" type="submit">Vytvoriť účet</button>
-        </Form>
-      </Formik>
+            <div className="form-control">
+              <label htmlFor="role">Pozícia v systéme</label>
+              <Field name="role" as="select">
+                <option value="">--Vyberte--</option>
+                <option value="admin">Administrátor</option>
+                <option value="teacher">Učiteľ</option>
+                <option value="student">Študent</option>
+              </Field>
+              <ErrorMessage name="role"/>
+            </div>
+            <button className="btn" type="submit">Vytvoriť účet</button>
+          </Form>
+        </Formik>
+      </>
     );
   }
 }

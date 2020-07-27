@@ -27,7 +27,7 @@ class App extends Component {
     userId: null,
     myId: null,
     role: null,
-    mTeacher: false,
+    mTeacher: null,
   }
   currentUser = () => {
     const user = JSON.parse(localStorage.getItem('token'));
@@ -41,7 +41,7 @@ class App extends Component {
   }
 
   logout = () => {
-    this.setState({token: null, userId: null, role: null, myId: null, mTeacher: false});
+    this.setState({token: null, userId: null, role: null, myId: null, mTeacher: null});
     localStorage.removeItem('token');
   };
 
@@ -84,7 +84,14 @@ class App extends Component {
               {!this.state.token && <Redirect from="/registration" to="/" exact/>}
               {!this.state.token && <Redirect from="/events" to="/" exact/>}
               {!this.state.token && <Redirect from="/lectures" to="/" exact/>}
-              {this.state.token && <Redirect from="/auth" to="/people" exact/>}
+              {!this.state.token && <Redirect from="/profile" to="/" exact/>}
+              {!this.state.token && <Redirect from="/lectures" to="/" exact/>}
+              {!this.state.token && <Redirect from="/myclass" to="/" exact/>}
+              {!this.state.token && <Redirect from="/attendance" to="/" exact/>}
+              {!this.state.token && <Redirect from="/record" to="/" exact/>}
+              {!this.state.token && <Redirect from="/homework" to="/" exact/>}
+              {!this.state.token && <Redirect from="/grades" to="/" exact/>}
+              {this.state.token  && <Redirect from="/auth" to="/people" exact/>}
 
               {!this.state.token && (
                 <Route path="/auth" component={AuthPage}/>

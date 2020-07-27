@@ -54,6 +54,6 @@ export async function create(parentValue, {
 }
 
 // Delete TeacherLecture
-export async function remove(parentValue, {id}) {
-  return await models.TeacherLecture.destroy({where: {id}})
+export async function remove(parentValue, {lectureId, teacherId}) {
+  return await models.TeacherLecture.destroy({where: {lectureId: lectureId, teacherId: teacherId}})
 }

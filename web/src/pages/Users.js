@@ -411,6 +411,7 @@ class Users extends Component {
               />
             }
           </Modal>)}
+        <h1>Administratíva používateľov</h1>
         {this.state.editUser && (
           <Modal
             title={this.state.editUser.username}

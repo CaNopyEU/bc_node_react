@@ -243,7 +243,6 @@ class LecturePage extends Component {
                 <option value="true">Známkovaný</option>
                 <option value="false">Výchovný</option>
               </Field>
-              <ErrorMessage name="lectureType"/>
             </div>
             <button className="btn" type="submit">Vytvoriť predmet</button>
           </Form>

@@ -25,8 +25,12 @@ export const createTeacherLecture = {
 export const deleteTeacherLecture = {
     type: TeacherLectureType,
     args: {
-        id: {
-            name: 'id',
+        lectureId: {
+            name: 'lectureId',
+            type: GraphQLInt
+        },
+        teacherId: {
+            name: 'teacherId',
             type: GraphQLInt
         }
     },

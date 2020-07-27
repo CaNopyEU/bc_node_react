@@ -8,8 +8,8 @@
   },
   "production": {
     "username": "postgres",
-    "password": "Radim1385",
-    "database": "db-test",
+    "password": "admin",
+    "database": "prod-db",
     "host": "localhost",
     "dialect": "postgres"
   }

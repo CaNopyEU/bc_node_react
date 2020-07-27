@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import _ from 'lodash';
 
 import './Auth.css';
 import './lectures.css';
@@ -13,12 +14,24 @@ class GradeBookPage extends Component {
       lectures: [],
       selectedLecture: '',
       grades: [],
+      jan: [],
+      feb: [],
+      mar: [],
+      apr: [],
+      maj: [],
+      jun: [],
+      aug: [],
+      sep: [],
+      okt: [],
+      nov: [],
+      dec: []
     }
   }
 
   componentDidMount() {
     this.fetchMyLectures()
   }
+
 
   fetchMyLecGrades(id) {
     let requestBody = {
@@ -94,40 +107,147 @@ class GradeBookPage extends Component {
       });
   }
 
-  getFilteredDates(min, max) {
-    const shit = this.state.grades.filter(x => (x.date > min) && (x.date < max));
-    return Object.values(shit);
-  }
-
   handleClickLecture(value) {
     this.setState({selectedLecture: value})
     this.fetchMyLecGrades(value.id)
   }
 
+  getFilteredDates(min, max, month) {
+    let shit = new Date(min).getMonth()
+    if (shit === 3) {
+      const prevState = this.state.apr;
+      const newState = prevState.concat(min)
+      this.setState({apr: newState})
+    }
+    console.log('this shit', shit)
+    //const shit = this.state.grades.filter(x => (x.date > min) && (x.date < max));
+    //return Object.values(shit);
+  }
+
+
   render() {
-
-
     const min = Date.parse('2020-04-01');
     const max = Date.parse('2020-11-30');
 
-    console.log(min)
     return (
       <>
         <h1>Moja žiacka knižka</h1>
         <div className="gradebook-btns">
-        {
-          this.state.lectures.map(lec => (
-            <button onClick={() => this.handleClickLecture(lec)} className="btn">{lec.lecture}</button>
-          ))
-        }
+          {
+            this.state.lectures.map(lec => (
+              <button onClick={() => this.handleClickLecture(lec)} className="btn">{lec.lecture}</button>
+            ))
+          }
         </div>
         {
           this.state.selectedLecture &&
           <div className="gradebook-platform">
             <h1 className="gradebook-platform-lecture">{this.state.selectedLecture.lecture}</h1>
             <table className="table-grades">
-              <tr><td>September</td><td>Október</td><td>November</td><td>December</td><td>Január</td><td>Február</td><td>Marec</td><td>Apríl</td><td>Máj</td><td>Jún</td></tr>
-              <tr><td>{this.getFilteredDates(min, max)}</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+              <tr>
+                <td>September</td>
+                <td>Október</td>
+                <td>November</td>
+                <td>December</td>
+                <td>Január</td>
+                <td>Február</td>
+                <td>Marec</td>
+                <td>Apríl</td>
+                <td>Máj</td>
+                <td>Jún</td>
+              </tr>
+              <tr>
+                <td>
+                  {
+                    this.state.grades.map(grade => (
+                      <>
+                        {new Intl.DateTimeFormat('default', {month: 'numeric'}).format(grade.date) == 9 ? grade.grade + '  ' : ''}
+                      </>
+                    ))
+                  }
+                </td>
+                <td>
+                  {
+                    this.state.grades.map(grade => (
+                      <>
+                        {new Intl.DateTimeFormat('default', {month: 'numeric'}).format(grade.date) == 10 ? grade.grade + '  ' : ''}
+                      </>
+                    ))
+                  }
+                </td>
+                <td>
+                  {
+                    this.state.grades.map(grade => (
+                      <>
+                        {new Intl.DateTimeFormat('default', {month: 'numeric'}).format(grade.date) == 11 ? grade.grade + '  ' : ''}
+                      </>
+                    ))
+                  }
+                </td>
+                <td>
+                  {
+                    this.state.grades.map(grade => (
+                      <>
+                        {new Intl.DateTimeFormat('default', {month: 'numeric'}).format(grade.date) == 12 ? grade.grade + '  ' : ''}
+                      </>
+                    ))
+                  }
+                </td>
+                <td>
+                  {
+                    this.state.grades.map(grade => (
+                      <>
+                        {new Intl.DateTimeFormat('default', {month: 'numeric'}).format(grade.date) == 1 ? grade.grade + '  ' : ''}
+                      </>
+                    ))
+                  }
+                </td>
+                <td>
+                  {
+                    this.state.grades.map(grade => (
+                      <>
+                        {new Intl.DateTimeFormat('default', {month: 'numeric'}).format(grade.date) == 2 ? grade.grade + '  ' : ''}
+                      </>
+                    ))
+                  }
+                </td>
+                <td>
+                  {
+                    this.state.grades.map(grade => (
+                      <>
+                        {new Intl.DateTimeFormat('default', {month: 'numeric'}).format(grade.date) == 3 ? grade.grade + ' ' : ''}
+                      </>
+                    ))
+                  }
+                </td>
+                <td>
+                  {
+                    this.state.grades.map(grade => (
+                      <>
+                        {new Intl.DateTimeFormat('default', {month: 'numeric'}).format(grade.date) == 4 ? grade.grade + '  ' : ''}
+                      </>
+                    ))
+                  }
+                </td>
+                <td>
+                  {
+                    this.state.grades.map(grade => (
+                      <>
+                        {new Intl.DateTimeFormat('default', {month: 'numeric'}).format(grade.date) == 5 ? grade.grade + '  ' : ''}
+                      </>
+                    ))
+                  }
+                </td>
+                <td>
+                  {
+                    this.state.grades.map(grade => (
+                      <>
+                        {new Intl.DateTimeFormat('default', {month: 'numeric'}).format(grade.date) == 6 ? grade.grade + '  ' : ''}
+                      </>
+                    ))
+                  }
+                </td>
+              </tr>
             </table>
           </div>
 

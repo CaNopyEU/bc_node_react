@@ -4,7 +4,11 @@ import './Modal.css';
 
 const modal = props => (
   <div className="modal">
-    <header><h1 className="modal__header">{props.title}</h1></header>
+    <header><h1 className="modal__header">{props.title}
+      {props.canCancel &&
+      <button onClick={props.onCancel}>
+        X
+      </button>}</h1></header>
     <section className="modal__content">
       {props.children}
     </section>

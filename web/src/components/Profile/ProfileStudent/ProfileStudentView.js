@@ -4,7 +4,7 @@ function ProfileStudentView(props) {
   return (
     <>
       <table>
-        <p>Informácie o študentovi</p>
+        <h1>Informácie o študentovi</h1>
         <tbody>
         <tr>
           <td>Meno:</td>

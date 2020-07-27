@@ -148,7 +148,7 @@ function Grades(props) {
         ))}
       </div>
       <GradesView delete={gradeClickHandler} grades={grades}/>
-      <h1>Oznámkujte žiaka z predmetu: </h1>
+      <h1>Oznámkujte žiaka z predmetu: {selectedLecture.lecture}</h1>
       <Formik
         initialValues={{grade: '', date: ''}}
         validationSchema={Yup.object({

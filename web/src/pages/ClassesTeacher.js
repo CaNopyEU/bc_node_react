@@ -389,6 +389,7 @@ class ClassTeacherPage extends Component {
 
     return (
       <>
+        {(this.state.selectedStudent) && <Backdrop/>}
         {this.state.selectedStudent && (
           <Modal
             title={`Detail študenta ${this.state.selectedStudent.first_name} ${this.state.selectedStudent.last_name}`}

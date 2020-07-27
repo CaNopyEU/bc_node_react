@@ -3,7 +3,7 @@ import React from "react";
 function ProfileTeacherView(props) {
   return (
     <>
-      <table className="in-column-profile-teacher">
+      <table>
         <tr>
           <td>Meno:</td>
           <td>{props.user.first_name}</td>
@@ -51,7 +51,12 @@ function ProfileTeacherView(props) {
             <td></td>
           </tr>
         }
-        <button onClick={props.editHandler} className="btn">Upraviť učiteľa</button>
+        <tr>
+          <td>
+            <button onClick={props.editHandler} className="btn">Upraviť učiteľa</button>
+          </td>
+          <td></td>
+        </tr>
       </table>
     </>
   )
